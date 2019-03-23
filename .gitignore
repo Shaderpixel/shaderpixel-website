@@ -52,6 +52,7 @@ typings/
 *.tgz
 
 # dotenv environment variables file
+# Gatsby reads off two types of env files .env.development, .env.production https://www.gatsbyjs.org/docs/environment-variables/
 .env
 .env.*
 
