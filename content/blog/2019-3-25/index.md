@@ -1,6 +1,6 @@
 ---
 title: "Setting up my new site in Gatsby - Part III"
-date: "2019-03-24"
+date: "2019-03-23"
 category: ""
 tags: ["this", "that"]
 excerpt: "A preview of my third post"
@@ -16,7 +16,7 @@ Aside from notes on project structure that can be found in the [documentations](
 - `/data` - This folder can contain local data for your application e.g. `/data/SiteConfig.js`. The data stored in here should be safe to be published to a repo. Information such as third party API keys should be stored inside .env files and should not be commited to a repo.
 - `/static` - This folder contains files useful to the site such as favicons for the site and robots.txt
 
-# Figuring out Passing data
+# Figuring out Passing data and Styles
 
 ## Getting Site Metadata into Components
 
@@ -35,6 +35,20 @@ So I guess its down to preference. I would like to stick with using GraphQL for 
 > The plugin creates File nodes from files. The various “transformer” plugins can transform File nodes into various other types of data e.g. gatsby-transformer-json transforms JSON files into JSON data nodes and gatsby-transformer-remark transforms markdown files into MarkdownRemark nodes from which you can query an HTML representation of the markdown.
 
 > You can have multiple instances of this plugin to read source nodes from different locations on your filesystem.
+
+## Figuring out Styles
+
+Tailwind with Emotion demo: https://github.com/jlengstorf/gatsby-tailwind-demo
+Gatsby-plugin-emotion: https://www.gatsbyjs.org/packages/gatsby-plugin-emotion/
+Tailwind includes Normalize 8.0.0
+Fluid Typography can be added via a plain old CSS stylesheet, via Emotions way of global styles, or via a Tailwind plugin.
+
+Guess now I just have to test it out.
+
+Having used Styled Components once in my prior React project, naturally I was curious what are the differences between Emotion and Styled Components
+https://github.com/emotion-js/emotion/issues/113
+https://github.com/jsjoeio/styled-components-vs-emotion
+https://github.com/A-gambit/CSS-IN-JS-Benchmarks/blob/master/RESULT.md
 
 # Thoughts
 
