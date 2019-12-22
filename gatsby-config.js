@@ -1,4 +1,8 @@
-// Site configuration options for a Gatsby site
+/**
+ * Site configuration options for a Gatsby site
+ * Can contain site (metadata), which Gatsby plugins you’d like to include, etc.
+ * (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
+ *  */
 const config = require(`./data/SiteConfig`);
 
 module.exports = {
@@ -31,6 +35,12 @@ module.exports = {
       options: {
         name: `projects`,
         path: `${__dirname}/content/portfolio`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-emotion`,
+      options: {
+        // Accepts all options defined by `babel-plugin-emotion` plugin.
       },
     },
   ],
