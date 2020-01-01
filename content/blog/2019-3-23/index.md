@@ -18,6 +18,7 @@ I am a learner, I can't take something at face value and use it without digging 
 
 - Information put in the siteMetadata such as title, siteURL, description are not automatically pulled in by Gatsby to build your site's metatags. They can be queried using GraphQL queries, and since all the siteMetadata is stored in a separate file, I could also pull it in via an import
 - Site titles are set on a per page basis to allow flexibility of creating contextual site titles, and that meets SEO standards of having unique and meaningful site titles, seems like to postfix the current relevant title with the actual site title
-- Layout components are important to house things that needs to be used per content type on a much higher level, followed by template components, followed by reusable sub-components.
-- We have templates for content types that can be templated and they can still be wrapped by layout components inside the templates and use sub components
-- Create pages programmatically from data for templated content but use the page in pages folder for one off pages such as the homepage (index.js) or the about page
+- Layout components are useful to house things that needs to be on a global scope and used per content type on a much higher level. We have templates for content types that can be templated and they can still be wrapped by layout components. Lastly we have reusable sub-components can go into both layout and template components.
+- There are two general ways to create pages in Gatsby:
+  -- Create pages programmatically from data for templated content using the CreatePages API
+  -- Create a new file in the pages folder for one off pages such as the homepage (index.js) or the about page

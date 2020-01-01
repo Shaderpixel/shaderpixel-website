@@ -63,6 +63,11 @@
     "react/prefer-stateless-function": 0,
     "react/forbid-prop-types": 0,
     "react/no-unescaped-entities": 0,
+    "react/jsx-curly-newline": 0,
+    "react/state-in-constructor": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/static-property-placement": 0,
+
     "jsx-a11y/accessible-emoji": 0,
     "react/require-default-props": 0,
     "react/jsx-filename-extension": [
@@ -71,6 +76,8 @@
         "extensions": [".js", ".jsx"]
       }
     ],
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
     "radix": 0,
     "no-shadow": [
       2,
@@ -97,16 +104,21 @@
     ],
     "jsx-a11y/href-no-hash": "off",
     "jsx-a11y/anchor-is-valid": [
-      "warn",
+      "error",
       {
-        "aspects": ["invalidHref"]
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight", "to"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
       }
     ]
   },
   "plugins": [
-    // "html",
     "prettier",
     "markdown",
-    "graphql"
+    "graphql",
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import"
   ]
 }

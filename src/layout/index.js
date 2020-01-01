@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { graphql, StaticQuery } from 'gatsby';
+import Header from '../components/Header';
 
 const SITE_METADATA_QUERY = graphql`
   query SITE_METADATA_QUERY {
@@ -23,7 +24,8 @@ class MainLayout extends React.Component {
             <Helmet>
               <meta name="description" content={siteMetadata.description} />
             </Helmet>
-            {children}
+            <Header />
+            <main>{children}</main>
           </>
         )}
       </StaticQuery>
