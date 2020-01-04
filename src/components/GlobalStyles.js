@@ -1,19 +1,18 @@
 import { css, Global } from '@emotion/core';
 import { withTheme } from 'emotion-theming';
+import emotionNormalize from 'emotion-normalize';
 import React from 'react';
 import globalFontSizing from '../styles/globalFontSizing';
+import globalGeneric from '../styles/globalGeneric';
+import globalElements from '../styles/globalElements';
 
 const GlobalStyles = withTheme(props => (
   <Global
     styles={css`
-      ${globalFontSizing} /*composition*/
-      /* a {
-        color: ${props.theme.fontColor};
-        text-decoration: underline;
-      } */
-      .lock-scroll {
-        overflow: hidden !important;
-      }
+      ${emotionNormalize}
+      ${globalGeneric}
+      ${globalFontSizing}
+      ${globalElements}
     `}
   />
 ));

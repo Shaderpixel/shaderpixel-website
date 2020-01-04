@@ -1,119 +1,136 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import styled from '@emotion/styled';
+import tw from 'tailwind.macro';
 import { css } from '@emotion/core';
+import {mix} from 'polished';
+import {sizingVar} from '../styles/variables';
+
+const themes = [
+  { name: 'light', icon: '☼' },
+  { name: 'dark', icon: '☾' },
+  { name: 'seasonal', icon: '🎄' },
+];
 
 // Styles
-const ThemeToggle = styled.div`
+const ThemeToggler = styled.div`
   position: relative;
+  border: 2px solid
+    ${({ theme }) =>
+      mix(0.2, theme.colors.$lightGray, theme.colors.$cementGray)};
+  border-radius: 2em;
+  display: flex;
+  flex-flow: row nowrap;
+  overflow: hidden;
 
-  .theme-switch__input,
-  .theme-switch__label {
-    position: absolute;
-    z-index: 1;
-  }
+  .c-themeToggle {
+    position: relative;
+    flex: 1;
 
-  .theme-switch__input {
-    opacity: 0;
-
-    &:hover,
-    &:focus {
-      + .theme-switch__label {
-        background-color: ${({ theme }) => theme.colors.$lightGray};
-      }
-
-      + .theme-switch__label span::after {
-        background-color: ${({ theme }) => theme.colors.$primary};
-      }
-    }
-  }
-
-  .theme-switch__label {
-    padding: 20px;
-    margin: 60px;
-    transition: background-color 200ms ease-in-out;
-    width: 120px;
-    height: 50px;
-    border-radius: 50px;
-    text-align: center;
-    background-color: ${({ theme }) => theme.borderColor};
-    box-shadow: -4px 4px 15px inset rgba(0, 0, 0, 0.4);
-
-    &::before,
-    &::after {
-      font-size: 2rem;
+    & > input[type="radio"] {
       position: absolute;
-      transform: translate3d(0, -50%, 0);
-      top: 50%;
+      z-index: 2;
+      appearance: none;
+      background: none;
+      height: 100%;
+      width: 100%;
+      cursor: pointer;
     }
 
-    &::before {
-      content: "\\263C";
-      right: 100%;
-      margin-right: 10px;
+    & > label {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding: 0.25em 1em;
+      background-color: ${({ theme }) => theme.colors.$lightGray};
+    }
+
+    &:not(:last-child) {
+      & > label {
+        border-right: 2px solid
+          ${({ theme }) =>
+            mix(0.2, theme.colors.$lightGray, theme.colors.$cementGray)};
+      }
+    }
+
+    &__icon {
+      font-size: ${sizingVar.lengthEm5};
+    }
+
+    &__icon-light {
       color: orange;
     }
 
-    &::after {
-      content: "\\263E";
-      left: 100%;
-      margin-left: 10px;
-      color: ${({ theme }) => theme.colors.$darkGray};
+    &__icon-dark {
+      color: slategray;
     }
 
-    span {
-      position: absolute;
-      bottom: calc(100% + 10px);
-      left: 0;
-      width: 100%;
-    }
+    /* TODO Hover and focus styles: drop some shadows */
 
-    span::after {
-      position: absolute;
-      top: calc(100% + 15px);
-      left: 5px;
-      width: 40px;
-      height: 40px;
-      content: "";
-      border-radius: 50%;
-      background-color: ${({ theme }) => theme.colors.$blue};
-      transition: transform 200ms, background-color 200ms;
-      box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.4);
+    /* Checked label styles */
+    & > input[type="radio"]:checked + label {
+      background-color: ${({ theme }) =>
+        mix(0.2, theme.colors.$lightGray, theme.colors.$cementGray)};
+
+      .c-themeToggle__icon {
+        filter: brightness(160%);
+      }
     }
   }
 
-  // Checked label styles
-  .theme-switch__input:checked ~ .theme-switch__label {
-    background-color: lightSlateGray;
-
-    &::before {
-      color: lightSlateGray;
-    }
-
-    &::after {
-      color: turquoise;
-    }
-
-    span::after {
-      transform: translate3d(70px, 0, 0);
-    }
+  /* TODO remove this class once Tailwind is properly brought in */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 `;
+
 // Component
-const ThemeToggler = props => (
-  // This is how the theme switcher option will be...
-  // TODO switch this to a three way toggle using radio buttons
-  <ThemeToggle>
-    <input
-      type="checkbox"
-      id="themeToggle"
-      name="theme-Toggle"
-      className="theme-switch__input"
-      onChange={props.themeContext.toggleDark}
-    />
-    <label htmlFor="themeToggle" className="theme-switch__label">
-      <span>Toggle theme</span>
-    </label>
-  </ThemeToggle>
-);
-export default ThemeToggler;
+
+const ThemeTogglerComponent = props => {
+  const inputItems = themes.map(theme => (
+    <div key={theme.name} className="c-themeToggle">
+      <input
+        name="theme"
+        type="radio"
+        disabled={
+          (props.themeContext.dark && theme.name === 'dark') ||
+          (props.themeContext.seasonal && theme.name === 'seasonal') ||
+          (!props.themeContext.dark &&
+            !props.themeContext.seasonal &&
+            theme.name === 'light')
+        }
+        checked={
+          (props.themeContext.dark && theme.name === 'dark') ||
+          (props.themeContext.seasonal && theme.name === 'seasonal') ||
+          (!props.themeContext.dark &&
+            !props.themeContext.seasonal &&
+            theme.name === 'light')
+        }
+        value={theme.name}
+        id={`themeToggle-${theme.name}`}
+        onChange={props.themeContext.toggleDark}
+      />
+      <label htmlFor={`themeToggle-${theme.name}`}>
+        <span className="sr-only">Toggle {theme.name} theme</span>
+        <span
+          className={`c-themeToggle__icon-${theme.name} c-themeToggle__icon`}
+        >
+          {theme.icon}
+        </span>
+      </label>
+    </div>
+  ));
+  return (
+  <ThemeToggler>
+    {inputItems}
+  </ThemeToggler>)
+};
+export default ThemeTogglerComponent;

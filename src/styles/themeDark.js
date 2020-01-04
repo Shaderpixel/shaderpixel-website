@@ -22,6 +22,7 @@ const theme = {
   backgroundColor: $lightGray,
   borderColor: $cementGray,
   borderColorActive: $solidGray,
+  borderRadius: '5px',
   linkColor: $blue,
   linkColorActive: $blueActive,
   boxShadow: '0 0px 12px -6px rgba(0,0,0,0.94)',

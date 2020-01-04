@@ -29,17 +29,15 @@ const Paragraph = styled.p`
     props.primary ? props.theme.fontColor : props.theme.backgroundColor};
 `;
 
-console.log(Paragraph);
-
 const test = tw`my-0 text-xl leading-tight italic`;
 
 const Index = () => (
-    <Layout>
-      <Paragraph primary css={test}>
-        Hello World
-      </Paragraph>
-      <Paragraph css={tw`italic`}>Testing a separate paragraph</Paragraph>
-    </Layout>
-  );
+  <Layout>
+    <Paragraph primary css={test}>
+      Hello World
+    </Paragraph>
+    <Paragraph css={tw`italic`}>Testing a separate paragraph</Paragraph>
+  </Layout>
+);
 
 export default Index;

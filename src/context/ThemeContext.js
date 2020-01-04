@@ -2,8 +2,11 @@ import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 import themeDark from '../styles/themeDark';
 import themeLight from '../styles/themeLight';
+import themeSeasonal from '../styles/themeSeasonal';
 
 const defaultContextData = {
+  isSeasonal: false,
+  seasonal: false,
   dark: false,
   toggleDark: () => {},
 };
@@ -15,6 +18,7 @@ const useDarkMode = () => {
     window.matchMedia('(prefers-color-scheme: dark)').matches === true;
 
   const [themeState, setThemeState] = React.useState({
+    seasonal: false,
     dark: false,
     themeHasBeenSet: false,
   });
@@ -22,9 +26,9 @@ const useDarkMode = () => {
   React.useEffect(() => {
     const lsDark = localStorage.getItem('dark') === 'true';
     if (lsDark || supportsDarkMode()) {
-      setThemeState({ dark: true, themeHasBeenSet: true });
+      setThemeState({ seasonal: false, dark: true, themeHasBeenSet: true });
     } else {
-      setThemeState({ dark: false, themeHasBeenSet: true });
+      setThemeState({ seasonal: false, dark: false, themeHasBeenSet: true });
     }
   }, []);
 
@@ -33,17 +37,39 @@ const useDarkMode = () => {
 
 const ThemeProvider = ({ children }) => {
   const [themeState, setThemeState] = useDarkMode();
-  const theme = themeState.dark ? themeDark : themeLight;
-  const toggleDark = () => {
-    const dark = !themeState.dark;
-    localStorage.setItem('dark', JSON.stringify(dark));
-    setThemeState({ ...themeState, dark });
+  const theme =
+    // eslint-disable-next-line no-nested-ternary
+    themeState.dark && !themeState.seasonal
+      ? themeDark
+      : !themeState.dark && themeState.seasonal
+      ? themeSeasonal
+      : themeLight;
+  const toggleDark = e => {
+    if (e.target.value !== 'seasonal') {
+      const dark =
+        e.target.type.toLowerCase() === 'checkbox'
+          ? !themeState.dark
+          : e.target.value === 'dark';
+      localStorage.setItem('dark', JSON.stringify(dark));
+      setThemeState({ ...themeState, dark, seasonal: false });
+    } else {
+      console.log(e.target.value);
+      const dark = false;
+      setThemeState({ ...themeState, dark, seasonal: true });
+    }
   };
 
   return (
     <div style={{ display: themeState.themeHasBeenSet ? 'block' : 'none' }}>
       <EmotionThemeProvider theme={theme}>
-        <ThemeContext.Provider value={{ dark: themeState.dark, toggleDark }}>
+        <ThemeContext.Provider
+          value={{
+            isSeasonal: false,
+            seasonal: themeState.seasonal,
+            dark: themeState.dark,
+            toggleDark,
+          }}
+        >
           {children}
         </ThemeContext.Provider>
       </EmotionThemeProvider>

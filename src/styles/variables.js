@@ -20,20 +20,20 @@ const sizingVar = {
   ms3: ms(3, msOption),
   ms4: ms(4, msOption),
   ms5: ms(5, msOption),
-  lengthEm1: `$(ms(-6, msOption))em`, // .43em
-  lengthEm2: `$(ms(-4, msOption))em`, // .56em
-  lengthEm3: `$(ms(-2, msOption))em`, // .75em
-  lengthEm4: `$(ms(0, msOption))em`, // 1em
-  lengthEm5: `$(ms(2, msOption))em`, // 1.33em
-  lengthEm6: `$(ms(4, msOption))em`, // 1.77em
-  lengthEm7: `$(ms(6, msOption))em`, // 2.37em
-  lengthEm8: `$(ms(8, msOption))em`, // 3.16em
-  lengthEm9: `$(ms(10, msOption))em`, // 4.21em
-  lengthEm10: `$(ms(12, msOption))em`, // 5.62em
+  lengthEm1: `${ms(-6, msOption)}em`, // .43em
+  lengthEm2: `${ms(-4, msOption)}em`, // .56em
+  lengthEm3: `${ms(-2, msOption)}em`, // .75em
+  lengthEm4: `${ms(0, msOption)}em`, // 1em
+  lengthEm5: `${ms(2, msOption)}em`, // 1.33em
+  lengthEm6: `${ms(4, msOption)}em`, // 1.77em
+  lengthEm7: `${ms(6, msOption)}em`, // 2.37em
+  lengthEm8: `${ms(8, msOption)}em`, // 3.16em
+  lengthEm9: `${ms(10, msOption)}em`, // 4.21em
+  lengthEm10: `${ms(12, msOption)}em`, // 5.62em
 
   // Viewport-width-based Spacing
-  lengthVw1: `$(ms(4, msOption))vw`, // 3.16em
-  lengthVw2: `$(ms(16, msOption))vw`, // 5.62em
+  lengthVw1: `${ms(4, msOption)}vw`, // 3.16em
+  lengthVw2: `${ms(16, msOption)}vw`, // 5.62em
 };
 
 export { sizingVar };

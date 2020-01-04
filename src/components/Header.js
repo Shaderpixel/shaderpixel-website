@@ -1,22 +1,30 @@
 import React from 'react';
+import ThemeSwitcher from './ThemeSwitcher';
 import ThemeToggler from './ThemeToggler';
 import { useTheme } from '../context/ThemeContext';
 
 const Header = props => {
   // TODO add scroll sticky and slim state
   const themeContext = useTheme();
-  console.log(themeContext);
   return (
     <header>
       <p>This is a header</p>
-      {themeContext && Object.keys(themeContext).length > 0 ? (
-        <ThemeToggler
-          data-testid="darkmode-switch"
-          htmlFor="darkmode-switch"
+      {themeContext && !themeContext.isSeasonal ? (
+        <ThemeSwitcher
+          data-testid="theme-switch"
+          htmlFor="theme-switch"
           isDark={themeContext.dark}
           themeContext={themeContext}
         />
-      ) : null}
+      ) : (
+        <ThemeToggler
+          data-testid="theme-toggle"
+          htmlFor="theme-toggle"
+          isDark={themeContext.dark}
+          isSeasonal={themeContext.isSeasonal}
+          themeContext={themeContext}
+        />
+      )}
     </header>
   );
 };
