@@ -53,7 +53,6 @@ const ThemeProvider = ({ children }) => {
       localStorage.setItem('dark', JSON.stringify(dark));
       setThemeState({ ...themeState, dark, seasonal: false });
     } else {
-      console.log(e.target.value);
       const dark = false;
       setThemeState({ ...themeState, dark, seasonal: true });
     }

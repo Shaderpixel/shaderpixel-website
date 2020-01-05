@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import styled from '@emotion/styled';
-import tw from 'tailwind.macro';
 import { css } from '@emotion/core';
 import {mix} from 'polished';
 import {sizingVar} from '../styles/variables';

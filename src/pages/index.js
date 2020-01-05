@@ -1,8 +1,7 @@
 import React from 'react';
 import { graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
-import { css, Global } from '@emotion/core';
-import tw from 'tailwind.macro';
+import { css} from '@emotion/core';
 import Layout from '../layout';
 import { sizingVar } from '../styles/variables';
 
@@ -24,19 +23,21 @@ import { sizingVar } from '../styles/variables';
 // `;
 
 const Paragraph = styled.p`
-  ${tw`flex justify-center items-center bg-gray-500`}
   color: ${props =>
     props.primary ? props.theme.fontColor : props.theme.backgroundColor};
 `;
 
-const test = tw`my-0 text-xl leading-tight italic`;
-
 const Index = () => (
   <Layout>
-    <Paragraph primary css={test}>
+    <Paragraph
+      primary
+      className="my-0 text-xl leading-tight italic flex justify-center items-center bg-gray-500"
+    >
       Hello World
     </Paragraph>
-    <Paragraph css={tw`italic`}>Testing a separate paragraph</Paragraph>
+    <Paragraph className="justify-center items-center bg-gray-500 flex">
+      Testing a separate paragraph
+    </Paragraph>
   </Layout>
 );
 

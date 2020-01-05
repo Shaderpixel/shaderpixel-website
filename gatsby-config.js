@@ -45,5 +45,14 @@ module.exports = {
         // Accepts all options defined by `babel-plugin-emotion` plugin.
       },
     },
+    `gatsby-plugin-postcss`,
+    {
+      resolve: `gatsby-plugin-purgecss`,
+      options: {
+        develop: true,
+        tailwind: true,
+      },
+    },
+    `gatsby-plugin-offline`,
   ],
 };

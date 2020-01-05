@@ -15,9 +15,7 @@
     "jquery": true,
     "jest": true
   },
-  "globals": {
-    "tw": true
-  },
+  "globals": {},
   "rules": {
     "no-debugger": 0,
     "no-alert": 0,
