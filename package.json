@@ -84,6 +84,7 @@
     "lint:md": "remark content/posts/",
     "write-good": "write-good $(glob 'content/blog/**/*.md')",
     "format:js": "prettier '**/*.{js,jsx}' --write",
+    "format:styles": "prettier '**/*.{css,scss}' --write",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   },
   "remarkConfig": {
