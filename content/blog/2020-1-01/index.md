@@ -1,8 +1,10 @@
 ---
 title: "Theming my new site - Part II"
 date: "2020-01-01"
+cover: "7.jpg"
 category: ""
 tags: ["this", "that"]
+slug: "test8"
 excerpt: "A preview of my fifth post"
 ---
 

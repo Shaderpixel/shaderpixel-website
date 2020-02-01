@@ -1,6 +1,7 @@
 ---
-title: "Theming my new site - Part II"
+title: "Theming my new site - Part IIbefore"
 date: "2020-01-01"
+cover: "7.jpg"
 category: ""
 tags: ["this", "that"]
 excerpt: "A preview of my fifth post"

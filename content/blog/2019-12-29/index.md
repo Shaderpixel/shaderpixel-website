@@ -1,6 +1,7 @@
 ---
 title: "Theming my new site - Part I"
 date: "2019-12-29"
+cover: "7.jpg"
 category: ""
 tags: ["this", "that"]
 excerpt: "A preview of my fifth post"
