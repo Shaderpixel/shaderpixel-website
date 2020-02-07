@@ -7,6 +7,7 @@ import config from "../../data/SiteConfig";
 export default class PostTemplate extends React.Component {
   render() {
     const { data, pageContext } = this.props;
+    console.log(data);
     const { slug } = pageContext;
     const postNode = data.markdownRemark;
     const post = postNode.frontmatter;
@@ -35,7 +36,9 @@ export default class PostTemplate extends React.Component {
 /* eslint no-undef: "off" */
 export const pageQuery = graphql`
   query BlogPostBySlug($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(
+      fields: { slug: { eq: $slug }, collection: { eq: "posts" } } # filter by collection and slug
+    ) {
       html
       timeToRead
       excerpt
@@ -49,6 +52,7 @@ export const pageQuery = graphql`
       fields {
         slug
         date
+        collection
       }
     }
   }
