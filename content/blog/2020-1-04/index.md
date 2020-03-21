@@ -1,5 +1,5 @@
 ---
-title: "Theming my new site - Part III4"
+title: "Theming my new site - Part III"
 date: "2020-01-04"
 category: ""
 cover: "7.jpg"
