@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * modify viewport value https://www.gatsbyjs.org/docs/custom-html/
+ * Anything you render in the html.js component will not be made “live” in the client like other components. If you want to dynamically update your <head> we recommend using React Helmet
+ */
 export default function HTML(props) {
   return (
     <html {...props.htmlAttributes}>
