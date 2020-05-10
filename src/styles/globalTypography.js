@@ -146,7 +146,6 @@ export default css`
     font-style: normal;
   }
 
-  //TODO wrap up fonts and typography setup
   /*-----------------------
    Variable Font Size Interpolation
   -----------------------*/
@@ -178,10 +177,14 @@ export default css`
    FONT SETTING
   -----------------------*/
   * {
-    font-family: serif;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
 
     @supports (font-variation-settings: normal) {
-      font-family: 'InterVF', georgia, sans-serif;
+      font-family: 'InterVF', system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
       font-variation-settings: 'wght' var(--text-wght), 'slnt' var(--text-slnt);
     }
   }
@@ -192,24 +195,35 @@ export default css`
   h4,
   h5,
   h6,
-  .display-1,
-  .display-2,
-  .display-3,
-  .diplay-4,
-  .display-5 {
-    font-family: sans-serif;
+  .u-display-1,
+  .u-display-2,
+  .u-display-3,
+  .u-display-4,
+  .u-display-5 {
+    font-family: Emberly, Georgia, Cambria, 'Times New Roman', Times, serif;
 
     @supports (font-variation-settings: normal) {
-      font-family: 'Emberly VF', georgia, sans-serif;
+      font-family: 'Emberly VF', Georgia, Cambria, 'Times New Roman', Times,
+        serif;
       font-variation-settings: 'wght' var(--text-wght),
         'wdth' var(--text-header-wdth);
     }
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: ${sizingVar.ms0};
+  }
+
   pre,
   code,
-  .code {
-    font-family: 'Fira Code', monospace;
+  .u-code {
+    font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono',
+      'Courier New', monospace;
     font-variant-ligatures: contextual;
     @supports (font-variation-settings: normal) {
       font-family: 'Fira Code VF', monospace;
@@ -221,61 +235,33 @@ export default css`
    Element Font Styling
   -----------------------*/
   /* HEADERS */
-  h1,
-  .h1 {
-    font-size: ${sizingVar.ms26}em;
-  }
-
-  h2,
-  .h2 {
-    font-size: ${sizingVar.ms23}em;
-  }
-
-  h3,
-  .h3 {
+  h1 {
     font-size: ${sizingVar.ms20}em;
   }
 
-  h4,
-  .h4 {
-    font-size: ${sizingVar.ms17}em;
+  h2 {
+    font-size: ${sizingVar.ms18}em;
   }
 
-  h5,
-  .h5 {
+  h3 {
+    font-size: ${sizingVar.ms16}em;
+  }
+
+  h4 {
     font-size: ${sizingVar.ms14}em;
   }
 
-  h6,
-  .h6 {
-    font-size: ${sizingVar.ms11}em;
+  h5 {
+    font-size: ${sizingVar.ms12}em;
   }
 
-  /*
-    Display Headers
-  */
-  .display-1 {
-    font-size: ${sizingVar.ms28}em;
-  }
-  .display-2 {
-    font-size: ${sizingVar.ms25}em;
-  }
-  .display-3 {
-    font-size: ${sizingVar.ms22}em;
-  }
-  .display-4 {
-    font-size: ${sizingVar.ms19}em;
-  }
-  .display-5 {
-    font-size: ${sizingVar.ms16}em;
-  }
-  .display-6 {
-    font-size: ${sizingVar.ms13}em;
+  h6 {
+    font-size: ${sizingVar.ms10}em;
   }
 
   /* ITALICS AND STRONGS */
-  .italic,
   em {
+    font-style: italic;
     --text-slnt: -10;
   }
 
