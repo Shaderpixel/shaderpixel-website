@@ -3,11 +3,20 @@ const _ = require('lodash');
 const moment = require('moment');
 const siteConfig = require('../../data/SiteConfig');
 
+/**
+ ** Helper functions
+ */
+// helper function for hasOwnProperty
+const hasOwnProperty = Function.prototype.call.bind(
+  Object.prototype.hasOwnProperty
+);
+
 exports.createCollectionPages = (
   createPage,
   queryResult,
   templates,
-  pathPrefix
+  customPathPrefix = '',
+  dateSlug = false
 ) => {
   // * error catching
   if (queryResult.errors) {
@@ -18,6 +27,21 @@ exports.createCollectionPages = (
   const tagSet = new Set();
   const categorySet = new Set();
   const nodes = queryResult.data.allMarkdownRemark.edges; // array of markdown nodes
+  const { siteMetadata } = queryResult.data.site;
+  let pathPrefix = '';
+
+  /**
+   ** Set path prefix
+   */
+  // let pathPrefix be either customPathPrefix or if collection exists in the first node, use that, otherwise no pathPrefix needed
+  if (customPathPrefix.length > 0) {
+    pathPrefix = customPathPrefix;
+  } else if (
+    hasOwnProperty(nodes[0].node, 'fields') &&
+    hasOwnProperty(nodes[0].node.fields, 'collection')
+  ) {
+    pathPrefix = `/${nodes[0].node.fields.collection}`;
+  }
 
   /**
    ** Sort posts using MomentJS
@@ -26,8 +50,8 @@ exports.createCollectionPages = (
   // e.g. allMarkdownRemark(sort: { fields: [frontmatter___date], order: DESC })
 
   nodes.sort(({ node: nodeA }, { node: nodeB }) => {
-    const dateA = moment(nodeA.frontmatter.date, siteConfig.dateFromFormat);
-    const dateB = moment(nodeB.frontmatter.date, siteConfig.dateFromFormat);
+    const dateA = moment(nodeA.fields.date, siteConfig.dateFromFormat);
+    const dateB = moment(nodeB.fields.date, siteConfig.dateFromFormat);
 
     // return dateA.isBefore(dateB) ? 1 : -1; doesn't preserve the original position of the node if two nodes have the same date
     // instead: If a > b, returning 1 or a positive value is one and the same thing, similarly, if a < b then returning -1 or the difference is the same.
@@ -77,18 +101,35 @@ exports.createCollectionPages = (
     // get next and prev node reference
     const nextID = index + 1 < nodes.length ? index + 1 : 0; // loop back to start
     const prevID = index - 1 >= 0 ? index - 1 : nodes.length - 1; // loop back to end
-    const { node: nextNode } = nodes[nextID];
-    const { node: prevNode } = nodes[prevID];
+    const { node: nextNode } = nodes[nextID]; // node alias as nextNode
+    const { node: prevNode } = nodes[prevID]; // node alias as prevNode
 
+    const datePrefix =
+      dateSlug && node.fields.date
+        ? `/${moment(node.fields.date).format(siteConfig.dateFromFormat)}`
+        : '';
+    const prevDatePrefix =
+      dateSlug && prevNode.fields.date
+        ? `/${moment(prevNode.fields.date).format(siteConfig.dateFromFormat)}`
+        : '';
+    const nextDatePrefix =
+      dateSlug && nextNode.fields.date
+        ? `/${moment(nextNode.fields.date).format(siteConfig.dateFromFormat)}`
+        : '';
     createPage({
-      path: `${pathPrefix}${node.fields.slug}`,
+      path: `${pathPrefix}${datePrefix}${node.fields.slug}`,
       component: templates.page,
       context: {
-        slug: `${node.fields.slug}`, // no pathPrefix here since its used in page query
+        slug: node.fields.slug, // no pathPrefix here since its used as page query argument
+        collection: node.fields.collection,
         nextTitle: nextNode.frontmatter.title,
-        nextSlug: `${pathPrefix}${nextNode.fields.slug}`,
-        prevtitle: prevNode.frontmatter.title,
-        prevSlug: `${pathPrefix}${prevNode.fields.slug}`,
+        nextSlug: `${pathPrefix}${nextDatePrefix}${nextNode.fields.slug}`,
+        prevTitle: prevNode.frontmatter.title,
+        prevSlug: `${pathPrefix}${prevDatePrefix}${prevNode.fields.slug}`,
+        headingsMaxDepth:
+          siteMetadata && siteMetadata.headingsMaxDepth
+            ? siteMetadata.headingsMaxDepth
+            : null, // headingsMaxDepth is needed for post.jsx page query, not sure about other templates yet
       },
     });
   });
