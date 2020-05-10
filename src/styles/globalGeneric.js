@@ -1,12 +1,13 @@
 import { css } from '@emotion/core';
 import { sizingVar } from './variables';
 
-export default css`
+export default theme => css`
   /* Generic Box-sizing */
   *,
   *::before,
   *::after {
     box-sizing: border-box;
+    color: ${theme.fontColor};
   }
   /* Generic Attributes */
   *:not([role='dialog'])[hidden] {
@@ -23,5 +24,14 @@ export default css`
   :disabled {
     cursor: not-allowed !important;
     opacity: 0.7;
+  }
+
+  @media not all, screen and (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0s !important;
+      scroll-behavior: auto !important;
+    }
   }
 `;
