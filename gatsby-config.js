@@ -6,7 +6,7 @@
 const urlJoin = require('url-join');
 const path = require('path');
 
-const config = require(`./data/SiteConfig`);
+const config = require('./data/SiteConfig');
 
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
@@ -14,9 +14,11 @@ module.exports = {
     // When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in siteMetadata
     siteUrl: urlJoin(config.siteUrl, config.pathPrefix),
     title: config.siteTitle,
+    titleSeparator: config.siteTitleSeparator,
     titleAlt: config.siteTitleAlt,
     description: config.siteDescription,
     copyright: config.copyright,
+    headingsMaxDepth: config.tocMaxDepth,
     rssMetadata: {
       site_url: urlJoin(config.siteUrl, config.pathPrefix),
       feed_url: urlJoin(config.siteUrl, config.pathPrefix, config.siteRss),
@@ -28,48 +30,40 @@ module.exports = {
       )}/logos/logo-512.png`,
       copyright: config.copyright,
     },
+    postDefaultCategory: config.postDefaultCategoryID,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-lodash`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-twitter',
-    'gatsby-plugin-sitemap',
+    /**
+     * not needed becausestatic folder is always copied over
+     * https://www.gatsbyjs.org/docs/static-folder/
+     * */
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `assets`,
+    //     path: `${__dirname}/static/`,
+    //     ignore: [],
+    //   },
+    // },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `assets`,
-        path: `${__dirname}/static/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `posts`,
+        name: 'blog',
         path: `${__dirname}/content/blog`,
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `projects`,
+        name: 'project',
         path: `${__dirname}/content/portfolio`,
       },
     },
     {
-      resolve: `gatsby-plugin-emotion`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        // Accepts all options defined by `babel-plugin-emotion` plugin.
-      },
-    },
-    `gatsby-plugin-postcss`,
-    {
-      resolve: `gatsby-plugin-purgecss`,
-      options: {
-        develop: true,
-        tailwind: true,
+        name: 'images',
+        path: `${__dirname}/src/assets/images`,
       },
     },
     {
@@ -81,8 +75,8 @@ module.exports = {
             options: {
               maxWidth: 800,
               quality: 70,
-              tracedSvg: {
-                color: '#F00',
+              tracedSVG: {
+                color: '#476EEE',
                 turnPolicy: 'TURNPOLICY_MAJORITY',
               },
               withWebp: {
@@ -115,6 +109,28 @@ module.exports = {
         ],
       },
     },
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-lodash',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-catch-links',
+    'gatsby-plugin-twitter',
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-emotion',
+      options: {
+        // Accepts all options defined by 'babel-plugin-emotion' plugin.
+      },
+    },
+    'gatsby-plugin-postcss',
+    {
+      resolve: 'gatsby-plugin-purgecss',
+      options: {
+        printRejected: true,
+        develop: false,
+        tailwind: true,
+      },
+    },
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
@@ -137,7 +153,7 @@ module.exports = {
         background_color: config.backgroundColor,
         theme_color_in_head: false, // This will avoid adding theme-color meta tag since it can be switched
         cache_busting_mode: 'name',
-        crossOrigin: `use-credentials`, // enable CORS
+        crossOrigin: 'use-credentials', // enable CORS
         display: 'minimal-ui',
         icons: [
           {
@@ -153,7 +169,7 @@ module.exports = {
         ],
       },
     },
-    `gatsby-plugin-offline`, // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore
+    'gatsby-plugin-offline', // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore
     {
       resolve: 'gatsby-plugin-feed',
       options: {
@@ -236,6 +252,20 @@ module.exports = {
             title: `${config.siteTitle} RSS Feed`,
           },
         ],
+      },
+    },
+    'gatsby-plugin-preload-fonts',
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/,
+          options: {
+            name: 'MyIcon',
+            className: 'icon',
+            'aria-hidden': true,
+          },
+        },
       },
     },
   ],
