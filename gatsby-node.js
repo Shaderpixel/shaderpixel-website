@@ -42,7 +42,7 @@ exports.onCreateNode = ({ node, actions: { createNodeField }, getNode }) => {
      */
     createFieldCollection(node, createNodeField, fileNode);
 
-    // creating custom field: creating custom field: slug and attaching it to the node to be queried later
+    // creating custom field:  slug and attaching it to the node to be queried later
     createFieldSlug(node, createNodeField, fileNode);
 
     // creating custom field: date
@@ -62,14 +62,22 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     listingPage: path.resolve('src/templates/listing.jsx'),
   };
 
+  const projectTemplates = {};
+
   const postQueryResult = await graphql(`
     query GetAllPosts {
-      allMarkdownRemark(filter: { fields: { collection: { eq: "posts" } } }) {
+      site {
+        siteMetadata {
+          headingsMaxDepth
+        }
+      }
+      allMarkdownRemark(filter: { fields: { collection: { eq: "blog" } } }) {
         edges {
           node {
             fields {
               slug
               date
+              collection
             }
             frontmatter {
               title
@@ -83,5 +91,13 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   `);
 
-  createCollectionPages(createPage, postQueryResult, postTemplates, '/blog');
+  const projectQueryResult = {};
+
+  createCollectionPages(
+    createPage,
+    postQueryResult,
+    postTemplates,
+    undefined,
+    true
+  );
 };
