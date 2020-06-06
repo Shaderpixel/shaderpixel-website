@@ -1,9 +1,9 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import Layout from '../layout';
+import { MainLayout } from '../layout';
 import { sizingVar } from '../styles/variables';
 
 // const Paragraph = styled.p`
@@ -31,7 +31,7 @@ const Paragraph = styled.p`
 const Index = props => (
   <>
     <Helmet title={props.data.site.siteMetadata.title} />
-    <Layout>
+    <MainLayout>
       <div className="md:u-measure-short">
         <h1>Test H1 Header</h1>
         <p className="mb-em-3 leading-3">
@@ -80,7 +80,7 @@ const Index = props => (
         <pre>TEST CODE => @ &amp; r --></pre>
         <Paragraph
           primary
-          className="my-0 text-xl leading-tight italic flex justify-center items-center bg-gray-500"
+          className="my-0 text-xl leading-tight u-italic flex justify-center items-center bg-gray-500"
         >
           Hello World
         </Paragraph>
@@ -88,7 +88,7 @@ const Index = props => (
           Testing a separate paragraph
         </Paragraph>
       </div>
-    </Layout>
+    </MainLayout>
   </>
 );
 

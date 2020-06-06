@@ -56,10 +56,10 @@ exports.onCreateNode = ({ node, actions: { createNodeField }, getNode }) => {
 // TODO figure out data needed for blogs
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const postTemplates = {
-    page: path.resolve('src/templates/post.jsx'),
-    tagPage: path.resolve('src/templates/tag.jsx'),
-    categoryPage: path.resolve('src/templates/category.jsx'),
-    listingPage: path.resolve('src/templates/listing.jsx'),
+    page: path.resolve('src/templates/Post/index.js'),
+    tagPage: path.resolve('src/templates/tag.js'),
+    categoryPage: path.resolve('src/templates/category.js'),
+    listingPage: path.resolve('src/templates/listing.js'),
   };
 
   const projectTemplates = {};
