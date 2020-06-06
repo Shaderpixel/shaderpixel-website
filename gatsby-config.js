@@ -259,7 +259,7 @@ module.exports = {
       resolve: 'gatsby-plugin-react-svg',
       options: {
         rule: {
-          include: /assets/,
+          include: /\.inline\.svg$/,
           options: {
             name: 'MyIcon',
             className: 'icon',
