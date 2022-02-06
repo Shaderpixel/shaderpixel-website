@@ -2,8 +2,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import {mix} from 'polished';
-import {sizingVar} from '../styles/variables';
+import { mix } from 'polished';
+import { sizingVar } from '../styles/variables';
 
 const themes = [
   { name: 'light', icon: '☼' },
@@ -26,7 +26,7 @@ const ThemeToggler = styled.div`
     position: relative;
     flex: 1;
 
-    & > input[type="radio"] {
+    & > input[type='radio'] {
       position: absolute;
       z-index: 2;
       appearance: none;
@@ -53,7 +53,7 @@ const ThemeToggler = styled.div`
     }
 
     &__icon {
-      font-size: ${sizingVar.lengthEm5};
+      font-size: ${sizingVar.ms5}em;
     }
 
     &__icon-light {
@@ -67,7 +67,7 @@ const ThemeToggler = styled.div`
     /* TODO Hover and focus styles: drop some shadows */
 
     /* Checked label styles */
-    & > input[type="radio"]:checked + label {
+    & > input[type='radio']:checked + label {
       background-color: ${({ theme }) =>
         mix(0.2, theme.colors.$lightGray, theme.colors.$cementGray)};
 
@@ -75,19 +75,6 @@ const ThemeToggler = styled.div`
         filter: brightness(160%);
       }
     }
-  }
-
-  /* TODO remove this class once Tailwind is properly brought in */
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
   }
 `;
 
@@ -118,7 +105,7 @@ const ThemeTogglerComponent = props => {
         onChange={props.themeContext.toggleDark}
       />
       <label htmlFor={`themeToggle-${theme.name}`}>
-        <span className="sr-only">Toggle {theme.name} theme</span>
+        <span className="u-sr-only">Toggle {theme.name} theme</span>
         <span
           className={`c-themeToggle__icon-${theme.name} c-themeToggle__icon`}
         >
@@ -127,9 +114,6 @@ const ThemeTogglerComponent = props => {
       </label>
     </div>
   ));
-  return (
-  <ThemeToggler>
-    {inputItems}
-  </ThemeToggler>)
+  return <ThemeToggler>{inputItems}</ThemeToggler>;
 };
 export default ThemeTogglerComponent;
