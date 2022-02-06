@@ -4,7 +4,7 @@ import { graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { MainLayout } from '../layout';
-import { sizingVar } from '../styles/variables';
+import { screensVar, sizingVar } from '../styles/variables';
 
 // const Paragraph = styled.p`
 //   color: ${props => (props.primary ? `hotpink` : `turquoise`)};
@@ -28,76 +28,95 @@ const Paragraph = styled.p`
     props.primary ? props.theme.fontColor : props.theme.backgroundColor};
 `;
 
-const Index = props => (
-  <>
-    <Helmet title={props.data.site.siteMetadata.title} />
-    <MainLayout>
-      <div className="md:u-measure-short">
-        <h1>404</h1>
-        <p className="mb-em-3 leading-3">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
-          molestiae eum similique reprehenderit saepe ducimus nulla nostrum.
-          Quae eligendi cum accusantium magni sapiente, deleniti earum, quas,
-          sint magnam reprehenderit reiciendis.
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro nulla
-          modi officia, officiis excepturi fugit nesciunt nostrum,
-          reprehenderit, cumque pariatur quis laborum quaerat. Eveniet officiis
-          ipsa corporis, aliquid sit omnis.Voluptate sed maxime ea repudiandae
-          reprehenderit maiores assumenda ullam labore asperiores dolorem
-          quibusdam ut itaque inventore voluptatem accusantium doloremque
-          veritatis repellendus debitis, magni cum architecto aliquam odit?
-          Eveniet, dignissimos nesciunt!
-        </p>
-        <h2>Test H2 Header</h2>
-        <p>
-          <span className="bold">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat
-            dignissimos, corrupti et veritatis aliquam suscipit aliquid
-            doloremque dicta reiciendis inventore, culpa minima vero nihil,
-            repellat unde! Quos, fuga? Voluptatibus, labore.
-          </span>
-        </p>
-        <p>
-          <em>
-            Amet excepturi modi odio repudiandae. Expedita magni possimus
-            repellat? Numquam aperiam excepturi molestias commodi delectus
-            repellat! Aliquid consequuntur voluptatum nisi. Aperiam, rem
-            veritatis laborum a delectus dolor dignissimos error eius.
-          </em>
-        </p>
-        .
-        <p>
-          <span>
-            Temporibus dignissimos facere nulla corporis cum beatae, sint minus
-            illo, accusamus vel libero molestiae velit voluptas. Soluta,
-            repudiandae? Commodi harum tempora blanditiis quos dolore, aliquam
-            sed qui laboriosam ipsa earum.
-          </span>
-        </p>
-        <span className="display-1 d-block">Test Page</span>
-        <pre>TEST CODE => @ &amp; r --></pre>
-        <Paragraph
-          primary
-          className="my-0 text-xl leading-tight u-italic flex justify-center items-center bg-gray-500"
+const BigTitle = styled.h1`
+  font-size: ${sizingVar.ms27}em;
+  text-align: center;
+
+  @media (min-width: ${screensVar.sm}) {
+    font-size: ${sizingVar.ms30}em;
+  }
+
+  @media (min-width: ${screensVar.md}) {
+    font-size: ${sizingVar.ms35}em;
+  }
+`;
+
+// TODO when site grows bigger, possibly add a search functionality
+// https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-search/
+const Index = props => {
+  const { data, pageContext } = props;
+  console.log('props', props);
+  console.log('data', data);
+  console.log('pageContext', pageContext);
+  const { siteMetadata } = data.site;
+  console.log('siteMetadata', siteMetadata);
+  // Math.random is (inclusive of 0, but not 1) which works well with array index
+  const randIndex = Math.floor(Math.random() * data.allSitePage?.totalCount);
+  const randomEdge = data.allSitePage?.edges[randIndex];
+  const randomLink = randomEdge?.node?.path;
+
+  return (
+    <>
+      <Helmet
+        title={`404 ${siteMetadata.titleSeparator} ${siteMetadata.title}`}
+      >
+        <meta name="description" content="oops" />
+      </Helmet>
+      <MainLayout>
+        <BigTitle className="u-mb-0">404</BigTitle>
+        <div
+          className="md:u-measure-short md:u-mx-auto u-text-center"
+          css={theme =>
+            css`
+              margin-top: -${sizingVar.ms0}em;
+              margin-bottom: ${sizingVar.ms16}em;
+
+              @media (min-width: ${screensVar.md}) {
+                margin-top: -${sizingVar.ms12}em;
+                margin-bottom: ${sizingVar.ms22}em;
+              }
+            `
+          }
         >
-          Hello World
-        </Paragraph>
-        <Paragraph className="justify-center items-center bg-gray-500 flex">
-          Testing a separate paragraph
-        </Paragraph>
-      </div>
-    </MainLayout>
-  </>
-);
+          <span className="u-code">
+            There's nothing here. Since you are already on this site, why not
+            look around? Try a different link,{' '}
+            <Link to={randomLink}>like this one</Link>.
+          </span>
+        </div>
+      </MainLayout>
+    </>
+  );
+};
 
 // Page Query
-export const homepageQuery = graphql`
-  query {
+export const pageQuery = graphql`
+  query AllPageLinks {
     site {
       siteMetadata {
         title
+        titleSeparator
+        postDefaultCategory
+        headingsMaxDepth
+      }
+    }
+    allSitePage(
+      filter: {
+        path: {
+          regex: "/^(?!/blog/list/).*$/"
+          nin: ["/404/", "/404.html", "/dev-404-page/"]
+        }
+      }
+    ) {
+      totalCount
+      edges {
+        node {
+          path
+          context {
+            tag
+            slug
+          }
+        }
       }
     }
   }
