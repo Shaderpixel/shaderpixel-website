@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@responsive {
+  /* .u-bleed {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: 100vw;
+  } */
+  .icon {
+    /* Default prop className for svgs imported via plugin */
+    stroke: red;
+  }
+}

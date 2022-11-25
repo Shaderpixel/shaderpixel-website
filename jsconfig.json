@@ -1,0 +1,6 @@
+// for moving the pesky long imports
+{
+    "compilerOptions": {
+        "baseUrl": "."
+    }
+}
