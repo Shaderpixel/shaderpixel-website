@@ -9,21 +9,50 @@ import { graphql } from 'gatsby';
 export const blogCoverImage = graphql`
   fragment blogCoverImage560 on File {
     childImageSharp {
-      fluid(maxWidth: 560, traceSVG: { color: "#476EEE" }, quality: 50) {
+      fluid(maxWidth: 560, traceSVG: { color: "#C7BEA1" }, quality: 50) {
         ...GatsbyImageSharpFluid_withWebp_tracedSVG
       }
     }
   }
   fragment blogCoverImage640 on File {
     childImageSharp {
-      fluid(maxWidth: 640, traceSVG: { color: "#476EEE" }) {
+      fluid(maxWidth: 640, traceSVG: { color: "#C7BEA1" }) {
         ...GatsbyImageSharpFluid_withWebp_tracedSVG
       }
     }
   }
   fragment blogCoverImage800 on File {
     childImageSharp {
-      fluid(maxWidth: 800, traceSVG: { color: "#476EEE" }, quality: 75) {
+      fluid(maxWidth: 800, traceSVG: { color: "#C7BEA1" }, quality: 75) {
+        ...GatsbyImageSharpFluid_withWebp_tracedSVG
+      }
+    }
+  }
+`;
+
+export const aboutPortraitImage = graphql`
+  fragment aboutPortraitImage560 on File {
+    childImageSharp {
+      fluid(maxWidth: 560, traceSVG: { color: "#C7BEA1" }, quality: 50) {
+        ...GatsbyImageSharpFluid_withWebp_tracedSVG
+      }
+    }
+  }
+  fragment aboutPortraitImage640 on File {
+    childImageSharp {
+      fluid(maxWidth: 640, traceSVG: { color: "#C7BEA1" }) {
+        ...GatsbyImageSharpFluid_withWebp_tracedSVG
+      }
+    }
+  }
+  fragment aboutPortraitImage800 on File {
+    childImageSharp {
+      fluid(
+        maxWidth: 800
+        traceSVG: { color: "#C7BEA1" }
+        quality: 95
+        srcSetBreakpoints: [400, 560, 768, 920, 1200]
+      ) {
         ...GatsbyImageSharpFluid_withWebp_tracedSVG
       }
     }

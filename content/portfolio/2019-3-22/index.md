@@ -1,10 +1,10 @@
 ---
-title: "WDN Website"
-date: "2015-03-22"
-cover: "7.jpg"
-category: ""
-tags: ["this", "that"]
-excerpt: "An experimental page for the WDN group"
+title: 'WDN Website'
+date: '2015-03-22'
+cover: '../images/7.jpg'
+category: ''
+tags: ['this', 'that']
+excerpt: 'An experimental page for the WDN group'
 ---
 
 # Getting Started

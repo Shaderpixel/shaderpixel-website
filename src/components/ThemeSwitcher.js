@@ -2,10 +2,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { sizingVar } from '../styles/variables';
+import { sizingVar, screensVar } from '../styles/variables';
 
 // Styles
 const ThemeSwitcher = styled.div`
+  grid-area: themeToggler;
   position: relative;
   display: inline-flex;
 
@@ -38,8 +39,8 @@ const ThemeSwitcher = styled.div`
     align-items: center;
     /* padding: 0.25em 5px; 5px is the same as the left of the toggle circle */
     width: 100%;
-    min-width: ${sizingVar.ms15}em;
-    height: ${sizingVar.ms7}em;
+    min-width: ${sizingVar.ms13}em;
+    height: ${sizingVar.ms5}em;
     transition: background-color ${({ theme }) =>
       theme.transitionTime}ms ease-in-out;
     border: ${({ theme }) => `2px solid ${theme.colors.themePrimary1}`};
@@ -48,41 +49,61 @@ const ThemeSwitcher = styled.div`
     background-color: ${({ theme }) => theme.colors.themeDark1};
     box-shadow: -4px 4px 15px inset rgba(0, 0, 0, 0.4);
 
+    @media (min-width: ${screensVar.md}) {
+      min-width: ${sizingVar.ms15}em;
+      height: ${sizingVar.ms7}em;
+    }
+
     &::before,
     &::after {
-      font-size: ${sizingVar.ms2}em;
+      font-size: ${sizingVar['ms-2']}em;
       z-index: 2;
       cursor: pointer;
+
+      @media (min-width: ${screensVar.md}) {
+        font-size: ${sizingVar.ms2}em;
+      }
     }
 
     &::before {
       content: "\\263C";
       position: relative;
-      left: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms5}rem /2);;
-      transform: translate3d(-50%,0,0);
-      color: ${({ theme }) => theme.headerFooterColor};
+      left: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms2}rem /2);
+      transform: translate3d(-51%,0,0);
+      color: ${({ theme }) => theme.footerBackgroundColor};
+
+      @media (min-width: ${screensVar.md}) {
+        left: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms5}rem /2);
+      }
     }
 
     &::after {
       content: "\\263E";
       position: absolute;
       transform: translate3d(50%, 0, 0) rotate3d(0, 0, 1, 35deg);
-      right: calc(${sizingVar['ms-22']}rem + ${
-  sizingVar.ms5
-}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
+      right: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms2}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
       color: ${({ theme }) => theme.colors.themePrimary1};
+
+      @media (min-width: ${screensVar.md}) {
+        right: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms5}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
+      }
     }
 
     .theme-switch-toggle {
       position: absolute;
       left: ${sizingVar['ms-22']}em;
-      width: ${sizingVar.ms5}em;
-      height: ${sizingVar.ms5}em;
+      width: ${sizingVar.ms2}em;
+      height: ${sizingVar.ms2}em;
       content: "";
       border-radius: 50%;
       background-color: ${({ theme }) => theme.colors.themePrimary1};
       transition: transform 200ms, background-color 200ms;
       box-shadow: -3px 3px 8px rgba(0, 0, 0, 0.4);
+
+      @media (min-width: ${screensVar.md}) {
+        width: ${sizingVar.ms5}em;
+        height: ${sizingVar.ms5}em;
+      }
     }
   }
 
@@ -95,16 +116,18 @@ const ThemeSwitcher = styled.div`
     }
 
     &::after {
-      color:  ${({ theme }) => theme.headerFooterColor};
+      color:  ${({ theme }) => theme.footerBackgroundColor};
     }
 
     .theme-switch-toggle {
       // prettier-ignore
-      transform: translate3d(calc(4.209em - ${
-        sizingVar['ms-22']
-      }em - 2px - 100%  - 2px - ${
-  sizingVar['ms-22']
+      transform: translate3d(calc(${sizingVar.ms13}em - ${sizingVar['ms-22']}em - 2px - 100%  - 2px - ${sizingVar['ms-22']
 }em),0,0); /* move dot the entire length of the toggle - the starting left position - left border width - move it back by the entire width of the dot - right border width - same amount starting from right */
+
+    @media (min-width: ${screensVar.md}) {
+        transform: translate3d(calc(${sizingVar.ms15}em - ${sizingVar['ms-22']}em - 2px - 100%  - 2px - ${sizingVar['ms-22']
+}em),0,0); /* move dot the entire length of the toggle - the starting left position - left border width - move it back by the entire width of the dot - right border width - same amount starting from right */
+      }
     }
   }
 `;

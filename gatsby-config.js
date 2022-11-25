@@ -13,6 +13,8 @@ module.exports = {
   siteMetadata: {
     // When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in siteMetadata
     siteUrl: urlJoin(config.siteUrl, config.pathPrefix),
+    siteNav: config.siteNavLinks,
+    userLinks: config.userLinks,
     title: config.siteTitle,
     titleSeparator: config.siteTitleSeparator,
     titleAlt: config.siteTitleAlt,
@@ -34,7 +36,7 @@ module.exports = {
   },
   plugins: [
     /**
-     * not needed becausestatic folder is always copied over
+     * not needed because static folder is always copied over
      * https://www.gatsbyjs.org/docs/static-folder/
      * */
     // {
@@ -55,6 +57,13 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'reading-list',
+        path: `${__dirname}/content/reading-list`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'project',
         path: `${__dirname}/content/portfolio`,
       },
@@ -63,7 +72,7 @@ module.exports = {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'images',
-        path: `${__dirname}/src/assets/images`,
+        path: `${__dirname}/static/images`,
       },
     },
     {
@@ -73,21 +82,29 @@ module.exports = {
           {
             resolve: 'gatsby-remark-images',
             options: {
+              // https://github.com/gatsbyjs/gatsby/commit/fa9fb9782c58811fcfb199ca32985a2ba39ffaac
               maxWidth: 800,
               quality: 70,
               tracedSVG: {
-                color: '#476EEE',
+                color: '#C7BEA1',
                 turnPolicy: 'TURNPOLICY_MAJORITY',
               },
               withWebp: {
                 quality: 80,
               },
               showCaption: ['title'],
+              wrapperStyle: 'margin-left: unset; margin-right:unset;',
             },
           },
           'gatsby-remark-responsive-iframe',
           'gatsby-remark-copy-linked-files',
-          'gatsby-remark-autolink-headers',
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              className: `header-anchor`,
+              offsetY: `106`, // not functional v2, needs upgrade to latest
+            },
+          },
           {
             resolve: 'gatsby-remark-prismjs',
             options: {
@@ -155,18 +172,7 @@ module.exports = {
         cache_busting_mode: 'name',
         crossOrigin: 'use-credentials', // enable CORS
         display: 'minimal-ui',
-        icons: [
-          {
-            src: '/logos/logo-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/logos/logo-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
+        icon: 'static/logos/logo.svg',
       },
     },
     'gatsby-plugin-offline', // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore

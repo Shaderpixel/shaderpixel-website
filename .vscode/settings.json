@@ -6,5 +6,27 @@
     "titleBar.activeBackground": "#ffc107",
     "titleBar.inactiveBackground": "#ffc107"
   },
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "colorInfo.languages": [
+    {
+      "selector": "css",
+      "colors": "css"
+    },
+    {
+      "selector": "sass",
+      "colors": "css"
+    },
+    {
+      "selector": "scss",
+      "colors": "css"
+    },
+    {
+      "selector": "less",
+      "colors": "css"
+    },
+    {
+      "selector": "javascript",
+      "colors": "css"
+    }
+  ]
 }

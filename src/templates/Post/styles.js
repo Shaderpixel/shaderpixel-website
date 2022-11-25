@@ -1,8 +1,9 @@
 import { css, keyframes } from '@emotion/core';
 import styled from '@emotion/styled';
+import { Link } from 'gatsby';
 import { sizingVar, screensVar } from '../../styles/variables';
 import { ThemeContext } from '../../context/ThemeContext';
-import bulletIcon from '../../assets/icons/bullet.svg';
+import bulletIcon from '../../../static/icons/bullet.svg';
 
 /**
  ** EMOTION CLASSES
@@ -171,11 +172,14 @@ export const BlogArticle = styled.article`
     grid-template-columns: 1fr 1fr;
   }
   @media (min-width: ${screensVar.lg}) {
-    display: grid;
     grid-template-areas: 'blog-hero-area blog-hero-area' 'blog-content-area blog-sidebar-1' 'blog-content-area blog-sidebar-2' 'blog-content-area blog-sidebar-3';
     grid-template-rows: auto 1fr min-content min-content;
     grid-template-columns: 1fr minmax(min-content, 12em);
     grid-column-gap: ${sizingVar.ms0}em;
+  }
+  @media (min-width: ${screensVar.lg}) {
+    grid-template-columns: max-content minmax(min-content, max-content);
+    grid-column-gap: ${sizingVar.ms8}em;
   }
 `;
 export const BlogHero = styled.section`
@@ -184,12 +188,19 @@ export const BlogHero = styled.section`
 `;
 export const BlogFrontmatter = styled.div`
   display: grid;
+  margin-top: ${sizingVar.ms11}em;
   margin-bottom: ${sizingVar.ms10}em;
   grid-template-areas:
     'blog-date blog-category'
     'blog-date blog-title'
     'blog-date blog-tags';
   grid-template-columns: ${sizingVar.ms10}em 1fr;
+
+  @media (min-width: ${screensVar.md}) {
+    margin-top: ${sizingVar.ms14}em;
+    margin-bottom: ${sizingVar.ms14}em;
+    grid-column-gap: ${sizingVar.ms0}em;
+  }
 `;
 export const BlogTitle = styled.h1`
   grid-area: blog-title;
@@ -209,15 +220,27 @@ export const BlogDate = styled.time`
 export const BlogDecorativeRibbon = styled.div`
   grid-area: blog-date;
   background-color: ${({ theme: { colors } }) => colors.themePrimary1};
-  height: 80%;
-  width: 44px;
+  height: 140%;
+  top: -46%;
+  position: relative;
+  width: 38px;
+
+  @media (min-width: ${screensVar.md}) {
+    height: 160%;
+    top: -66%;
+    width: 44px;
+  }
 `;
 export const BlogDecorativeRibbonTail = styled.div`
   grid-area: blog-date;
   position: relative;
   bottom: -80%;
   height: 28%;
-  width: 44px;
+  width: 38px;
+
+  @media (min-width: ${screensVar.md}) {
+    width: 44px;
+  }
 
   & > div {
     position: absolute;
@@ -236,14 +259,26 @@ export const BlogDecorativeRibbonTail = styled.div`
         top: 83%;
         background: none;
         border-top: 0px solid transparent;
-        border-right: 22px solid
+        border-right: 19px solid
           ${({ theme: { colors } }) => colors.themePrimary1};
         border-bottom: 0.8em solid transparent;
-        border-left: 22px solid
+        border-left: 19px solid
           ${({ theme: { colors } }) => colors.themePrimary1};
         height: 0;
         width: 0;
-        filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.4));
+        filter: drop-shadow(0 0px 1px rgba(0, 0, 0, 0.125))
+          drop-shadow(0 1px 0px rgba(0, 0, 0, 0.12))
+          drop-shadow(0 2px 0px rgba(0, 0, 0, 0.1175))
+          drop-shadow(0 3px 0px rgba(0, 0, 0, 0.115))
+          drop-shadow(0 4px 1px rgba(0, 0, 0, 0.1))
+          drop-shadow(0 5px 1px rgba(0, 0, 0, 0.08))
+          drop-shadow(0 6px 2px rgba(0, 0, 0, 0.06))
+          drop-shadow(0 7px 1px rgba(0, 0, 0, 0.04));
+
+        @media (min-width: ${screensVar.md}) {
+          border-right-width: 22px;
+          border-left-width: 22px;
+        }
       }
     }
 
@@ -257,13 +292,17 @@ export const BlogDecorativeRibbonTail = styled.div`
       transform-origin: 50% 0;
       animation: ${flappingRibbon} 14s cubic-bezier(0.8, 0.02, 0.51, 0.91) 250ms
         infinite;
+      perspective: 1000px;
     }
   }
 `;
 export const BlogCategory = styled.a`
   grid-area: blog-category;
-  font-size: ${sizingVar.ms4}em;
+  font-size: ${sizingVar.ms1}em;
   --text-wght: 400;
+  @media (min-width: ${screensVar.md}) {
+    font-size: ${sizingVar.ms4}em;
+  }
 `;
 export const BlogNavContainer = styled.section`
   /* grid-area: ${({ toc }) => (toc ? 'blog-sidebar-1' : 'auto')}; */
@@ -276,11 +315,13 @@ export const BlogNavContainerContent = styled.div`
 export const BlogContent = styled.section`
   grid-area: blog-content-area;
 `;
-export const PrevPostLink = styled.a`
+// styled Gatsby Link
+export const PrevPostLink = styled(props => <Link {...props} />)`
   /* grid-area: ${({ toc }) => (toc ? 'blog-sidebar-2' : 'blog-sidebar-1')}; */
   grid-area: blog-sidebar-2;
 `;
-export const NextPostLink = styled.a`
+// styled Gatsby Link
+export const NextPostLink = styled(props => <Link {...props} />)`
   grid-area: blog-sidebar-3;
   @media (min-width: ${screensVar.sm}) {
     text-align: right;

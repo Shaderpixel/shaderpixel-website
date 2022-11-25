@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
 import { sizingVar, screensVar } from '../../styles/variables';
-import backgroundClipImage from '../../assets/images/footer/Hawaii.min.jpg'; // TODO change it to use gatsby-background-image plugin
+import backgroundClipImage from '../../../static/images/footer/Hawaii.min.jpg'; // TODO change it to use gatsby-background-image plugin
 // TODO https://www.gatsbyjs.org/packages/gatsby-background-image/
 
 /**
@@ -10,7 +10,7 @@ import backgroundClipImage from '../../assets/images/footer/Hawaii.min.jpg'; // 
  */
 const footer = theme => css`
   position: relative;
-  padding-top: ${sizingVar.ms23}em;
+  padding-top: clamp(${sizingVar.ms23}em, 9.7vw, ${sizingVar.ms25}em);
   overflow: hidden;
 `;
 
@@ -75,7 +75,7 @@ export const FooterContainer = styled.div`
 `;
 
 export const FooterInnerContainer = styled.div`
-  background-color: ${({ theme }) => theme.headerFooterColor};
+  background-color: ${({ theme }) => theme.footerBackgroundColor};
   padding: 0 5% 5em;
   top: ${sizingVar['ms-7']}em;
   transform: skewY(-6deg);
@@ -88,7 +88,7 @@ export const FooterInnerContainer = styled.div`
     padding: 0 5% calc(7em - 5vw);
   }
   @media (min-width: ${screensVar.xl}) {
-    padding: 0 5% calc(7em - 4vw);
+    padding: 0 5% clamp(calc(7em - 4vw), 5.5vw, 6em);
   }
 
   &::before {
@@ -125,9 +125,9 @@ export const FooterInnerContainer = styled.div`
     content: '';
     position: absolute;
     z-index: -1;
-    height: 50%;
+    height: 58%;
     width: 100%;
-    background-color: ${({ theme }) => theme.headerFooterColor};
+    background-color: ${({ theme }) => theme.footerBackgroundColor};
   }
 `;
 
@@ -150,7 +150,7 @@ export const FooterContent = styled.div`
 `;
 
 export const FooterBrandingR = styled.div`
-  color: ${({ theme }) => theme.headerFooterColor};
+  color: ${({ theme }) => theme.footerBackgroundColor};
   top: calc(-0.571em - 5vw);
   right: calc(1.6em + 5vw);
   transform: translateX(50%);
@@ -159,7 +159,7 @@ export const FooterBrandingR = styled.div`
     if (theme.mode === 'dark') {
       return `
             background-image: url(${backgroundClipImage});
-            background-color: ${theme.headerFooterColor};
+            background-color: ${theme.footerBackgroundColor};
             background-size: cover;
             background-position: 45% 0%;
             color: ${theme.colors.themePrimary1};
@@ -232,7 +232,7 @@ export const FooterLinksGrid = styled.ul`
     }
 
     .logo-foreground {
-      fill: ${({ theme }) => theme.headerFooterColor};
+      fill: ${({ theme }) => theme.footerBackgroundColor};
     }
   }
   .githubIcon {

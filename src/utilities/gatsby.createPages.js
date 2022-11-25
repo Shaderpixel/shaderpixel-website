@@ -1,5 +1,5 @@
 const path = require('path');
-const _ = require('lodash');
+const kebabCase = require('lodash.kebabcase');
 const moment = require('moment');
 const siteConfig = require('../../data/SiteConfig');
 
@@ -11,8 +11,9 @@ const hasOwnProperty = Function.prototype.call.bind(
   Object.prototype.hasOwnProperty
 );
 
-exports.createCollectionPages = (
+exports.createCollectionPages = async (
   createPage,
+  graphql,
   queryResult,
   templates,
   customPathPrefix = '',
@@ -29,6 +30,7 @@ exports.createCollectionPages = (
   const nodes = queryResult.data.allMarkdownRemark.edges; // array of markdown nodes
   const { siteMetadata } = queryResult.data.site;
   let pathPrefix = '';
+  let postCollection = '';
 
   /**
    ** Set path prefix
@@ -40,7 +42,8 @@ exports.createCollectionPages = (
     hasOwnProperty(nodes[0].node, 'fields') &&
     hasOwnProperty(nodes[0].node.fields, 'collection')
   ) {
-    pathPrefix = `/${nodes[0].node.fields.collection}`;
+    postCollection = nodes[0].node.fields.collection;
+    pathPrefix = `/${postCollection}`;
   }
 
   /**
@@ -64,30 +67,6 @@ exports.createCollectionPages = (
   });
 
   /**
-   ** Create Listing Page
-   */
-
-  // pagination
-  const { postsPerPage } = siteConfig;
-  const pageCount = Math.ceil(nodes.length / postsPerPage);
-
-  [...Array(pageCount)].forEach((_val, pageNum) => {
-    createPage({
-      path:
-        pageNum === 0
-          ? `${pathPrefix}/list`
-          : `${pathPrefix}/list/${pageNum + 1}`,
-      component: templates.listingPage,
-      context: {
-        limit: postsPerPage,
-        skip: pageNum * postsPerPage,
-        pageCount,
-        currentPageNum: pageNum + 1,
-      },
-    });
-  });
-
-  /**
    ** Create individual pages
    */
   nodes.forEach(({ node }, index) => {
@@ -96,7 +75,11 @@ exports.createCollectionPages = (
       node.frontmatter.tags.forEach(tag => tagSet.add(tag));
 
     // Generate a unique list of categories
-    if (node.frontmatter.category) categorySet.add(node.frontmatter.category);
+    if (node.frontmatter.category) {
+      categorySet.add(node.frontmatter.category);
+    } else {
+      categorySet.add(siteConfig.postDefaultCategoryID);
+    }
 
     // get next and prev node reference
     const nextID = index + 1 < nodes.length ? index + 1 : 0; // loop back to start
@@ -135,26 +118,166 @@ exports.createCollectionPages = (
   });
 
   /**
-   ** Create tag pages
+   ** Create Listing Page
    */
-  tagSet.forEach(tag => {
+
+  // pagination
+  const { postsPerPage } = siteConfig;
+  const pageCount = Math.ceil(nodes.length / postsPerPage);
+
+  [...Array(pageCount)].forEach((_val, pageNum) => {
     createPage({
-      path: `${pathPrefix}/tags/${_.kebabCase(tag)}`,
-      component: templates.tagPage,
-      context: { tag },
+      path: pageNum === 0 ? `${pathPrefix}/` : `${pathPrefix}/${pageNum + 1}`,
+      component: templates.listingPage,
+      context: {
+        limit: postsPerPage,
+        skip: pageNum * postsPerPage,
+        pageCount,
+        currentPageNum: pageNum + 1,
+        pathPrefix,
+        collection: postCollection,
+      },
     });
   });
 
   /**
+   ** Create tag pages
+   */
+  // can't use async with forEach
+  // eslint-disable-next-line no-restricted-syntax
+  for (const tag of tagSet) {
+    // to create pagination for each tag we are going to query for number of pages and then create pages for each tag
+
+    const tagPathPrefix = `${pathPrefix}/tags`;
+    const kebabTag = kebabCase(tag);
+
+    // get post nodes by tag
+    // TODO remove unneeded frontmatter stuff in query
+    // eslint-disable-next-line no-await-in-loop
+    const tagQueryResult = await graphql(`query GetAllPostsWithTag {
+        allMarkdownRemark(
+          sort: { fields: frontmatter___date, order: DESC }
+          filter: { fields: { tags: { eq: "${tag}" }, collection: { eq: "${postCollection}" } } }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+                date
+                collection
+              }
+              frontmatter {
+                title
+                date
+                tags
+                category
+              }
+            }
+          }
+        }
+      }`);
+    const tagNodes = tagQueryResult.data.allMarkdownRemark.edges; // array of markdown nodes
+
+    const tagPageCount = Math.ceil(tagNodes.length / postsPerPage);
+
+    // TODO sort nodes using momentJS?
+
+    [...Array(tagPageCount)].forEach((_val, pageNum) => {
+      createPage({
+        path:
+          pageNum === 0
+            ? `${tagPathPrefix}/${kebabTag}`
+            : `${tagPathPrefix}/${kebabTag}/${pageNum + 1}`,
+        component: templates.tagPage,
+        context: {
+          limit: postsPerPage,
+          skip: pageNum * postsPerPage,
+          pageCount: tagPageCount,
+          currentPageNum: pageNum + 1,
+          tagPathPrefix,
+          pathPrefix,
+          collection: postCollection,
+          kebabTag,
+          tag,
+        },
+      });
+    });
+  }
+
+  /**
    ** Create category pages
    */
-  categorySet.forEach(category => {
-    createPage({
-      path: `${pathPrefix}/categories/${_.kebabCase(category)}`,
-      component: templates.categoryPage,
-      context: { category },
+  // can't use async with forEach
+  // eslint-disable-next-line no-restricted-syntax
+  for (const category of categorySet) {
+    // to create pagination for each category we are going to query for number of pages and then create pages for each category
+    const categoryPathPrefix = `${pathPrefix}/categories`;
+    const kebabCategory = kebabCase(category);
+    // if category = postDefaultCategoryID means the frontmatter category is not populated
+    const categoryFilterText =
+      category === siteConfig.postDefaultCategoryID ? '' : category;
+
+    // get post nodes by category
+    // TODO remove unneeded frontmatter stuff in query
+    // eslint-disable-next-line no-await-in-loop
+    const categoryQueryResult = await graphql(`query GetAllPostsWithCategory {
+        allMarkdownRemark(
+          sort: { fields: frontmatter___date, order: DESC }
+          filter: { fields: { category: { eq: "${categoryFilterText}" }, collection: { eq: "${postCollection}" } } }
+        ) {
+          edges {
+            node {
+              fields {
+                slug
+                date
+                collection
+              }
+              frontmatter {
+                title
+                date
+                category
+              }
+            }
+          }
+        }
+      }`);
+    const categoryNodes = categoryQueryResult.data.allMarkdownRemark.edges; // array of markdown nodes
+
+    const categoryPageCount = Math.ceil(categoryNodes.length / postsPerPage);
+
+    // TODO sort nodes using momentJS?
+
+    [...Array(categoryPageCount)].forEach((_val, pageNum) => {
+      createPage({
+        path:
+          pageNum === 0
+            ? `${categoryPathPrefix}/${kebabCategory}`
+            : `${categoryPathPrefix}/${kebabCategory}/${pageNum + 1}`,
+        component: templates.categoryPage,
+        context: {
+          limit: postsPerPage,
+          skip: pageNum * postsPerPage,
+          pageCount: categoryPageCount,
+          currentPageNum: pageNum + 1,
+          pathPrefix,
+          categoryPathPrefix,
+          collection: postCollection,
+          pageQueryCategoryFilter:
+            category === siteConfig.postDefaultCategoryID ? '' : category,
+          category,
+          kebabCategory,
+        },
+      });
     });
-  });
+  }
+  // categorySet.forEach(category => {
+  //   // todo don't I need pagination for these pages as well?
+  //   createPage({
+  //     path: `${pathPrefix}/categories/${kebabCase(category)}`,
+  //     component: templates.categoryPage,
+  //     context: { category },
+  //   });
+  // });
 };
 
 // current page queries are set up to query for content based off on slug stored in node.fields.slug which doesn't have a prefix

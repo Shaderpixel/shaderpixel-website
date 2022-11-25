@@ -1,12 +1,13 @@
 ---
-title: "Setting up my new site in Gatsby - Part II"
-date: "2019-03-23"
-cover: "7.jpg"
-category: ""
+title: 'Setting up my new site in Gatsby - Part II'
+date: '2019-03-23'
+cover: './images/7.jpg'
+category: ''
 tags:
   - cheese
   - jabbawocky
-excerpt: "A preview of my second post"
+excerpt: 'A preview of my second post'
+summary: 'blog summary...TLDR'
 ---
 
 # Getting Started with a Starter Recipe

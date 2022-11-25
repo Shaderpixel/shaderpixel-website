@@ -12,6 +12,7 @@
     width: 100vw;
   } */
   .icon {
+    /* Default prop className for svgs imported via plugin */
     stroke: red;
   }
 }

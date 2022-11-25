@@ -1,11 +1,12 @@
 ---
-title: "Theming my new site - Part IV"
-date: "2020-01-04"
-cover: "7.jpg"
-category: ""
-tags: ["this", "that"]
-slug: "test10"
-excerpt: "A preview of my fifth post"
+title: 'Theming my new site - Part IV'
+date: '2020-01-04'
+cover: './images/7.jpg'
+category: ''
+tags: ['this', 'that']
+slug: 'test1'
+excerpt: 'A preview of my fifth post'
+summary: 'blog summary...TLDR'
 ---
 
 # Autoprefixer setup

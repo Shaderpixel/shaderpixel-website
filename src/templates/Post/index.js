@@ -1,10 +1,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { graphql } from 'gatsby';
-import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css } from '@emotion/core';
 import moment from 'moment';
-import _ from 'lodash';
+import kebabCase from 'lodash.kebabcase';
 import Img from 'gatsby-image';
 import { Pills } from '../../components/Pills';
 import { MainLayout } from '../../layout';
@@ -12,11 +11,11 @@ import config from '../../../data/SiteConfig';
 import { sizingVar, screensVar } from '../../styles/variables';
 import { ThemeContext } from '../../context/ThemeContext';
 // SVG imported as component via gatsby-plugin-react-svg
-import TagIcon from '../../assets/icons/tag.inline.svg';
-import LeftChevron from '../../assets/icons/chevron_left.inline.svg';
-import RightChevron from '../../assets/icons/chevron_right.inline.svg';
-import ArrowIconLeft from '../../assets/icons/arrow_left.inline.svg';
-import ArrowIconRight from '../../assets/icons/arrow_right.inline.svg';
+import TagIcon from '../../../static/icons/tag.inline.svg';
+import LeftChevron from '../../../static/icons/chevron_left.min.inline.svg';
+import RightChevron from '../../../static/icons/chevron_right.min.inline.svg';
+import ArrowIconLeft from '../../../static/icons/arrow_left.inline.svg';
+import ArrowIconRight from '../../../static/icons/arrow_right.inline.svg';
 import postStyles, {
   BlogArticle,
   BlogHero,
@@ -32,7 +31,6 @@ import postStyles, {
   PrevPostLink,
   NextPostLink,
 } from './styles';
-// TODO move styles out
 
 export default class PostTemplate extends React.Component {
   static contextType = ThemeContext; // using ThemeContext for one off theme related matters. Could have also added a key in theme file to check which theme version
@@ -50,7 +48,7 @@ export default class PostTemplate extends React.Component {
       this.tabletMq = window.matchMedia(
         `(min-width: ${screensVar.sm}) and (max-width: ${screensVar.lg}`
       );
-      this.tabletMq.addListener(this.handleWidthChange);
+      this.tabletMq.addEventListener('change', this.handleWidthChange);
 
       // check browser width once on page load
       this.handleWidthChange(this.tabletMq);
@@ -99,10 +97,10 @@ export default class PostTemplate extends React.Component {
     console.log('showtoc', visibleTOC);
     console.log('tablet', tablet);
     const { slug } = pageContext;
-    const { siteMetadata } = data.site;
-    console.log('siteMetadata', siteMetadata);
+    const { title: siteTitle, titleSeparator } = data.site.siteMetadata;
     const postNode = data.markdownRemark;
     const postFrontmatter = postNode.frontmatter;
+
     if (!postFrontmatter.id) {
       postFrontmatter.id = slug;
     }
@@ -113,12 +111,12 @@ export default class PostTemplate extends React.Component {
     return (
       <>
         <Helmet
-          title={`${postFrontmatter.title} ${siteMetadata.titleSeparator} ${siteMetadata.title}`}
+          title={`${postFrontmatter.title} ${titleSeparator} ${siteTitle}`}
         />
-        <MainLayout className="u-px-5% lg:u-pl-2.5% lg:u-pr-1.25% xl:u-px-5%">
+        <MainLayout className="u-px-5% lg:u-pl-2.5% lg:u-pr-1.25% xl:u-px-5% lg:u-mb-10%">
           <BlogArticle>
             <BlogHero>
-              <BlogFrontmatter className="u-measure-short">
+              <BlogFrontmatter className="u-measure-long">
                 <BlogTitle>{postFrontmatter.title}</BlogTitle>
                 <BlogDate
                   dateTime={postNode.fields.date}
@@ -141,7 +139,7 @@ export default class PostTemplate extends React.Component {
                   </div>
                 </BlogDecorativeRibbonTail>
                 <BlogCategory
-                  href={`/${pageContext.collection}/categories/${_.kebabCase(
+                  href={`/${pageContext.collection}/categories/${kebabCase(
                     postFrontmatter.category
                       ? postFrontmatter.category
                       : postFrontmatter.category_id
@@ -166,15 +164,16 @@ export default class PostTemplate extends React.Component {
                     <Pills
                       css={postStyles.blogTags}
                       data={postFrontmatter.tags}
+                      ariaLabel="Blog tags"
                       link={postFrontmatter.tags.map(
                         tag =>
-                          `/${pageContext.collection}/tags/${_.kebabCase(tag)}`
+                          `/${pageContext.collection}/tags/${kebabCase(tag)}`
                       )}
                     />
                   </>
                 ) : null}
               </BlogFrontmatter>
-              <figure className="u-measure-long">
+              <figure className="u-measure-long u-mb-6 md:u-mb-8">
                 <Img
                   fluid={postFrontmatter.cover.childImageSharp.fluid}
                   alt={postFrontmatter.coverAlt}
@@ -203,12 +202,11 @@ export default class PostTemplate extends React.Component {
               </BlogNavContainer>
             ) : null}
             <BlogContent
-              className="u-measure-long lg:u-mb-0"
+              className="u-measure-long lg:u-measure-short xl:u-measure-long lg:u-mb-0"
               dangerouslySetInnerHTML={{ __html: postNode.html }}
             />
             <PrevPostLink
-              href={pageContext.prevSlug}
-              toc={visibleTOC}
+              to={pageContext.prevSlug}
               css={postStyles.blogPrevNext}
             >
               <LeftChevron
@@ -241,8 +239,7 @@ export default class PostTemplate extends React.Component {
               </div>
             </PrevPostLink>
             <NextPostLink
-              href={pageContext.nextSlug}
-              toc={visibleTOC}
+              to={pageContext.nextSlug}
               css={postStyles.blogPrevNext}
             >
               {!tablet ? (
@@ -324,6 +321,7 @@ export const pageQuery = graphql`
         date
         category
         tags
+        summary
       }
       fields {
         slug

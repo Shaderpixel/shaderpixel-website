@@ -4,12 +4,12 @@ import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
 import { Link } from 'gatsby';
 import { useTheme } from '../../context/ThemeContext';
-import IconGithub from '../../assets/icons/icon-github.compressed.inline.svg';
-import IconEmail from '../../assets/icons/icon-mail.compressed.inline.svg';
-import IconGitlab from '../../assets/icons/icon-gitlab.compressed.inline.svg';
-import IconLinkedin from '../../assets/icons/icon-linkedin.compressed.inline.svg';
-import IconCodepen from '../../assets/icons/icon-codepen.compressed.inline.svg';
-import IconTwitter from '../../assets/icons/icon-twitter.compressed.inline.svg';
+import IconGithub from '../../../static/icons/icon-github.compressed.inline.svg';
+import IconEmail from '../../../static/icons/icon-mail.compressed.inline.svg';
+import IconGitlab from '../../../static/icons/icon-gitlab.compressed.inline.svg';
+import IconLinkedin from '../../../static/icons/icon-linkedin.compressed.inline.svg';
+import IconCodepen from '../../../static/icons/icon-codepen.compressed.inline.svg';
+import IconTwitter from '../../../static/icons/icon-twitter.compressed.inline.svg';
 import footerStyles, {
   FooterContainer,
   FooterInnerContainer,

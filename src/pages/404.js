@@ -6,31 +6,10 @@ import { css } from '@emotion/core';
 import { MainLayout } from '../layout';
 import { screensVar, sizingVar } from '../styles/variables';
 
-// const Paragraph = styled.p`
-//   color: ${props => (props.primary ? `hotpink` : `turquoise`)};
-//   /* tw`flex justify-center items-center bg-gray-500 text-md-fluid`; */
-// `;
-
-// const Paragraph = tw.p`
-//   flex justify-center items-center bg-gray-500
-//   color: ${props => (props.primary ? "hotpink" : "turquoise")}
-// `;
-
-// const Paragraph = tw.p`
-//   flex justify-center items-center bg-gray-500
-//   props => ({
-//     color: props.primary ? 'hotpink' : 'turquoise'
-//   })
-// `;
-
-const Paragraph = styled.p`
-  color: ${props =>
-    props.primary ? props.theme.fontColor : props.theme.backgroundColor};
-`;
-
 const BigTitle = styled.h1`
   font-size: ${sizingVar.ms27}em;
   text-align: center;
+  margin-top: ${sizingVar.ms13}rem;
 
   @media (min-width: ${screensVar.sm}) {
     font-size: ${sizingVar.ms30}em;
@@ -38,6 +17,11 @@ const BigTitle = styled.h1`
 
   @media (min-width: ${screensVar.md}) {
     font-size: ${sizingVar.ms35}em;
+    margin-top: ${sizingVar.ms16}rem;
+  }
+
+  @media (min-width: ${screensVar.lg}) {
+    margin-top: ${sizingVar.ms18}rem;
   }
 `;
 

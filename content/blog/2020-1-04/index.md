@@ -1,11 +1,12 @@
 ---
-title: "Theming my new site - Part III"
-date: "2020-01-04"
-category: ""
-cover: "7.jpg"
-tags: ["this", "that"]
-slug: "test9"
-excerpt: "A preview of my fifth post"
+title: 'Theming my new site - Part III'
+date: '2020-01-04'
+category: ''
+cover: './images/7.jpg'
+tags: ['this', 'that']
+slug: 'test9'
+excerpt: 'A preview of my fifth post'
+summary: 'blog summary...TLDR'
 ---
 
 # Reverting Tailwind CSS setup

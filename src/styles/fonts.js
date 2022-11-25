@@ -8,6 +8,10 @@ import interBoldItalic from './fonts/Inter-3.12/Inter (Web)/Inter-BoldItalic.wof
 import interVFRoman from './fonts/Inter-3.12/Inter (Web)/Inter-roman.var.woff2';
 import interVFItalic from './fonts/Inter-3.12/Inter (Web)/Inter-italic.var.woff2';
 import interVF from './fonts/Inter-3.12/Inter (Web)/Inter.var.woff2';
+import emberlyRegular from './fonts/Emberly v1.3/WOFF2/Emberly-Regular.woff2';
+import emberlyRegularItalic from './fonts/Emberly v1.3/WOFF2/Emberly-RegularItalic.woff2';
+import emberlyMedium from './fonts/Emberly v1.3/WOFF2/Emberly-Medium.woff2';
+import emberlyMediumItalic from './fonts/Emberly v1.3/WOFF2/Emberly-MediumItalic.woff2';
 import emberlyBold from './fonts/Emberly v1.3/WOFF2/Emberly-Bold.woff2';
 import emberlyBoldItalic from './fonts/Emberly v1.3/WOFF2/Emberly-BoldItalic.woff2';
 import emberlyExtraBold from './fonts/Emberly v1.3/WOFF2/Emberly-ExtraBold.woff2';
@@ -31,6 +35,10 @@ export default {
   interVF,
   interVFRoman,
   interVFItalic,
+  emberlyRegular,
+  emberlyRegularItalic,
+  emberlyMedium,
+  emberlyMediumItalic,
   emberlyBold,
   emberlyBoldItalic,
   emberlyExtraBold,

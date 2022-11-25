@@ -7,11 +7,19 @@ export default theme => css`
   *::before,
   *::after {
     box-sizing: border-box;
-    color: ${theme.fontColor};
   }
   /* Generic Attributes */
   *:not([role='dialog'])[hidden] {
     display: none !important;
+  }
+
+  body {
+    color: ${theme.fontColor};
+  }
+
+  ::selection {
+    color: ${theme.highlightFgColor};
+    background-color: ${theme.highlightBgColor};
   }
 
   /* Do not set dialogs to display: none by default
@@ -28,10 +36,19 @@ export default theme => css`
 
   @media not all, screen and (prefers-reduced-motion: reduce) {
     * {
-      animation-duration: 0s !important;
+      /* animation-duration: 0s !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0s !important;
-      scroll-behavior: auto !important;
+      scroll-behavior: auto !important; */
+    }
+  }
+
+  .header-anchor {
+    /* set and used by gatsby-remark-autolink-headers */
+    transform: translateY(100%);
+
+    svg {
+      fill: ${theme.headerColor};
     }
   }
 `;

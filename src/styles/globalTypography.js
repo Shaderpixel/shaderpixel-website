@@ -2,7 +2,7 @@ import { css } from '@emotion/core';
 import { sizingVar } from './variables';
 import fonts from './fonts';
 
-export default css`
+export default theme => css`
   /*-----------------------
    Font Loading
   -----------------------*/
@@ -80,7 +80,27 @@ export default css`
     src: url(${fonts.emberlyVFItalic}) format('woff2 supports variations'),
       url(${fonts.emberlyVFItalic}) format('woff2-variations');
   }
-
+  @font-face {
+    font-family: 'Emberly';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(${fonts.emberlyRegular}) format('woff2');
+  }
+/*  @font-face {
+    font-family: 'Emberly';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(${fonts.emberlyMedium}) format('woff2');
+  }
+  @font-face {
+    font-family: 'Emberly';
+    font-style: italic;
+    font-weight: 500;
+    font-display: swap;
+    src: url(${fonts.emberlyBoldMedium}) format('woff2');
+  } */
   @font-face {
     font-family: 'Emberly';
     font-style: normal;
@@ -150,8 +170,7 @@ export default css`
    Variable Font Size Interpolation
   -----------------------*/
   :root {
-    font-size: ${sizingVar.minFontSize}em;
-    line-height: ${sizingVar.ms3};
+    font-size: ${sizingVar.minFontSize}rem;
   }
 
   @media screen and (min-width: ${sizingVar.minLerpWidth}em) {
@@ -176,7 +195,7 @@ export default css`
   /*-----------------------
    FONT SETTING
   -----------------------*/
-  * {
+  body {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
       'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -186,6 +205,13 @@ export default css`
       font-family: 'InterVF', system-ui, -apple-system, BlinkMacSystemFont,
         'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
       font-variation-settings: 'wght' var(--text-wght), 'slnt' var(--text-slnt);
+    }
+
+    &.u-text-stroke {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
+      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+      'Noto Color Emoji';
     }
   }
 
@@ -199,14 +225,19 @@ export default css`
   .u-display-2,
   .u-display-3,
   .u-display-4,
-  .u-display-5 {
+  .u-display-5,
+  .u-display-6 {
     font-family: Emberly, Georgia, Cambria, 'Times New Roman', Times, serif;
 
     @supports (font-variation-settings: normal) {
       font-family: 'Emberly VF', Georgia, Cambria, 'Times New Roman', Times,
         serif;
-      font-variation-settings: 'wght' var(--text-wght),
+      font-variation-settings: 'wght' var(--text-header-wght),
         'wdth' var(--text-header-wdth);
+    }
+
+    &.u-text-stroke {
+      font-family: Emberly, Georgia, Cambria, 'Times New Roman', Times, serif;
     }
   }
 
@@ -217,6 +248,11 @@ export default css`
   h5,
   h6 {
     line-height: ${sizingVar.ms0};
+    color: ${theme.headerColor};
+
+    &.u-text-stroke {
+      -webkit-text-stroke-color: ${theme.headerColor};
+    }
   }
 
   pre,
@@ -236,27 +272,27 @@ export default css`
   -----------------------*/
   /* HEADERS */
   h1 {
-    font-size: ${sizingVar.ms20}em;
-  }
-
-  h2 {
-    font-size: ${sizingVar.ms18}em;
-  }
-
-  h3 {
-    font-size: ${sizingVar.ms16}em;
-  }
-
-  h4 {
     font-size: ${sizingVar.ms14}em;
   }
 
-  h5 {
+  h2 {
+    font-size: ${sizingVar.ms13}em;
+  }
+
+  h3 {
     font-size: ${sizingVar.ms12}em;
   }
 
-  h6 {
+  h4 {
+    font-size: ${sizingVar.ms11}em;
+  }
+
+  h5 {
     font-size: ${sizingVar.ms10}em;
+  }
+
+  h6 {
+    font-size: ${sizingVar.ms9}em;
   }
 
   /* ITALICS AND STRONGS */
@@ -278,5 +314,19 @@ export default css`
   /* PARAGRAPH INTRO TEXT */
   p.intro {
     font-size: ${sizingVar.ms3}em;
+  }
+
+  /* FIGURE CAPTION */
+  figcaption {
+    font-size: ${sizingVar['ms-2']}em;
+  }
+
+  /*-----------------------
+   Typography utilities
+  -----------------------*/
+  /* This is added here because it needs theme */
+  .u-text-stroke {
+    -webkit-text-stroke-width: 1px;
+    color: transparent;
   }
 `;

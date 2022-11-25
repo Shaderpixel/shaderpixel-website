@@ -4,28 +4,134 @@ import { css, keyframes } from '@emotion/core';
 import { sizingVar, screensVar } from '../../styles/variables';
 
 /**
+ ** STYLED COMPONENTS
+ */
+export const HeaderContent = styled.div`
+  display: grid;
+  grid-template-columns: max-content 2fr max-content;
+  grid-template-areas:
+    'logo . themeToggler'
+    'logo navRegion navRegion';
+
+  @media (min-width: ${screensVar.xs}) {
+    grid-template-areas:
+      'logo navRegion themeToggler'
+      'logo navRegion .';
+  }
+
+  .logo {
+    &-link-container {
+      grid-area: logo;
+    }
+
+    height: ${sizingVar.ms12}em;
+    width: ${sizingVar.ms12}em;
+    transform-origin: bottom center;
+    margin-bottom: ${sizingVar['ms-10']}em;
+    transition: ${({ theme }) =>
+      `transform ${theme.transitionTime}ms ease-out`};
+
+    @media (min-width: ${screensVar.md}) {
+      height: ${sizingVar.ms14}em;
+      width: ${sizingVar.ms14}em;
+    }
+    @media (min-width: ${screensVar.lg}) {
+      height: ${sizingVar.ms16}em;
+      width: ${sizingVar.ms16}em;
+    }
+  }
+
+  #logo {
+    &-border {
+      fill: ${({ theme }) => theme.colors.themePrimary1};
+    }
+
+    &-circle-fill {
+      transition: ${({ theme }) => `fill ${theme.transitionTime}ms ease-out`};
+      fill: ${({ theme }) => theme.footerBackgroundColor};
+    }
+
+    &-R {
+      transition: ${({ theme }) => `fill ${theme.transitionTime}ms ease-out`};
+      fill: ${({ theme }) => theme.colors.themeLight1};
+    }
+
+    &-L {
+      fill: ${({ theme }) => theme.colors.themePrimary1};
+    }
+  }
+`;
+
+export const HeaderNav = styled.nav`
+  grid-area: navRegion;
+  align-self: center;
+  margin-top: ${sizingVar['ms-8']}em;
+
+  @media (min-width: ${screensVar.sm}) {
+    margin-top: ${sizingVar.ms0}em;
+  }
+
+  @media (min-width: ${screensVar.md}) {
+    margin-top: ${sizingVar.ms4}em;
+  }
+
+  ul {
+    display: flex;
+    flex-flow: row wrap;
+    text-transform: uppercase;
+    justify-content: flex-start;
+    font-weight: 500;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    font-size: ${sizingVar['ms-5']}em;
+    @supports (font-variation-settings: normal) {
+      --text-wght: 400;
+      --text-slnt: -4;
+    }
+
+    @media (min-width: ${screensVar.xs}) {
+      font-size: ${sizingVar['ms-4']}em;
+    }
+
+    @media (min-width: ${screensVar.sm}) {
+      font-size: ${sizingVar['ms-3']}em;
+    }
+
+    @media (min-width: ${screensVar.md}) {
+      font-size: ${sizingVar['ms-1']}em;
+    }
+
+    li {
+      a {
+      }
+    }
+  }
+`;
+
+/**
  ** EMOTION CLASSES
  */
 const header = theme => css`
-  /* background-color: ${theme.headerFooterColor}; */
+  /* background-color: ${theme.footerBackgroundColor}; */
 `;
 
 const headroomStyles = theme => css`
   .headroom {
-    background-color: ${theme.headerFooterColor};
-    border-bottom: 3px solid ${theme.colors.themePrimary1};
+    background-color: ${theme.headerBackgroundColor};
+    border-bottom: 1px solid ${theme.colors.themePrimary1};
     top: 0;
     left: 0;
     right: 0;
     z-index: 10;
     padding-left: 5%;
     padding-right: 5%;
-    padding-top: ${sizingVar.ms12}em;
-    padding-bottom: ${sizingVar['ms-10']}em;
+    padding-top: ${sizingVar['ms-1']}em;
+    padding-bottom: ${sizingVar['ms-5']}em;
+    transition: padding ${theme.transitionTime}ms ease-out;
   }
   .headroom--unfixed {
     position: relative;
-    transform: translate3d(0, -17%, 0) skewY(-2deg);
+    /*transform: translate3d(0, -17%, 0) skewY(-2deg);*/
   }
 
   .headroom:not([class*='headroom--unfixed']) {
@@ -36,19 +142,45 @@ const headroomStyles = theme => css`
 
   .headroom--scrolled {
     transition: transform 280ms ease-out;
+    padding-top: ${sizingVar['ms-5']}em;
+    padding-bottom: ${sizingVar['ms-8']}em;
   }
   .headroom--unpinned {
     position: fixed;
-    transform: translate3d(0, -117%, 0) skewY(-2deg);
+    transform: translate3d(0, -117%, 0);
   }
   .headroom--pinned {
     position: fixed;
-    transform: translate3d(0, -26%, 0) skewY(-2deg);
   }
 `;
 
 const themeSwitcherStyles = theme => css`
   margin-left: auto;
+`;
+
+const logoLinkStyles = theme => css`
+&:hover {
+    .logo {
+      #logo {
+    /*&-border {
+      fill: ${({ theme }) => theme.colors.themePrimary1};
+    }*/
+
+    &-circle-fill {
+      fill: ${theme.colors.themeLight1};
+    }
+
+    &-R {
+      fill: ${theme.footerBackgroundColor};
+    }
+
+   /* &-L {
+      fill: ${({ theme }) => theme.colors.themePrimary1};
+    }*/
+  }
+  }
+}
+
 `;
 
 const navLinkStyles = theme => css`
@@ -71,9 +203,13 @@ const navLinkStyles = theme => css`
   }
 
   &::before {
-    top: 0;
+    top: -1px;
     left: 0;
     transform-origin: left center;
+
+    @media (min-width: ${screensVar.xs}) {
+      top: 0;
+    }
   }
 
   &::after {
@@ -86,7 +222,7 @@ const navLinkStyles = theme => css`
     &::before,
     &::after {
       transform: skewX(310deg) scale3d(1, 1, 1);
-      background-color: ${theme.headerFooterLinkColorActive};
+      background-color: ${theme.highlightBgColor};
     }
   }
 `;
@@ -95,67 +231,6 @@ export default {
   header,
   headroomStyles,
   themeSwitcherStyles,
+  logoLinkStyles,
   navLinkStyles,
 };
-
-/**
- ** STYLED COMPONENTS
- */
-export const HeaderContent = styled.div`
-  display: flex;
-  transform: skewY(2deg);
-
-  .logo {
-    height: ${sizingVar.ms12}em;
-    width: ${sizingVar.ms12}em;
-    margin-bottom: ${sizingVar['ms-10']}em;
-    transition: ${({ theme }) =>
-      `transform ${theme.transitionTime}ms ease-out`};
-
-    @media (min-width: ${screensVar.md}) {
-      height: ${sizingVar.ms14}em;
-      width: ${sizingVar.ms14}em;
-    }
-    @media (min-width: ${screensVar.lg}) {
-      height: ${sizingVar.ms16}em;
-      width: ${sizingVar.ms16}em;
-    }
-  }
-
-  #logo {
-    &-border {
-      fill: ${({ theme }) => theme.colors.themePrimary1};
-    }
-
-    &-circle-fill {
-      fill: ${({ theme }) => theme.headerFooterColor};
-    }
-
-    &-R {
-      fill: ${({ theme }) => theme.colors.themeLight1};
-    }
-
-    &-L {
-      fill: ${({ theme }) => theme.colors.themePrimary1};
-    }
-  }
-`;
-
-export const HeaderNav = styled.nav`
-  ul {
-    display: flex;
-    flex-flow: row wrap;
-    text-transform: uppercase;
-    justify-content: space-evenly;
-    font-weight: 500;
-    @supports (font-variation-settings: normal) {
-      --text-wght: 500;
-      --text-slnt: -4;
-    }
-
-    li {
-      a {
-      }
-    }
-  }
-`;

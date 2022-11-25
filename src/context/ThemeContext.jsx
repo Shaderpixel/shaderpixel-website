@@ -1,22 +1,25 @@
-import { ThemeProvider as EmotionThemeProvider } from "emotion-theming";
-import React from "react";
-import themeDark from "../styles/themeDark";
-import themeLight from "../styles/themeLight";
-import themeSeasonal from "../styles/themeSeasonal";
+import { ThemeProvider as EmotionThemeProvider } from 'emotion-theming';
+import React from 'react';
+import themeDark from '../styles/themeDark';
+import themeLight from '../styles/themeLight';
+import themeSeasonal from '../styles/themeSeasonal';
+import { screensVar } from '../styles/variables';
 
 const defaultContextData = {
   isSeasonal: false,
   seasonal: false,
   dark: false,
   toggleDark: () => {},
+  screenWidth: '',
+  headerElHeight: 0,
+  setHeaderElHeight: () => {},
+  isHeadroomPinned: false,
+  setIsHeadroomPinned: () => {},
 };
 
 const ThemeContext = React.createContext(defaultContextData);
 const useTheme = () => React.useContext(ThemeContext);
 const useDarkMode = () => {
-  const supportsDarkMode = () =>
-    window.matchMedia("(prefers-color-scheme: dark)").matches === true;
-
   const [themeState, setThemeState] = React.useState({
     seasonal: false,
     dark: false,
@@ -24,8 +27,10 @@ const useDarkMode = () => {
   });
 
   React.useEffect(() => {
-    const lsDark = localStorage.getItem("dark") === "true";
-    if (lsDark || supportsDarkMode()) {
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)')
+      .matches;
+    const lsDark = localStorage.getItem('dark') === 'true';
+    if (lsDark || prefersDarkMode) {
       setThemeState({ seasonal: false, dark: true, themeHasBeenSet: true });
     } else {
       setThemeState({ seasonal: false, dark: false, themeHasBeenSet: true });
@@ -37,6 +42,10 @@ const useDarkMode = () => {
 
 const ThemeProvider = ({ children }) => {
   const [themeState, setThemeState] = useDarkMode();
+  const [isHeadroomPinned, setIsHeadroomPinned] = React.useState(false);
+  const [headerElHeight, setHeaderElHeight] = React.useState(0);
+  const mobileMq = `screen and (max-width: ${screensVar.xs})`;
+  const [screenWidth, setScreenWidth] = React.useState();
   const theme =
     // eslint-disable-next-line no-nested-ternary
     themeState.dark && !themeState.seasonal
@@ -45,12 +54,12 @@ const ThemeProvider = ({ children }) => {
       ? themeSeasonal
       : themeLight;
   const toggleDark = e => {
-    if (e.target.value !== "seasonal") {
+    if (e.target.value !== 'seasonal') {
       const dark =
-        e.target.type.toLowerCase() === "checkbox"
+        e.target.type.toLowerCase() === 'checkbox'
           ? !themeState.dark
-          : e.target.value === "dark";
-      localStorage.setItem("dark", JSON.stringify(dark));
+          : e.target.value === 'dark';
+      localStorage.setItem('dark', JSON.stringify(dark));
       setThemeState({ ...themeState, dark, seasonal: false });
     } else {
       const dark = false;
@@ -58,8 +67,26 @@ const ThemeProvider = ({ children }) => {
     }
   };
 
+  React.useEffect(() => {
+    // set initial value
+    const mobileMediaWatcher = window.matchMedia(mobileMq);
+    setScreenWidth(mobileMediaWatcher.matches ? 'mobile' : 'notMobile');
+
+    // event listener callback
+    function updateScreenWidthState(e) {
+      setScreenWidth(e.matches ? 'mobile' : 'notMobile');
+    }
+
+    mobileMediaWatcher.addEventListener('change', updateScreenWidthState);
+
+    // clean up after ourselves
+    return function cleanup() {
+      mobileMediaWatcher.removeEventListener('change', updateScreenWidthState);
+    };
+  }, [mobileMq]);
+
   return (
-    <div style={{ display: themeState.themeHasBeenSet ? "block" : "none" }}>
+    <div style={{ display: themeState.themeHasBeenSet ? 'block' : 'none' }}>
       <EmotionThemeProvider theme={theme}>
         <ThemeContext.Provider
           value={{
@@ -67,6 +94,11 @@ const ThemeProvider = ({ children }) => {
             seasonal: themeState.seasonal,
             dark: themeState.dark,
             toggleDark,
+            screenWidth,
+            isHeadroomPinned,
+            setIsHeadroomPinned,
+            headerElHeight,
+            setHeaderElHeight,
           }}
         >
           {children}
@@ -76,4 +108,4 @@ const ThemeProvider = ({ children }) => {
   );
 };
 
-export { ThemeProvider, useTheme };
+export { ThemeProvider, useTheme, ThemeContext };

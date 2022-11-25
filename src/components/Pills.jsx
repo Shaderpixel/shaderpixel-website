@@ -2,7 +2,12 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/core';
 import { sizingVar, screensVar } from '../styles/variables';
 
-export const Pills = ({ data: items, link: links, ...restProps }) => {
+export const Pills = ({
+  data: items,
+  link: links,
+  ariaLabel,
+  ...restProps
+}) => {
   const PillsContainer = styled.ul`
     display: inline-flex;
   `;
@@ -29,7 +34,7 @@ export const Pills = ({ data: items, link: links, ...restProps }) => {
   `;
 
   return (
-    <PillsContainer aria-label="Blog tags" {...restProps}>
+    <PillsContainer aria-label={ariaLabel} {...restProps}>
       {items && !links
         ? items.map(item => <Pill key={item}>{item}</Pill>)
         : items && links

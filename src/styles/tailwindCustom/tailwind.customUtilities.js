@@ -6,25 +6,27 @@ const {
   reusableCssProperties,
 } = require('../variables.node');
 
+// Note: if there is a prefix specified in tailwind.config.js, utilities created in this file will require that prefix. e.g. u-h1
+
 const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
-  const typographhyUtilities = {
+  const typographyUtilities = {
     '.h1': {
-      'font-size': `${sizingVar.ms20}em`,
-    },
-    '.h2': {
-      'font-size': `${sizingVar.ms18}em`,
-    },
-    '.h3': {
-      'font-size': `${sizingVar.ms16}em`,
-    },
-    '.h4': {
       'font-size': `${sizingVar.ms14}em`,
     },
-    '.h5': {
+    '.h2': {
+      'font-size': `${sizingVar.ms13}em`,
+    },
+    '.h3': {
       'font-size': `${sizingVar.ms12}em`,
     },
-    '.h6': {
+    '.h4': {
+      'font-size': `${sizingVar.ms11}em`,
+    },
+    '.h5': {
       'font-size': `${sizingVar.ms10}em`,
+    },
+    '.h6': {
+      'font-size': `${sizingVar.ms9}em`,
     },
     '.display-1': {
       'font-size': `${sizingVar.ms26}em`,
@@ -53,7 +55,7 @@ const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
       'font-style': 'normal',
     },
   };
-  addUtilities(typographhyUtilities, variants('customTypographyUtilities')); // get variants from main config file
+  addUtilities(typographyUtilities, variants('customTypographyUtilities')); // get variants from main config file
 });
 
 const customSpacingUtilities = plugin(function({ addUtilities, variants }) {
@@ -74,5 +76,15 @@ const customSpacingUtilities = plugin(function({ addUtilities, variants }) {
   addUtilities(spacingUtilities, variants('customSpacingUtilities')); // get variants from main config file
 });
 
+const customMiscUtilities = plugin(function({ addUtilities, variants }) {
+  const customStyleUtilities = {
+    '.no-link-style a': {
+      'text-decoration': `none !important`,
+    },
+  };
+  addUtilities(customStyleUtilities, variants('customStyleUtilities')); // get variants from main config file
+});
+
 exports.customTypographyUtilities = customTypographyUtilities;
 exports.customSpacingUtilities = customSpacingUtilities;
+exports.customMiscUtilities = customMiscUtilities;
