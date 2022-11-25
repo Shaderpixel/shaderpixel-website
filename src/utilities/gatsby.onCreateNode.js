@@ -1,5 +1,5 @@
 const path = require('path');
-const _ = require('lodash');
+const kebabCase = require('lodash.kebabcase');
 const moment = require('moment');
 const siteConfig = require('../../data/SiteConfig');
 
@@ -14,7 +14,7 @@ const hasOwnProperty = Function.prototype.call.bind(
 /**
  ** Gatsby: onCreateNode API
  */
-exports.createFieldCollection = (node, createNodeField, fileNode) => {
+exports.createFieldCollection = ({ node, createNodeField, fileNode }) => {
   createNodeField({
     node,
     name: 'collection',
@@ -22,15 +22,15 @@ exports.createFieldCollection = (node, createNodeField, fileNode) => {
   });
 };
 
-exports.createFieldSlug = (node, createNodeField, fileNode) => {
+exports.createFieldSlug = ({ node, createNodeField, fileNode }) => {
   let slug = '';
   const parsedFilePath = path.parse(fileNode.relativePath);
 
   if (hasOwnProperty(node, 'frontmatter')) {
     if (hasOwnProperty(node.frontmatter, 'slug')) {
-      slug = `/${_.kebabCase(node.frontmatter.slug)}`;
+      slug = `/${kebabCase(node.frontmatter.slug)}`;
     } else if (hasOwnProperty(node.frontmatter, 'title')) {
-      slug = `/${_.kebabCase(node.frontmatter.title)}`;
+      slug = `/${kebabCase(node.frontmatter.title)}`;
     }
   } else if (parsedFilePath.name !== 'index' && parsedFilePath.dir !== '') {
     slug = `/${parsedFilePath.dir}/${parsedFilePath.name}/`;
@@ -47,7 +47,7 @@ exports.createFieldSlug = (node, createNodeField, fileNode) => {
   });
 };
 
-exports.createFieldDate = (node, createNodeField, fileNode) => {
+exports.createFieldDate = ({ node, createNodeField, fileNode }) => {
   if (hasOwnProperty(node, 'frontmatter')) {
     if (hasOwnProperty(node.frontmatter, 'date')) {
       const date = moment(node.frontmatter.date, siteConfig.dateFromFormat);
@@ -59,5 +59,31 @@ exports.createFieldDate = (node, createNodeField, fileNode) => {
         value: date.toISOString(),
       });
     }
+  }
+};
+
+exports.createFieldTags = ({ node, createNodeField, fileNode }) => {
+  if (
+    hasOwnProperty(node, 'frontmatter') &&
+    hasOwnProperty(node?.frontmatter, 'tags')
+  ) {
+    createNodeField({
+      node,
+      name: 'tags',
+      value: node.frontmatter.tags,
+    });
+  }
+};
+
+exports.createFieldCategory = ({ node, createNodeField, fileNode }) => {
+  if (
+    hasOwnProperty(node, 'frontmatter') &&
+    hasOwnProperty(node?.frontmatter, 'category')
+  ) {
+    createNodeField({
+      node,
+      name: 'category',
+      value: node.frontmatter.category,
+    });
   }
 };

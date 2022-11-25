@@ -1,11 +1,14 @@
 /**
  * This file is where Gatsby expects to find any usage of the [Gatsby Node APIs](https://www.gatsbyjs.org/docs/node-apis/) (if any)* */
 const path = require('path');
+const siteConfig = require('./data/SiteConfig');
 
 const {
   createFieldCollection,
   createFieldSlug,
   createFieldDate,
+  createFieldTags,
+  createFieldCategory,
 } = require('./src/utilities/gatsby.onCreateNode');
 
 const { createCollectionPages } = require('./src/utilities/gatsby.createPages');
@@ -34,19 +37,25 @@ const { createCollectionPages } = require('./src/utilities/gatsby.createPages');
 exports.onCreateNode = ({ node, actions: { createNodeField }, getNode }) => {
   if (node.internal.type === 'MarkdownRemark') {
     const fileNode = getNode(node.parent);
-
+    const createFieldArgs = { node, createNodeField, fileNode };
     /**
      * creating custom field: sourceInstanceName to pull name used when setting up gatsby-source-filesystem 'blog' vs 'projects'
      * https://github.com/gatsbyjs/gatsby/issues/1634#issuecomment-388899348
      * https://www.gatsbyjs.org/packages/gatsby-source-filesystem/#how-to-query but only in allFiles
      */
-    createFieldCollection(node, createNodeField, fileNode);
+    createFieldCollection(createFieldArgs);
 
-    // creating custom field: creating custom field: slug and attaching it to the node to be queried later
-    createFieldSlug(node, createNodeField, fileNode);
+    // creating custom field: slug and attaching it to the node to be queried later
+    createFieldSlug(createFieldArgs);
 
     // creating custom field: date
-    createFieldDate(node, createNodeField, fileNode);
+    createFieldDate(createFieldArgs);
+
+    // creating custom filterable field: tags
+    createFieldTags(createFieldArgs);
+
+    // creating custom filterable field: category
+    createFieldCategory(createFieldArgs);
   }
 };
 
@@ -56,20 +65,28 @@ exports.onCreateNode = ({ node, actions: { createNodeField }, getNode }) => {
 // TODO figure out data needed for blogs
 exports.createPages = async ({ graphql, actions: { createPage } }) => {
   const postTemplates = {
-    page: path.resolve('src/templates/post.jsx'),
-    tagPage: path.resolve('src/templates/tag.jsx'),
-    categoryPage: path.resolve('src/templates/category.jsx'),
-    listingPage: path.resolve('src/templates/listing.jsx'),
+    page: path.resolve('src/templates/Post/index.js'),
+    tagPage: path.resolve('src/templates/tag.js'),
+    categoryPage: path.resolve('src/templates/category.js'),
+    listingPage: path.resolve('src/templates/listing.js'),
   };
+
+  const projectTemplates = {};
 
   const postQueryResult = await graphql(`
     query GetAllPosts {
-      allMarkdownRemark(filter: { fields: { collection: { eq: "posts" } } }) {
+      site {
+        siteMetadata {
+          headingsMaxDepth
+        }
+      }
+      allMarkdownRemark(filter: { fields: { collection: { eq: "blog" } } }) {
         edges {
           node {
             fields {
               slug
               date
+              collection
             }
             frontmatter {
               title
@@ -83,5 +100,38 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
     }
   `);
 
-  createCollectionPages(createPage, postQueryResult, postTemplates, '/blog');
+  const projectQueryResult = {};
+
+  createCollectionPages(
+    createPage,
+    graphql,
+    postQueryResult,
+    postTemplates,
+    undefined,
+    false
+  );
+};
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { deletePage, createPage } = actions;
+
+  return new Promise(resolve => {
+    // replace about/index.js with about/
+    // if the page component is the index page component
+    if (page.componentPath === `${__dirname}/src/pages/index/index.js`) {
+      deletePage(page);
+
+      // create a new page but with '/' as path
+      createPage({
+        ...page,
+        context: {
+          ...page.context,
+          recentHomepagePosts: siteConfig.recentHomepagePosts,
+        },
+        path: '/',
+      });
+    }
+
+    resolve();
+  });
 };

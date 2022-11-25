@@ -1,7 +1,7 @@
 import { css } from '@emotion/core';
 import { sizingVar } from './variables';
 
-export default css`
+export default theme => css`
   /* Generic Box-sizing */
   *,
   *::before,
@@ -11,6 +11,15 @@ export default css`
   /* Generic Attributes */
   *:not([role='dialog'])[hidden] {
     display: none !important;
+  }
+
+  body {
+    color: ${theme.fontColor};
+  }
+
+  ::selection {
+    color: ${theme.highlightFgColor};
+    background-color: ${theme.highlightBgColor};
   }
 
   /* Do not set dialogs to display: none by default
@@ -23,5 +32,23 @@ export default css`
   :disabled {
     cursor: not-allowed !important;
     opacity: 0.7;
+  }
+
+  @media not all, screen and (prefers-reduced-motion: reduce) {
+    * {
+      /* animation-duration: 0s !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0s !important;
+      scroll-behavior: auto !important; */
+    }
+  }
+
+  .header-anchor {
+    /* set and used by gatsby-remark-autolink-headers */
+    transform: translateY(100%);
+
+    svg {
+      fill: ${theme.headerColor};
+    }
   }
 `;

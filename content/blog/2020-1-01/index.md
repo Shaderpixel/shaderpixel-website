@@ -1,11 +1,12 @@
 ---
-title: "Theming my new site - Part II"
-date: "2020-01-01"
-cover: "7.jpg"
-category: ""
-tags: ["this", "that"]
-slug: "test8"
-excerpt: "A preview of my fifth post"
+title: 'Theming my new site - Part II'
+date: '2020-01-01'
+cover: './images/7.jpg'
+category: ''
+tags: ['this', 'that']
+slug: 'test8'
+excerpt: 'A preview of my fifth post'
+summary: 'blog summary...TLDR'
 ---
 
 # Setting up a theme switcher or a theme toggler? Why not both?

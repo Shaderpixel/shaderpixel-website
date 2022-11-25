@@ -6,17 +6,21 @@
 const urlJoin = require('url-join');
 const path = require('path');
 
-const config = require(`./data/SiteConfig`);
+const config = require('./data/SiteConfig');
 
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
   siteMetadata: {
     // When you want to reuse common pieces of data across the site (for example, your site title), you can store that data in siteMetadata
     siteUrl: urlJoin(config.siteUrl, config.pathPrefix),
+    siteNav: config.siteNavLinks,
+    userLinks: config.userLinks,
     title: config.siteTitle,
+    titleSeparator: config.siteTitleSeparator,
     titleAlt: config.siteTitleAlt,
     description: config.siteDescription,
     copyright: config.copyright,
+    headingsMaxDepth: config.tocMaxDepth,
     rssMetadata: {
       site_url: urlJoin(config.siteUrl, config.pathPrefix),
       feed_url: urlJoin(config.siteUrl, config.pathPrefix, config.siteRss),
@@ -28,48 +32,47 @@ module.exports = {
       )}/logos/logo-512.png`,
       copyright: config.copyright,
     },
+    postDefaultCategory: config.postDefaultCategoryID,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-lodash`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    'gatsby-plugin-catch-links',
-    'gatsby-plugin-twitter',
-    'gatsby-plugin-sitemap',
+    /**
+     * not needed because static folder is always copied over
+     * https://www.gatsbyjs.org/docs/static-folder/
+     * */
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: `assets`,
+    //     path: `${__dirname}/static/`,
+    //     ignore: [],
+    //   },
+    // },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `assets`,
-        path: `${__dirname}/static/`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `posts`,
+        name: 'blog',
         path: `${__dirname}/content/blog`,
       },
     },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        name: `projects`,
+        name: 'reading-list',
+        path: `${__dirname}/content/reading-list`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'project',
         path: `${__dirname}/content/portfolio`,
       },
     },
     {
-      resolve: `gatsby-plugin-emotion`,
+      resolve: 'gatsby-source-filesystem',
       options: {
-        // Accepts all options defined by `babel-plugin-emotion` plugin.
-      },
-    },
-    `gatsby-plugin-postcss`,
-    {
-      resolve: `gatsby-plugin-purgecss`,
-      options: {
-        develop: true,
-        tailwind: true,
+        name: 'images',
+        path: `${__dirname}/static/images`,
       },
     },
     {
@@ -79,21 +82,29 @@ module.exports = {
           {
             resolve: 'gatsby-remark-images',
             options: {
+              // https://github.com/gatsbyjs/gatsby/commit/fa9fb9782c58811fcfb199ca32985a2ba39ffaac
               maxWidth: 800,
               quality: 70,
-              tracedSvg: {
-                color: '#F00',
+              tracedSVG: {
+                color: '#C7BEA1',
                 turnPolicy: 'TURNPOLICY_MAJORITY',
               },
               withWebp: {
                 quality: 80,
               },
               showCaption: ['title'],
+              wrapperStyle: 'margin-left: unset; margin-right:unset;',
             },
           },
           'gatsby-remark-responsive-iframe',
           'gatsby-remark-copy-linked-files',
-          'gatsby-remark-autolink-headers',
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              className: `header-anchor`,
+              offsetY: `106`, // not functional v2, needs upgrade to latest
+            },
+          },
           {
             resolve: 'gatsby-remark-prismjs',
             options: {
@@ -113,6 +124,28 @@ module.exports = {
             },
           },
         ],
+      },
+    },
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-lodash',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    'gatsby-plugin-catch-links',
+    'gatsby-plugin-twitter',
+    'gatsby-plugin-sitemap',
+    {
+      resolve: 'gatsby-plugin-emotion',
+      options: {
+        // Accepts all options defined by 'babel-plugin-emotion' plugin.
+      },
+    },
+    'gatsby-plugin-postcss',
+    {
+      resolve: 'gatsby-plugin-purgecss',
+      options: {
+        printRejected: true,
+        develop: false,
+        tailwind: true,
       },
     },
     {
@@ -137,23 +170,12 @@ module.exports = {
         background_color: config.backgroundColor,
         theme_color_in_head: false, // This will avoid adding theme-color meta tag since it can be switched
         cache_busting_mode: 'name',
-        crossOrigin: `use-credentials`, // enable CORS
+        crossOrigin: 'use-credentials', // enable CORS
         display: 'minimal-ui',
-        icons: [
-          {
-            src: '/logos/logo-192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/logos/logo-512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
+        icon: 'static/logos/logo.svg',
       },
     },
-    `gatsby-plugin-offline`, // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore
+    'gatsby-plugin-offline', // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore
     {
       resolve: 'gatsby-plugin-feed',
       options: {
@@ -236,6 +258,20 @@ module.exports = {
             title: `${config.siteTitle} RSS Feed`,
           },
         ],
+      },
+    },
+    'gatsby-plugin-preload-fonts',
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /\.inline\.svg$/,
+          options: {
+            name: 'MyIcon',
+            className: 'icon',
+            'aria-hidden': true,
+          },
+        },
       },
     },
   ],
