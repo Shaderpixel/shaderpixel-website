@@ -14,8 +14,14 @@ import Logo from '../../../static/logos/logo.compressed.inline.svg';
 
 const Header = ({ siteNav, ...restProps }) => {
   const themeContext = useTheme();
+  const {
+    isHeadroomPinned,
+    setIsHeadroomPinned,
+    isSeasonal,
+    setHeaderElHeight,
+    dark,
+  } = themeContext;
   const headerRef = React.useRef();
-  console.log('themeContext', themeContext);
   console.log('siteNav', siteNav);
 
   // all observers run once on page load
@@ -31,7 +37,7 @@ const Header = ({ siteNav, ...restProps }) => {
           const borderBoxSize = Array.isArray(entry.borderBoxSize)
             ? entry.borderBoxSize[0]
             : entry.borderBoxSize;
-          themeContext.setHeaderElHeight(borderBoxSize.blockSize);
+          setHeaderElHeight(borderBoxSize.blockSize);
         }
       });
     });
@@ -41,7 +47,19 @@ const Header = ({ siteNav, ...restProps }) => {
     return () => {
       if (headerEl) resizeObserver.unobserve(headerEl);
     };
-  }, [themeContext]);
+  }, [setHeaderElHeight]);
+
+  React.useEffect(() => {
+    if (isHeadroomPinned) {
+      // headroom wrapper height doesn't always update immediately from the scale animation applied to logo on scroll.
+      // so instead of detecting and setting the
+      requestAnimationFrame(() =>
+        setHeaderElHeight(
+          headerRef.current?.querySelector('.headroom')?.offsetHeight
+        )
+      );
+    }
+  }, [isHeadroomPinned, setHeaderElHeight]);
 
   return (
     <header
@@ -55,17 +73,17 @@ const Header = ({ siteNav, ...restProps }) => {
       <Headroom
         disableInlineStyles
         upTolerance={40}
+        calcHeightOnResize
         css={theme =>
           css`
             ${headerStyles.headroomStyles(theme)}
           `
         }
         onPin={() => {
-          themeContext.setIsHeadroomPinned(true);
-          themeContext.setHeaderElHeight(headerRef.current?.offsetHeight);
+          setIsHeadroomPinned(true);
         }}
         onUnpin={() => {
-          themeContext.setIsHeadroomPinned(false);
+          setIsHeadroomPinned(false);
         }}
       >
         <HeaderContent>
@@ -105,11 +123,11 @@ const Header = ({ siteNav, ...restProps }) => {
               ))}
             </ul>
           </HeaderNav>
-          {themeContext && !themeContext.isSeasonal ? (
+          {themeContext && !isSeasonal ? (
             <ThemeSwitcher
               data-testid="theme-switch"
               htmlFor="theme-switch"
-              isDark={themeContext.dark}
+              isDark={dark}
               themeContext={themeContext}
               css={theme =>
                 css`
