@@ -44,7 +44,7 @@
     "react": "^16.13.1",
     "react-disqus-comments": "^1.4.0",
     "react-dom": "^16.13.1",
-    "react-headroom": "^3.0.0",
+    "react-headroom": "^3.2.1",
     "react-helmet": "^6.0.0",
     "react-share": "^4.1.0",
     "react-spring": "^8.0.25",

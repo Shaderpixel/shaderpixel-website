@@ -157,7 +157,7 @@ const navParentContainerStyles = (
     transform: ${isHeadroomPinned
       ? `translateY(${headerElHeight}px)`
       : 'translateY(0)'};
-    transition: transform 280ms ease-out; /* this should match headroom's transition */
+    transition: transform 280ms ease-in-out; /* this should match headroom's transition */
     background-color: ${theme.backgroundColor};
 
     &::before {
@@ -189,13 +189,17 @@ const navParentContainerStyles = (
         left: 0;
         right: 0;
         width: 100%;
-        height: ${sizingVar.ms1}em;
+        height: ${sizingVar.ms11}em;
         background: linear-gradient(
           0deg,
           ${theme.backgroundColor} 25%,
           transparent 100%
         );
         z-index: 1;
+
+        @media (min-width: ${screensVar.xl}) {
+          height: ${sizingVar.ms1}em;
+        }
       }
     }
 
