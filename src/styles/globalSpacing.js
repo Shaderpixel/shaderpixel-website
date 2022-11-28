@@ -13,7 +13,9 @@ export default css`
   }
 
   p,
-  img {
+  img,
+  ol,
+  ul {
     & + h2,
     & + h3,
     & + h4,
@@ -25,7 +27,9 @@ export default css`
 
   article {
     & > * + * {
-      margin-bottom: ${sizingVar.ms0}em;
+      &:not(h1, h2, h3, h4, h5, h6) {
+        margin-bottom: ${sizingVar.ms0}em;
+      }
     }
 
     & > *:last-child {
@@ -37,8 +41,14 @@ export default css`
   section {
     p,
     figure,
+    & > ol,
+    & > ul,
     & > img {
       margin-bottom: ${sizingVar['ms-1']}em;
+    }
+
+    li {
+      margin-bottom: ${sizingVar['ms-7']}em;
     }
 
     & > p:last-child,
