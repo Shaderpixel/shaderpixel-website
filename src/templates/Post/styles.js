@@ -68,6 +68,7 @@ const blogTagIcon = theme => css`
 const blogTags = css`
   grid-area: blog-tags;
   margin-left: ${sizingVar.ms7}em;
+  margin-top: ${sizingVar['ms-10']}em;
 `;
 const blogTOC = theme => css`
   font-size: ${sizingVar['ms-1']}em;
@@ -314,6 +315,33 @@ export const BlogNavContainerContent = styled.div`
 `;
 export const BlogContent = styled.section`
   grid-area: blog-content-area;
+
+  ul,
+  ol {
+    list-style-position: outside;
+    padding-left: ${sizingVar.ms0}em;
+  }
+
+  ul {
+    list-style-type: disc;
+
+    > ul {
+      list-style-type: circle;
+
+      > ul {
+        list-style-type: square;
+      }
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  /* adding text inside markdown lists becomes paragraph */
+  li p {
+    margin-bottom: 0;
+  }
 `;
 // styled Gatsby Link
 export const PrevPostLink = styled(props => <Link {...props} />)`
