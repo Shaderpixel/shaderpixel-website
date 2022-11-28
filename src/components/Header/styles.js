@@ -11,9 +11,9 @@ export const HeaderContent = styled.div`
   grid-template-columns: max-content 2fr max-content;
   grid-template-areas:
     'logo . themeToggler'
-    'logo navRegion navRegion';
+    'navRegion navRegion navRegion';
 
-  @media (min-width: ${screensVar.xs}) {
+  @media (min-width: ${screensVar['2xs']}) {
     grid-template-areas:
       'logo navRegion themeToggler'
       'logo navRegion .';
@@ -24,12 +24,23 @@ export const HeaderContent = styled.div`
       grid-area: logo;
     }
 
-    height: ${sizingVar.ms12}em;
-    width: ${sizingVar.ms12}em;
+    height: ${sizingVar.ms7}em;
+    width: ${sizingVar.ms7}em;
     transform-origin: bottom center;
-    margin-bottom: ${sizingVar['ms-10']}em;
     transition: ${({ theme }) =>
       `transform ${theme.transitionTime}ms ease-out`};
+
+    @media (min-width: ${screensVar['2xs']}) {
+      margin-bottom: ${sizingVar['ms-10']}em;
+      height: ${sizingVar.ms10}em;
+      width: ${sizingVar.ms10}em;
+    }
+
+    @media (min-width: ${screensVar.sm}) {
+      margin-bottom: ${sizingVar['ms-10']}em;
+      height: ${sizingVar.ms12}em;
+      width: ${sizingVar.ms12}em;
+    }
 
     @media (min-width: ${screensVar.md}) {
       height: ${sizingVar.ms14}em;
@@ -65,36 +76,29 @@ export const HeaderContent = styled.div`
 export const HeaderNav = styled.nav`
   grid-area: navRegion;
   align-self: center;
-  margin-top: ${sizingVar['ms-8']}em;
+  margin-top: ${sizingVar['ms-2']}em;
 
-  @media (min-width: ${screensVar.sm}) {
-    margin-top: ${sizingVar.ms0}em;
-  }
-
-  @media (min-width: ${screensVar.md}) {
-    margin-top: ${sizingVar.ms4}em;
+  @media (min-width: ${screensVar['2xs']}) {
+    margin-top: 0;
   }
 
   ul {
     display: flex;
     flex-flow: row wrap;
     text-transform: uppercase;
-    justify-content: flex-start;
+    justify-content: space-between;
     font-weight: 500;
     letter-spacing: 1px;
     word-spacing: 2px;
-    font-size: ${sizingVar['ms-5']}em;
+    font-size: ${sizingVar['ms-4']}em;
     @supports (font-variation-settings: normal) {
       --text-wght: 400;
       --text-slnt: -4;
     }
 
-    @media (min-width: ${screensVar.xs}) {
-      font-size: ${sizingVar['ms-4']}em;
-    }
-
-    @media (min-width: ${screensVar.sm}) {
+    @media (min-width: ${screensVar['2xs']}) {
       font-size: ${sizingVar['ms-3']}em;
+      justify-content: flex-start;
     }
 
     @media (min-width: ${screensVar.md}) {
