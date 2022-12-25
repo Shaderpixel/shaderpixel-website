@@ -9,13 +9,13 @@ import aboutStyles, {
   PropertyCardContainer,
   PropertyCardIconContainer,
   PropertyCardDetailContainer,
-} from './styles';
-import { useTheme } from '../../context/ThemeContext';
-import { MainLayout } from '../../layout';
-import { sizingVar } from '../../styles/variables';
-import IconProfession from '../../../static/icons/code.compressed.inline.svg';
-import IconInterest from '../../../static/icons/lab.compressed.inline.svg';
-import IconPastTime from '../../../static/icons/interest1.compressed.inline.svg';
+} from '../styles/pages/about.styles';
+import { useTheme } from '../context/ThemeContext';
+import { MainLayout } from '../layout';
+import { sizingVar } from '../styles/variables';
+import IconProfession from '../../static/icons/code.compressed.inline.svg';
+import IconInterest from '../../static/icons/lab.compressed.inline.svg';
+import IconPastTime from '../../static/icons/interest1.compressed.inline.svg';
 
 const PropertyCard = ({ children }) => {
   console.log(children);

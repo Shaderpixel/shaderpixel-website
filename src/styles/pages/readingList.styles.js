@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { css, keyframes } from '@emotion/core';
-import { sizingVar, screensVar } from '../../styles/variables';
+import { sizingVar, screensVar } from '../variables';
 import linkIcon from '../../../static/icons/link.svg';
 
 /**
