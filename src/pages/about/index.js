@@ -45,72 +45,12 @@ const About = ({ data, ...props }) => {
             </h1>
           </AboutHeader>
           <p>
-            Richard once aspired to be an author/writer - a 7 year old's
-            ambition after too much reading. He also considered archaeology
-            after watching Jurassic Park and reading donated copies of National
-            Geography magazines from his neighbor while growing up. Despite his
-            parent's best intentions to guide him down the path of established
-            careers, Richard gravitated towards a career in technology. His
-            first taste of technology was when his family acquired a white and
-            large boxy x486 computer that ingests toast-sized floppy disks.{' '}
-          </p>
-          <p>
-            Unlike nerd cliches you heard over and over again, Richard is not a
-            hacker or and never touch programming until he was in university. He
-            grew up playing video games and MUDs. His knack in problem solving
-            comes at the expense of his parent's and sibling's despair and
-            anguish when he tries to open things up to figure how things work
-            and never quite successfully putting them back together again. There
-            was a lot of force involved. He also fully admits to deleting the
-            system files and accidentally performing a partial reformat of the
-            family computer.
-          </p>
-          <p>
-            He also has a strength in planning, strategizing, and executing.
-            During his schooling years, Richard always find creating report on
-            subjects to be absolute blast. The logical categorization of topics
-            and requirements that leads to the eventual conclusion of the
-            requested ask was soothing and methodical for him. Sometimes he
-            overdelivers on the researched topic and often wonders if his
-            teacher actually read through the entire binder report on cell
-            division when grading it. His research paper writing during his
-            graduate study days also helped him develop a more structured
-            approach to problem solving and planning and execution. Today, he
-            applies the improved version of his skills as the lead developer of
-            his team where he continues to hone his management skills.
-          </p>
-          <p>
-            Richard carries a bachelor's degree in Actuarial Science and a
-            master's degree in Management Information Systems. His strong
-            business and IT background and lends him a unique insight into both
-            worlds. He empathizes with both aspects and sees the need for a
-            balanced equilibrium between the two in a digitally-driven business
-            era.{' '}
-          </p>
-          <p>
-            In his spare time, Richard indulges in continuous learning by
-            keeping up on latest trends in the web development world. He also
-            satiates his need for fantasy in a good book and video game now and
-            then. You might also find him tending to his garden or doing laps at
-            a track field or a pool.
-          </p>
-          <h2>Personal note from Richard</h2>
-          <p className="u-font-mono">
-            Hi there, I am Richard. Thank you for reading this far. Writing in
-            third person is always a challenge for me but I hope you learnt a
-            little something about myself. I hope you find value or
-            entertainment as you go through my site. If you enjoy what you read
-            and would like to connect, please feel free to send me an email. I
-            will be building a contact form sometime in the near future, but
-            right now, the best way to get hold of me is via email. I look
-            forward to personally reading a note from you.{' '}
-          </p>
-          <p className="u-font-mono">
-            Thank you once more for indulging in my writing.😄
-          </p>
-          <p className="u-font-mono">
-            Warmest regards,
-            <br /> Richard.
+            Hi there. Thank you for checking out my little corner on the
+            Internet. I created this site with the intent of documenting lessons
+            that I have picked up at work and in life. I hope you find value or
+            entertainment as you go through my site. If you enjoy what you have
+            read, please feel free to send me an email and let me know. I look
+            forward to personally reading a note from you.
           </p>
           <section className="u-mt-13">
             <PropertyCard>
@@ -118,10 +58,13 @@ const About = ({ data, ...props }) => {
               <>
                 <h2 className="u-font-sans ">Profession</h2>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Impedit deserunt, quos illo nemo aut maiores illum optio
-                  facere eligendi enim blanditiis, tenetur doloremque pariatur
-                  cumque fuga ratione
+                  Richard is the Lead Developer at an award-winning digital
+                  agency based in Toronto. He plays a pivotal role in redefining
+                  the agency's modern digital offerings that will bring
+                  meaningful and value-added results for the agency's clients.
+                  Aside from honing his management, leadership, and development
+                  skills, he also mentors his team and help them grow and be
+                  successful in their career.
                 </p>
               </>
             </PropertyCard>
@@ -130,20 +73,20 @@ const About = ({ data, ...props }) => {
               <>
                 <h2 className="u-font-sans">Interests</h2>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Impedit deserunt, quos illo nemo aut maiores illum optio
-                  facere eligendi enim blanditiis, tenetur doloremque pariatur
-                  cumque fuga <span className="u-font-serif">lim</span> ratione
+                  Richard enjoys keeping up-to-date and experimenting with the
+                  latest web technologies. He spends hours deep diving into the
+                  fundamentals to build up a strong foundational understanding
+                  in the topics that he comes across.
                 </p>
+                <p>His current interests include:</p>
                 <ul className="u-list-disc u-list-outside u-pl-4">
-                  <li>Something</li>
-                  <li>Apple</li>
-                  <li>Orange</li>
-                  <li>Development</li>
-                  <li>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus adipisci quae explicabo{' '}
-                  </li>
+                  <li>Front-end technologies</li>
+                  <li>React-based frameworks and dependencies</li>
+                  <li>JAMstack architecture</li>
+                  <li>Composable Architecture and Microservices</li>
+                  <li>Headless CMSes</li>
+                  <li>Web performance optimization</li>
+                  <li>UX/UI and Web accessibility</li>
                 </ul>
               </>
             </PropertyCard>
@@ -158,21 +101,12 @@ const About = ({ data, ...props }) => {
               <>
                 <h2 className="u-font-sans ">Past Time</h2>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Impedit deserunt, quos illo nemo aut maiores illum optio
-                  facere eligendi enim blanditiis, tenetur doloremque pariatur
-                  cumque fuga ratione
+                  Aside from his professional interests, Richard spends his
+                  spare time with a good book or video game now and then. You
+                  will also find him tending to his garden or doing laps at a
+                  track field or a pool. He also appreciates a cool glass of
+                  cider, listening to music, and cooking.
                 </p>
-                <ul className="u-list-disc u-list-inside">
-                  <li>Something</li>
-                  <li>Apple</li>
-                  <li>Orange</li>
-                  <li>Development</li>
-                  <li>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Natus adipisci quae explicabo{' '}
-                  </li>
-                </ul>
               </>
             </PropertyCard>
           </section>

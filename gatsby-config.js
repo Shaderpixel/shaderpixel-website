@@ -172,7 +172,7 @@ module.exports = {
         cache_busting_mode: 'name',
         crossOrigin: 'use-credentials', // enable CORS
         display: 'minimal-ui',
-        icon: 'static/logos/logo.svg',
+        icon: 'static/logos/logo.compressed.inline.svg',
       },
     },
     'gatsby-plugin-offline', // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore

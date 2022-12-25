@@ -33,9 +33,9 @@ const config = {
   tocMaxDepth: 3, // headings maximum depth to show in table of contents
   dateFromFormat: 'YYYY-MM-DD', // Date format used in the frontmatter.
   dateFormat: 'MM/DD/YYYY', // Date format for display.
-  postsPerPage: 1, // Amount of posts displayed per listing page.
-  desktopMaxPaginationPages: 8, // number of pagination itms to show on listing pages, it will be value stated plus 1 for the current page
-  mobileMaxPaginationPages: 3, // number of pagination itms to show on listing pages, it will be value stated plus 1 for the current page
+  postsPerPage: 10, // Amount of posts displayed per listing page.
+  desktopMaxPaginationPages: 8, // number of pagination items to show on listing pages, it will be value stated plus 1 for the current page
+  mobileMaxPaginationPages: 3, // number of pagination items to show on listing pages, it will be value stated plus 1 for the current page
   recentHomepagePosts: 5, // Amount of posts displayed on homepage
   userName: 'Richard Lock', // Username to display in the author segment.
   userEmail: 'autobot@iamrichardlock.com', // Email used for RSS feed's author segment

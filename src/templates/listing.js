@@ -91,11 +91,11 @@ const ListingTemplate = ({ data, pageContext }) => {
           <h1>Writings</h1>
           <p className="u-measure-long">
             Here you will find thoughts that Richard has put "pen to paper".
-            Some pieces might be really short such as to document <i>ah-ha</i>
+            Some pieces might be really short such as to document <i>ah-ha</i>{' '}
             moments while others can be lengthier pieces to expound or reflect
             on articles and topics that he has come across with the goal to
             reinforce his understanding. He hopes that you will find them
-            helpful or at least slightly amusing and entertaining.
+            helpful or at least slightly amusing and/or entertaining.
           </p>
           <small className="u-measure-long u-font-mono u-small u-block">
             Disclaimer: This website is a personal project where Richard tries
