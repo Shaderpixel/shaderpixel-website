@@ -62,7 +62,7 @@ export default class PostTemplate extends React.Component {
   }
 
   handleWidthChange = mq => {
-    console.log('mq', mq);
+    // console.log('mq', mq);
     this.setState({ tablet: mq.matches });
   };
 
@@ -90,12 +90,12 @@ export default class PostTemplate extends React.Component {
   render() {
     const { data, pageContext } = this.props;
     const { visibleTOC, tablet } = this.state;
-    console.log('data', data);
-    console.log('pageContext', pageContext);
-    console.log('props', this.props);
-    console.log('ThemeContext', this.context);
-    console.log('showtoc', visibleTOC);
-    console.log('tablet', tablet);
+    // console.log('data', data);
+    // console.log('pageContext', pageContext);
+    // console.log('props', this.props);
+    // console.log('ThemeContext', this.context);
+    // console.log('showtoc', visibleTOC);
+    // console.log('tablet', tablet);
     const { slug } = pageContext;
     const { title: siteTitle, titleSeparator } = data.site.siteMetadata;
     const postNode = data.markdownRemark;

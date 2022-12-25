@@ -8,6 +8,10 @@ const path = require('path');
 
 const config = require('./data/SiteConfig');
 
+// custom Tailwind extractor for PurgeCSS. Copied from plugin package and modified to look for %
+const customTWExtractor = content =>
+  content.match(/[\w-/:%[\]]+(?<!:%)/g) || [];
+
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
   siteMetadata: {
@@ -141,17 +145,19 @@ module.exports = {
     },
     'gatsby-plugin-postcss',
     {
-      resolve: 'gatsby-plugin-purgecss',
-      options: {
-        printRejected: true,
-        develop: false,
-        tailwind: true,
-      },
-    },
-    {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
         trackingId: config.googleAnalyticsID,
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-purgecss',
+      options: {
+        printRejected: true,
+        // printAll: true,
+        develop: false,
+        // tailwind: true,
+        defaultExtractor: customTWExtractor,
       },
     },
     {
@@ -243,8 +249,19 @@ module.exports = {
                       date
                     }
                     frontmatter {
-                      title
-                      cover
+                        title
+                        cover {
+                          childImageSharp {
+                            fluid(traceSVG: {color: "#C7BEA1"}) {
+                              src
+                              srcSet
+                              srcSetWebp
+                              srcWebp
+                              tracedSVG
+                              sizes
+                            }
+                          }
+                        }
                       date
                       category
                       tags

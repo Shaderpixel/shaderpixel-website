@@ -8,15 +8,15 @@ import readingListStyles, {
   CategoryCardContainer,
   CategoryCardTitleContainer,
   CategoryCardDetailContainer,
-} from './styles';
-import { useTheme } from '../../context/ThemeContext';
-import { MainLayout } from '../../layout';
-import { sizingVar } from '../../styles/variables';
-import TagIcon from '../../../static/icons/tag.inline.svg';
-import AnchorIcon from '../../../static/icons/anchor.inline.svg';
-import ExpandIcon from '../../../static/icons/icon-expand.compressed.inline.svg';
-import CollapseIcon from '../../../static/icons/icon-collapse.compressed.inline.svg';
-import { getViewportHeight } from '../../utilities/helpers';
+} from '../styles/pages/readingList.styles';
+import { useTheme } from '../context/ThemeContext';
+import { MainLayout } from '../layout';
+import { sizingVar } from '../styles/variables';
+import TagIcon from '../../static/icons/tag.inline.svg';
+import AnchorIcon from '../../static/icons/anchor.inline.svg';
+import ExpandIcon from '../../static/icons/icon-expand.compressed.inline.svg';
+import CollapseIcon from '../../static/icons/icon-collapse.compressed.inline.svg';
+import { getViewportHeight } from '../utilities/helpers';
 
 const PillLinkList = ({ linkDataMap }) => {
   const mapKeys = [...linkDataMap.keys()];

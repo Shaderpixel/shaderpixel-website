@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
 import styled from '@emotion/styled';
 import { css } from '@emotion/core';
-import { MainLayout } from '../../layout';
-import { sizingVar, screensVar } from '../../styles/variables';
+import { MainLayout } from '../layout';
+import { sizingVar, screensVar } from '../styles/variables';
 
 const homepageContainer = css`
   @media (min-width: 56em) {
@@ -111,7 +111,6 @@ const linkCards = theme => css`
 `;
 
 const Index = props => {
-  console.log('site props', props);
   const graphqlResult = props.data;
   const { siteMetadata } = graphqlResult?.site ?? {};
   const { title, titleSeparator, titleAlt } = siteMetadata;
@@ -158,7 +157,6 @@ const Index = props => {
               </h2>
               <ul className="u-list-disc u-pl-4">
                 {recentPosts.map(recentPost => {
-                  console.log('recentPost', recentPost);
                   const { id, fields, frontmatter } = recentPost;
                   const { collection, slug } = fields;
                   const { title } = frontmatter;

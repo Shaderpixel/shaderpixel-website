@@ -22,7 +22,6 @@ const Header = ({ siteNav, ...restProps }) => {
     dark,
   } = themeContext;
   const headerRef = React.useRef();
-  console.log('siteNav', siteNav);
 
   // all observers run once on page load
   // observe nav element height on window resize

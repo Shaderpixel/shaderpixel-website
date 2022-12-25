@@ -81,11 +81,15 @@ const ThemeSwitcher = styled.div`
       content: "\\263E";
       position: absolute;
       transform: translate3d(50%, 0, 0) rotate3d(0, 0, 1, 35deg);
-      right: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms2}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
+      right: calc(${sizingVar['ms-22']}rem + ${
+  sizingVar.ms2
+}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
       color: ${({ theme }) => theme.colors.themePrimary1};
 
       @media (min-width: ${screensVar.md}) {
-        right: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms5}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
+        right: calc(${sizingVar['ms-22']}rem + ${
+  sizingVar.ms5
+}rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
       }
     }
 
@@ -121,34 +125,39 @@ const ThemeSwitcher = styled.div`
 
     .theme-switch-toggle {
       // prettier-ignore
-      transform: translate3d(calc(${sizingVar.ms13}em - ${sizingVar['ms-22']}em - 2px - 100%  - 2px - ${sizingVar['ms-22']
+      transform: translate3d(calc(${sizingVar.ms13}em - ${
+  sizingVar['ms-22']
+}em - 2px - 100%  - 2px - ${
+  sizingVar['ms-22']
 }em),0,0); /* move dot the entire length of the toggle - the starting left position - left border width - move it back by the entire width of the dot - right border width - same amount starting from right */
 
     @media (min-width: ${screensVar.md}) {
-        transform: translate3d(calc(${sizingVar.ms15}em - ${sizingVar['ms-22']}em - 2px - 100%  - 2px - ${sizingVar['ms-22']
+        transform: translate3d(calc(${sizingVar.ms15}em - ${
+  sizingVar['ms-22']
+}em - 2px - 100%  - 2px - ${
+  sizingVar['ms-22']
 }em),0,0); /* move dot the entire length of the toggle - the starting left position - left border width - move it back by the entire width of the dot - right border width - same amount starting from right */
       }
     }
   }
 `;
 // Component
-const ThemeSwitch = ({ className, ...restProps }) =>
-  console.log('themeswitcherprops', className) || (
-    <ThemeSwitcher css={className}>
-      <input
-        type="checkbox"
-        id="ThemeSwitcher"
-        name="theme-Toggle"
-        className="theme-switch__input"
-        checked={restProps.themeContext.dark}
-        onChange={restProps.themeContext.toggleDark}
-      />
-      <label htmlFor="ThemeSwitcher" className="theme-switch__label">
-        <span className="u-sr-only">
-          Toggle {restProps.themeContext.dark ? 'light' : 'dark'} theme
-        </span>
-        <div className="theme-switch-toggle" aria-hidden="true" />
-      </label>
-    </ThemeSwitcher>
-  );
+const ThemeSwitch = ({ className, ...restProps }) => (
+  <ThemeSwitcher css={className}>
+    <input
+      type="checkbox"
+      id="ThemeSwitcher"
+      name="theme-Toggle"
+      className="theme-switch__input"
+      checked={restProps.themeContext.dark}
+      onChange={restProps.themeContext.toggleDark}
+    />
+    <label htmlFor="ThemeSwitcher" className="theme-switch__label">
+      <span className="u-sr-only">
+        Toggle {restProps.themeContext.dark ? 'light' : 'dark'} theme
+      </span>
+      <div className="theme-switch-toggle" aria-hidden="true" />
+    </label>
+  </ThemeSwitcher>
+);
 export default ThemeSwitch;

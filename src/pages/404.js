@@ -29,11 +29,7 @@ const BigTitle = styled.h1`
 // https://www.gatsbyjs.com/docs/how-to/adding-common-features/adding-search/
 const Index = props => {
   const { data, pageContext } = props;
-  console.log('props', props);
-  console.log('data', data);
-  console.log('pageContext', pageContext);
   const { siteMetadata } = data.site;
-  console.log('siteMetadata', siteMetadata);
   // Math.random is (inclusive of 0, but not 1) which works well with array index
   const randIndex = Math.floor(Math.random() * data.allSitePage?.totalCount);
   const randomEdge = data.allSitePage?.edges[randIndex];
