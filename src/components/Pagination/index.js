@@ -41,8 +41,6 @@ export const Pagination = ({
     let laterHalf;
     let firstHalf = Math.floor(maxPaginationPages / 2);
     let secondHalf = Math.ceil(maxPaginationPages / 2);
-    console.log('firstHalf', firstHalf);
-    console.log('secondHalf', secondHalf);
 
     if (currentPageNum + secondHalf >= pageCount) {
       firstHalf += Math.abs(pageCount - currentPageNum - secondHalf);
@@ -60,8 +58,6 @@ export const Pagination = ({
     if (secondHalf > 0) {
       laterHalf = [...Array(secondHalf)].map((v, i) => currentPageNum + i + 1);
     }
-    console.log('initialHalf', initialHalf);
-    console.log('laterHalf', laterHalf);
 
     paginationSeed = [...initialHalf, currentPageNum, ...laterHalf].filter(
       value => !Number.isNaN(value) && value > 0 && value <= pageCount
@@ -69,7 +65,6 @@ export const Pagination = ({
   } else {
     paginationSeed = [...Array(pageCount)].map((v, i) => i + 1);
   }
-  console.log('paginationSeed', paginationSeed);
 
   // check if the pageNumber is going to be the first page
   function firstLinkChecker(pageNumber) {
@@ -126,7 +121,7 @@ export const Pagination = ({
         </Link>
       </li>
     ) : null;
-  console.log('currentPageNum', currentPageNum);
+
   const next =
     pageCount > 2 && currentPageNum !== pageCount ? (
       <li>

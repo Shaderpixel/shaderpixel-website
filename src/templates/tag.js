@@ -55,8 +55,6 @@ const ListingBody = ({ listDataMap }) => {
 };
 
 const ListingTemplate = ({ data, pageContext }) => {
-  console.log('data', data);
-  console.log('pageContext', pageContext);
   const {
     currentPageNum,
     pageCount,

@@ -30,7 +30,6 @@ const icons = {
 
 const Footer = ({ userLinks, ...restProps }) => {
   const themeContext = useTheme();
-  console.log('themeContext', themeContext);
   return (
     <footer
       css={theme =>
