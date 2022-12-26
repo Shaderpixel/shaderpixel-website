@@ -20,4 +20,3 @@ https://emotion.sh/docs/css-prop#style-precedence
 `css={class1, class2}`
 class1 and class2 is created via the CSS template literals: css`...`
 
-![Hopper The Rabbit2](./images/7.jpg)
