@@ -1,7 +1,7 @@
 ---
 title: 'Typography'
 date: '2020-01-05'
-cover: './images/7.jpg'
+cover: '7.jpg'
 category: ''
 tags: ['this', 'that', 'computer']
 slug: 'test2'

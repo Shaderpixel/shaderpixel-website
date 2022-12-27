@@ -1,7 +1,7 @@
 ---
 title: 'Setting up my Blog'
 date: '2020-01-04'
-cover: './images/7.jpg'
+cover: '7.jpg'
 category: ''
 tags: ['this', 'that']
 slug: 'test4'

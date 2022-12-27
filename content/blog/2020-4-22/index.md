@@ -1,7 +1,7 @@
 ---
 title: 'Using Emotion CSS Prop'
 date: '2020-04-21'
-cover: './images/7.jpg'
+cover: '7.jpg'
 coverAlt: 'some image'
 coverCredit: 'Image credit'
 category: 'Gatsby Development'
@@ -20,3 +20,4 @@ https://emotion.sh/docs/css-prop#style-precedence
 `css={class1, class2}`
 class1 and class2 is created via the CSS template literals: css`...`
 
+![Hopper The Rabbit2](7.jpg)

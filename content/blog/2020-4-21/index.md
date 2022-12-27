@@ -1,7 +1,7 @@
 ---
 title: 'Setting up my Blog'
 date: '2020-04-21'
-cover: './images/7.jpg'
+cover: '7.jpg'
 coverAlt: 'some image'
 coverCredit: 'Image credit'
 category: 'something'

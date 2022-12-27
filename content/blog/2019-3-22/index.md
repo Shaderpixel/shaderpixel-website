@@ -1,7 +1,7 @@
 ---
 title: 'Setting up my new site in Gatsby - Part I'
 date: '2019-03-22'
-cover: './images/7.jpg'
+cover: '7.jpg'
 coverAlt: 'some image'
 coverCredit: 'Image credit'
 category: ''
