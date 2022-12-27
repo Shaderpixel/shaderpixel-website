@@ -1,7 +1,7 @@
 ---
 title: 'Theming my new site - Part II'
 date: '2020-01-01'
-cover: './images/7.jpg'
+cover: '7.jpg'
 category: ''
 tags: ['this', 'that']
 slug: 'test8'

@@ -1,7 +1,7 @@
 ---
 title: 'Setting up my new site in Gatsby - Part V'
 date: '2019-03-26'
-cover: './images/7.jpg'
+cover: '7.jpg'
 category: ''
 tags: ['this', 'that']
 excerpt: 'A preview of my fifth post'

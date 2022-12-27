@@ -1,7 +1,7 @@
 ---
 title: 'Setting up my new site in Gatsby - Part II'
 date: '2019-03-23'
-cover: './images/7.jpg'
+cover: '7.jpg'
 category: ''
 tags:
   - cheese
