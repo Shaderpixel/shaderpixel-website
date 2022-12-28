@@ -4,8 +4,6 @@
  * (Check out the [config docs](https://www.gatsbyjs.org/docs/gatsby-config/) for more detail).
  *  */
 const urlJoin = require('url-join');
-const path = require('path');
-
 const config = require('./data/SiteConfig');
 
 // custom Tailwind extractor for PurgeCSS. Copied from plugin package and modified to look for %
@@ -96,7 +94,7 @@ module.exports = {
               withWebp: {
                 quality: 80,
               },
-              showCaption: ['title'],
+              showCaptions: ['title', 'alt'],
               wrapperStyle: 'margin-left: unset; margin-right:unset;',
             },
           },
