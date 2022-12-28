@@ -87,15 +87,14 @@ module.exports = {
               // https://github.com/gatsbyjs/gatsby/commit/fa9fb9782c58811fcfb199ca32985a2ba39ffaac
               maxWidth: 800,
               quality: 70,
-              tracedSVG: {
-                color: '#C7BEA1',
-                turnPolicy: 'TURNPOLICY_MAJORITY',
-              },
               withWebp: {
                 quality: 80,
               },
+              withAvif: {
+                quality: 80,
+              },
               showCaptions: ['title', 'alt'],
-              wrapperStyle: 'margin-left: unset; margin-right:unset;',
+              wrapperStyle: 'max-width: 800px;',
             },
           },
           'gatsby-remark-responsive-iframe',
@@ -130,6 +129,7 @@ module.exports = {
     },
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-lodash',
+    `gatsby-plugin-image`,
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     'gatsby-plugin-catch-links',
@@ -250,14 +250,7 @@ module.exports = {
                         title
                         cover {
                           childImageSharp {
-                            fluid(traceSVG: {color: "#C7BEA1"}) {
-                              src
-                              srcSet
-                              srcSetWebp
-                              srcWebp
-                              tracedSVG
-                              sizes
-                            }
+                            gatsbyImageData(width: 560, quality: 60, layout: CONSTRAINED)
                           }
                         }
                       date
