@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { sizingVar, screensVar } from '../styles/variables';
 
 export const Pills = ({

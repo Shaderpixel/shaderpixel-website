@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { sizingVar, measuresVar } from './variables';
 
 export default css`

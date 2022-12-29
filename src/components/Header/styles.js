@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css } from '@emotion/react';
 import { sizingVar, screensVar } from '../../styles/variables';
 
 /**

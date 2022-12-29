@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { sizingVar } from './variables';
 
 export default css`
@@ -22,7 +22,7 @@ export default css`
   * 2. Always fill the visible space in .gatsby-highlight.
   * 3. Adjust the position of the line numbers
   */
-  .gatsby-highlight pre[class*="language-"] {
+  .gatsby-highlight pre[class*='language-'] {
     background-color: transparent;
     margin: 0;
     padding: 0;
@@ -35,7 +35,7 @@ export default css`
   */
 
   /* Adjust the position of the line numbers */
-  .gatsby-highlight pre[class*="language-"].line-numbers {
+  .gatsby-highlight pre[class*='language-'].line-numbers {
     padding-left: 2.8em;
   }
 

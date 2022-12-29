@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import { animated, useSpring } from 'react-spring';
 import readingListStyles, {
   CategoryCardContainer,
@@ -262,7 +262,6 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
 };
 
 const ReadingList = ({ data, ...props }) => {
-  console.log('data', data);
   const { title, titleSeparator } = data.site.siteMetadata;
   const dataNodes = data.allMarkdownRemark.edges.map(edge => edge.node);
   const linkDataMap = new Map();
@@ -276,8 +275,6 @@ const ReadingList = ({ data, ...props }) => {
       );
     linkDataMap.set(hash, { title, hash, html });
   });
-
-  console.log('linkDataMap', linkDataMap);
 
   return (
     <>

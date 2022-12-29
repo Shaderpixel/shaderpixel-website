@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
-import { css } from '@emotion/core';
+import { css } from '@emotion/react';
 import moment from 'moment';
 import config from '../../../data/SiteConfig';
 import { sizingVar, screensVar } from '../../styles/variables';

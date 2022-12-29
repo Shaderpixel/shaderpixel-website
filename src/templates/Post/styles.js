@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 import { Link } from 'gatsby';
 import { sizingVar, screensVar } from '../../styles/variables';
