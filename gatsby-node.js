@@ -16,6 +16,22 @@ const { createCollectionPages } = require('./src/utilities/gatsby.createPages');
 /**
  ** Gatsby APIs
  */
+/**
+ * Temporary workaround for missing sitePage.context. Replace usage in 404.js
+ * https://www.gatsbyjs.com/docs/reference/release-notes/migrating-from-v3-to-v4/#field-sitepagecontext-is-no-longer-available-in-graphql-queries
+ */
+// exports.createSchemaCustomization = ({ actions }) => {
+//   const { createTypes } = actions;
+//   createTypes(`
+//      type SitePage implements Node {
+//        context: SitePageContext
+//      }
+//      type SitePageContext {
+//        slug: String,
+//        tag: String,
+//      }
+//    `);
+// };
 
 /**
  * set Babel Config or Preset if needed e.g. for babel macro.
@@ -102,7 +118,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
 
   const projectQueryResult = {};
 
-  createCollectionPages(
+  await createCollectionPages(
     createPage,
     graphql,
     postQueryResult,

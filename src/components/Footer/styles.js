@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css } from '@emotion/react';
 import { sizingVar, screensVar } from '../../styles/variables';
 import backgroundClipImage from '../../../static/images/footer/Hawaii.min.jpg'; // TODO change it to use gatsby-background-image plugin
 // TODO https://www.gatsbyjs.org/packages/gatsby-background-image/

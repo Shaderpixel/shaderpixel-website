@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
-import { css } from '@emotion/core';
 import styled from '@emotion/styled';
 import moment from 'moment';
 import { MainLayout } from '../layout';

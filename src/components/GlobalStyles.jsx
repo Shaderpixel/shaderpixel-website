@@ -1,5 +1,4 @@
-import { css, Global } from '@emotion/core';
-import { withTheme } from 'emotion-theming';
+import { withTheme, css, Global } from '@emotion/react';
 import React from 'react';
 import globalCssVars from '../styles/globalCssVars';
 import globalTypography from '../styles/globalTypography';

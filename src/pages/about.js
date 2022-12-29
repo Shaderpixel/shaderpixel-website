@@ -2,8 +2,8 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
-import { css } from '@emotion/core';
-import Img from 'gatsby-image';
+import { css } from '@emotion/react';
+import { GatsbyImage } from 'gatsby-plugin-image';
 import aboutStyles, {
   AboutHeader,
   PropertyCardContainer,
@@ -17,19 +17,15 @@ import IconProfession from '../../static/icons/code.compressed.inline.svg';
 import IconInterest from '../../static/icons/lab.compressed.inline.svg';
 import IconPastTime from '../../static/icons/interest1.compressed.inline.svg';
 
-const PropertyCard = ({ children }) => {
-  console.log(children);
-  return (
-    <PropertyCardContainer>
-      <PropertyCardIconContainer>{children[0]}</PropertyCardIconContainer>
-      <PropertyCardDetailContainer>{children[1]}</PropertyCardDetailContainer>
-    </PropertyCardContainer>
-  );
-};
+const PropertyCard = ({ children }) => (
+  <PropertyCardContainer>
+    <PropertyCardIconContainer>{children[0]}</PropertyCardIconContainer>
+    <PropertyCardDetailContainer>{children[1]}</PropertyCardDetailContainer>
+  </PropertyCardContainer>
+);
 
 const About = ({ data, ...props }) => {
   const themeContext = useTheme();
-  console.log('data', data);
   const { title, titleSeparator } = data.site.siteMetadata;
 
   return (
@@ -38,7 +34,10 @@ const About = ({ data, ...props }) => {
       <MainLayout>
         <article className="u-measure-long u-mx-auto u-mt-13 md:u-mt-16 lg:u-mt-18">
           <AboutHeader>
-            <Img className="portrait" fluid={data.file.childImageSharp.fluid} />
+            <GatsbyImage
+              image={data.file.childImageSharp.gatsbyImageData}
+              className="portrait"
+            />
             <h1 className="u-display-6 md:u-display-4 u-ml-5 u-mb-0">
               I am
               <br /> Richard Lock

@@ -69,7 +69,8 @@ exports.createCollectionPages = async (
   /**
    ** Create individual pages
    */
-  nodes.forEach(({ node }, index) => {
+  // https://github.com/gatsbyjs/gatsby/issues/19489
+  const postPromises = nodes.map(({ node }, index) => {
     // Generate a unique list of tags
     if (node.frontmatter.tags)
       node.frontmatter.tags.forEach(tag => tagSet.add(tag));
@@ -117,6 +118,8 @@ exports.createCollectionPages = async (
     });
   });
 
+  await Promise.all(postPromises);
+
   /**
    ** Create Listing Page
    */
@@ -125,7 +128,7 @@ exports.createCollectionPages = async (
   const { postsPerPage } = siteConfig;
   const pageCount = Math.ceil(nodes.length / postsPerPage);
 
-  [...Array(pageCount)].forEach((_val, pageNum) => {
+  const pagePromises = [...Array(pageCount)].map((_val, pageNum) => {
     createPage({
       path: pageNum === 0 ? `${pathPrefix}/` : `${pathPrefix}/${pageNum + 1}`,
       component: templates.listingPage,
@@ -139,6 +142,8 @@ exports.createCollectionPages = async (
       },
     });
   });
+
+  await Promise.all(pagePromises);
 
   /**
    ** Create tag pages
@@ -154,35 +159,45 @@ exports.createCollectionPages = async (
     // get post nodes by tag
     // TODO remove unneeded frontmatter stuff in query
     // eslint-disable-next-line no-await-in-loop
-    const tagQueryResult = await graphql(`query GetAllPostsWithTag {
-        allMarkdownRemark(
-          sort: { fields: frontmatter___date, order: DESC }
-          filter: { fields: { tags: { eq: "${tag}" }, collection: { eq: "${postCollection}" } } }
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-                date
-                collection
+    const tagQueryResult = await graphql(
+      `
+        query GetAllPostsWithTag($postCollection: String, $tag: String) {
+          allMarkdownRemark(
+            sort: { fields: frontmatter___date, order: DESC }
+            filter: {
+              fields: {
+                tags: { eq: $tag }
+                collection: { eq: $postCollection }
               }
-              frontmatter {
-                title
-                date
-                tags
-                category
+            }
+          ) {
+            edges {
+              node {
+                fields {
+                  slug
+                  date
+                  collection
+                }
+                frontmatter {
+                  title
+                  date
+                  tags
+                  category
+                }
               }
             }
           }
         }
-      }`);
+      `,
+      { tag, postCollection }
+    );
     const tagNodes = tagQueryResult.data.allMarkdownRemark.edges; // array of markdown nodes
 
     const tagPageCount = Math.ceil(tagNodes.length / postsPerPage);
 
     // TODO sort nodes using momentJS?
 
-    [...Array(tagPageCount)].forEach((_val, pageNum) => {
+    const tagPromises = [...Array(tagPageCount)].map((_val, pageNum) => {
       createPage({
         path:
           pageNum === 0
@@ -202,6 +217,8 @@ exports.createCollectionPages = async (
         },
       });
     });
+
+    await Promise.all(tagPromises);
   }
 
   /**
@@ -247,28 +264,32 @@ exports.createCollectionPages = async (
 
     // TODO sort nodes using momentJS?
 
-    [...Array(categoryPageCount)].forEach((_val, pageNum) => {
-      createPage({
-        path:
-          pageNum === 0
-            ? `${categoryPathPrefix}/${kebabCategory}`
-            : `${categoryPathPrefix}/${kebabCategory}/${pageNum + 1}`,
-        component: templates.categoryPage,
-        context: {
-          limit: postsPerPage,
-          skip: pageNum * postsPerPage,
-          pageCount: categoryPageCount,
-          currentPageNum: pageNum + 1,
-          pathPrefix,
-          categoryPathPrefix,
-          collection: postCollection,
-          pageQueryCategoryFilter:
-            category === siteConfig.postDefaultCategoryID ? '' : category,
-          category,
-          kebabCategory,
-        },
-      });
-    });
+    const categoryPromises = [...Array(categoryPageCount)].map(
+      (_val, pageNum) => {
+        createPage({
+          path:
+            pageNum === 0
+              ? `${categoryPathPrefix}/${kebabCategory}`
+              : `${categoryPathPrefix}/${kebabCategory}/${pageNum + 1}`,
+          component: templates.categoryPage,
+          context: {
+            limit: postsPerPage,
+            skip: pageNum * postsPerPage,
+            pageCount: categoryPageCount,
+            currentPageNum: pageNum + 1,
+            pathPrefix,
+            categoryPathPrefix,
+            collection: postCollection,
+            pageQueryCategoryFilter:
+              category === siteConfig.postDefaultCategoryID ? '' : category,
+            category,
+            kebabCategory,
+          },
+        });
+      }
+    );
+
+    await Promise.all(categoryPromises);
   }
   // categorySet.forEach(category => {
   //   // todo don't I need pagination for these pages as well?

@@ -1,7 +1,5 @@
 import React from 'react';
-import Headroom from 'react-headroom';
-import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/core';
+import { css } from '@emotion/react';
 import { Link } from 'gatsby';
 import { useTheme } from '../../context/ThemeContext';
 import IconGithub from '../../../static/icons/icon-github.compressed.inline.svg';
