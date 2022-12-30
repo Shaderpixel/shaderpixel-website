@@ -8,6 +8,9 @@
     "shaderpixel"
   ],
   "license": "MIT",
+  "engines": {
+    "node": "^18.0.0"
+  },
   "dependencies": {
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
@@ -20,6 +23,7 @@
     "gatsby-plugin-image": "^3.0.0",
     "gatsby-plugin-lodash": "^6.0.0",
     "gatsby-plugin-manifest": "^5.0.0",
+    "gatsby-plugin-netlify": "^5.1.0",
     "gatsby-plugin-nprogress": "^5.0.0",
     "gatsby-plugin-offline": "^6.0.0",
     "gatsby-plugin-postcss": "^6.0.0",
