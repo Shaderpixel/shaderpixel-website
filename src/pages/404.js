@@ -92,10 +92,6 @@ export const pageQuery = graphql`
       edges {
         node {
           path
-          context {
-            tag
-            slug
-          }
         }
       }
     }
