@@ -208,7 +208,7 @@ export const query = graphql`
     allMarkdownRemark(
       filter: { fields: { collection: { eq: "blog" } } }
       limit: $recentHomepagePosts
-      sort: { fields: frontmatter___date, order: DESC }
+      sort: { frontmatter: { date: DESC } }
     ) {
       nodes {
         frontmatter {

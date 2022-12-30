@@ -80,6 +80,9 @@ const Header = ({ siteNav, ...restProps }) => {
         onPin={() => {
           setIsHeadroomPinned(true);
         }}
+        onUnfix={() => {
+          setIsHeadroomPinned(false);
+        }}
         onUnpin={() => {
           setIsHeadroomPinned(false);
         }}

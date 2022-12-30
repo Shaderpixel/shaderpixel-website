@@ -5,12 +5,14 @@ const {
   measuresVar,
 } = require('./src/styles/variables.node');
 const {
+  customTypographyBase,
   customTypographyUtilities,
   customSpacingUtilities,
   customMiscUtilities,
 } = require('./src/styles/tailwindCustom/tailwind.customUtilities');
 
 module.exports = {
+  purge: false, // purging is done through gatsby-plugin-purgecss
   prefix: 'u-',
   corePlugins: {
     fontStyle: false, // due to using variable fonts, this is provided via customUtilities
@@ -170,12 +172,14 @@ module.exports = {
     },
   },
   variants: {
+    customTypographyBase: ['responsive'],
     customTypographyUtilities: ['responsive'],
     customSpacingUtilities: ['responsive'],
     customStyleUtilities: ['responsive'],
     listStyleType: ['responsive', 'hover', 'focus'],
   },
   plugins: [
+    customTypographyBase,
     customTypographyUtilities,
     customSpacingUtilities,
     customMiscUtilities,

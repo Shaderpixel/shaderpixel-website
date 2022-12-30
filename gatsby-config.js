@@ -6,10 +6,6 @@
 const urlJoin = require('url-join');
 const config = require('./data/SiteConfig');
 
-// custom Tailwind extractor for PurgeCSS. Copied from plugin package and modified to look for %
-const customTWExtractor = content =>
-  content.match(/[\w-/:%[\]]+(?<!:%)/g) || [];
-
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
   siteMetadata: {
@@ -37,18 +33,6 @@ module.exports = {
     postDefaultCategory: config.postDefaultCategoryID,
   },
   plugins: [
-    /**
-     * not needed because static folder is always copied over
-     * https://www.gatsbyjs.org/docs/static-folder/
-     * */
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `assets`,
-    //     path: `${__dirname}/static/`,
-    //     ignore: [],
-    //   },
-    // },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -154,8 +138,7 @@ module.exports = {
         printRejected: true,
         // printAll: true,
         develop: false,
-        // tailwind: true,
-        defaultExtractor: customTWExtractor,
+        tailwind: true,
       },
     },
     {
@@ -176,7 +159,7 @@ module.exports = {
         cache_busting_mode: 'name',
         crossOrigin: 'use-credentials', // enable CORS
         display: 'minimal-ui',
-        icon: 'static/logos/logo.compressed.inline.svg',
+        icon: 'static/logos/logo.compressed.svg',
       },
     },
     'gatsby-plugin-offline', // must come after the manifest, so that it can cache the created manifest.webmanifest. TODO Also has other options need explore
@@ -231,37 +214,32 @@ module.exports = {
                 ],
               }));
             },
-            query: `
-            {
-              allMarkdownRemark(
-                limit: 100,
-                sort: { order: DESC, fields: [fields___date] },
-              ) {
-                edges {
-                  node {
-                    excerpt
-                    html
-                    timeToRead
-                    fields {
-                      slug
-                      date
-                    }
-                    frontmatter {
-                        title
-                        cover {
-                          childImageSharp {
-                            gatsbyImageData(width: 560, quality: 60, layout: CONSTRAINED)
-                          }
-                        }
-                      date
-                      category
-                      tags
-                    }
-                  }
-                }
-              }
+            query: `{
+  allMarkdownRemark(limit: 100, sort: {frontmatter: {date: DESC}}) {
+    edges {
+      node {
+        excerpt
+        html
+        timeToRead
+        fields {
+          slug
+          date
+        }
+        frontmatter {
+          title
+          cover {
+            childImageSharp {
+              gatsbyImageData(width: 560, quality: 60, layout: CONSTRAINED)
             }
-          `,
+          }
+          date
+          category
+          tags
+        }
+      }
+    }
+  }
+}`,
             output: config.siteRss,
             title: `${config.siteTitle} RSS Feed`,
           },

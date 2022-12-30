@@ -28,7 +28,6 @@ const { createCollectionPages } = require('./src/utilities/gatsby.createPages');
 //      }
 //      type SitePageContext {
 //        slug: String,
-//        tag: String,
 //      }
 //    `);
 // };

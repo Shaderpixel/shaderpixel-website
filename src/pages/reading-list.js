@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet';
 import { graphql, Link } from 'gatsby';
 import { css } from '@emotion/react';
@@ -9,7 +8,6 @@ import readingListStyles, {
   CategoryCardTitleContainer,
   CategoryCardDetailContainer,
 } from '../styles/pages/readingList.styles';
-import { useTheme } from '../context/ThemeContext';
 import { MainLayout } from '../layout';
 import { sizingVar } from '../styles/variables';
 import TagIcon from '../../static/icons/tag.inline.svg';
@@ -22,30 +20,6 @@ const PillLinkList = ({ linkDataMap }) => {
   const mapKeys = [...linkDataMap.keys()];
   return (
     <ul css={readingListStyles.listContainer}>
-      {mapKeys.map(mapKey => {
-        const { title, hash } = linkDataMap.get(mapKey);
-        return (
-          <li key={mapKey}>
-            <PillLink linkText={title} linkHash={hash} />
-          </li>
-        );
-      })}
-      {mapKeys.map(mapKey => {
-        const { title, hash } = linkDataMap.get(mapKey);
-        return (
-          <li key={mapKey}>
-            <PillLink linkText={title} linkHash={hash} />
-          </li>
-        );
-      })}
-      {mapKeys.map(mapKey => {
-        const { title, hash } = linkDataMap.get(mapKey);
-        return (
-          <li key={mapKey}>
-            <PillLink linkText={title} linkHash={hash} />
-          </li>
-        );
-      })}
       {mapKeys.map(mapKey => {
         const { title, hash } = linkDataMap.get(mapKey);
         return (
@@ -71,8 +45,6 @@ const PillLink = ({ linkHash, linkText }) => (
 );
 
 const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
-  const themeContext = useTheme();
-  const { isHeadroomPinned, headerElHeight } = themeContext;
   const mapKeys = [...linkDataMap.keys()];
   const navParentContainerRef = React.useRef();
 
@@ -81,7 +53,7 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
   );
   const [navRef, setNavRef] = React.useState(null); // useCallback ref because we need to detect initial height after render, using a regular ref would not retrigger initial height calculation
   // https://stackoverflow.com/questions/64279820/event-when-useref-element-have-height-more-than-zero
-  const [navListSticky, setNavListSticky] = React.useState(false);
+  // const [navListSticky, setNavListSticky] = React.useState(false);
   const [navCurrentVh, setNavCurrentVh] = React.useState('10');
   const [navScrollVh, setNavScrollVh] = React.useState();
   const [maxNavListHeightVh, setMaxNavListHeightVh] = React.useState(null);
@@ -100,10 +72,12 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
     if (navRef?.offsetHeight) {
       setNavCurrentVh(getViewportHeight(navRef.offsetHeight));
     }
+
     if (navRef?.scrollHeight) {
       setNavScrollVh(getViewportHeight(navRef.scrollHeight));
     }
-    if (navRef?.scrollHeight >= sizingVar.maxNavListHeight) {
+
+    if (navRef?.scrollHeight > sizingVar.maxNavListHeight) {
       setNavListHeightLimit(true);
     } else {
       setNavListHeightLimit(false);
@@ -123,7 +97,7 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
           setNavScrollVh(getViewportHeight(navRef.scrollHeight));
           setMaxNavListHeightVh(getViewportHeight(sizingVar.maxNavListHeight));
 
-          if (navRef.scrollHeight >= sizingVar.maxNavListHeight) {
+          if (navRef.scrollHeight > sizingVar.maxNavListHeight) {
             setNavListHeightLimit(true);
           } else {
             setNavListHeightLimit(false);
@@ -141,25 +115,37 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
 
   // all observers run once on page load
   // observe nav element becomes sticky
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) =>
-        entry.intersectionRatio < 1
-          ? setNavListSticky(true)
-          : setNavListSticky(false),
-      { threshold: [1], rootMargin: '-10px 0px 0px 0px' }
-    );
-    // resource: https://stackoverflow.com/questions/16302483/event-to-detect-when-positionsticky-is-triggered
-    // trick: CSS top or rootMargin top set to -1px for IO to check sticky
-    // const navObseravable = navRef.current;
-    if (navParentContainerRef.current)
-      observer.observe(navParentContainerRef.current);
+  // can't get this to work due to adjustment of sticky nav position when headroom is pinned changes navListSticky boolean
+  // React.useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([entry]) => {
+  //       console.log('entry', entry);
+  //       console.log('isHeadroomPinned', isHeadroomPinned);
+  //       console.log('headerElHeight', headerElHeight);
+  //       const isNavSticky =
+  //         (entry.intersectionRatio > 0 &&
+  //           isHeadroomPinned &&
+  //           entry.boundingClientRect.top <= headerElHeight) ||
+  //         entry.intersectionRatio < 1
+  //           ? true
+  //           : false;
+  //       console.log('isNavSticky', isNavSticky);
+  //       setNavListSticky(isNavSticky);
+  //       // return entry.intersectionRatio < 1
+  //       //   ? setNavListSticky(true)
+  //       //   : setNavListSticky(false);
+  //     },
+  //     { threshold: [1], rootMargin: '-10px 0px 0px 0px' }
+  //   );
+  //   // resource: https://stackoverflow.com/questions/16302483/event-to-detect-when-positionsticky-is-triggered
+  //   // trick: CSS top or rootMargin top set to -1px for IO to check sticky
+  //   const navObseravable = navParentContainerRef.current;
+  //   if (navObseravable) observer.observe(navObseravable);
 
-    return () => {
-      if (navParentContainerRef.current)
-        observer.unobserve(navParentContainerRef.current);
-    };
-  });
+  //   return () => {
+  //     if (navObseravable) observer.unobserve(navObseravable);
+  //   };
+  // });
 
   const springProps = useSpring({
     height: (() => {
@@ -197,14 +183,10 @@ const ReadingListSectionContent = ({ linkDataMap, ...restProps }) => {
           ${readingListStyles.navParentContainerStyles(
             theme,
             navListExpanded,
-            navScrollVh,
-            isHeadroomPinned,
-            headerElHeight
+            navScrollVh
           )}
         `}
-        className={`${navListSticky ? `isPinned` : ''} ${
-          navListHeightLimit ? 'navHeightLimit' : ''
-        }`}
+        className={`${navListHeightLimit ? 'navHeightLimit' : ''}`}
       >
         <animated.nav
           css={theme => css`
@@ -311,7 +293,7 @@ export const query = graphql`
     }
     allMarkdownRemark(
       filter: { fields: { collection: { eq: "reading-list" } } }
-      sort: { fields: frontmatter___title }
+      sort: { frontmatter: { title: ASC } }
     ) {
       edges {
         node {

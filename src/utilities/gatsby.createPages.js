@@ -160,35 +160,28 @@ exports.createCollectionPages = async (
     // TODO remove unneeded frontmatter stuff in query
     // eslint-disable-next-line no-await-in-loop
     const tagQueryResult = await graphql(
-      `
-        query GetAllPostsWithTag($postCollection: String, $tag: String) {
-          allMarkdownRemark(
-            sort: { fields: frontmatter___date, order: DESC }
-            filter: {
-              fields: {
-                tags: { eq: $tag }
-                collection: { eq: $postCollection }
-              }
-            }
-          ) {
-            edges {
-              node {
-                fields {
-                  slug
-                  date
-                  collection
-                }
-                frontmatter {
-                  title
-                  date
-                  tags
-                  category
-                }
-              }
-            }
-          }
+      `query GetAllPostsWithTag($postCollection: String, $tag: String) {
+  allMarkdownRemark(
+    sort: {frontmatter: {date: DESC}}
+    filter: {fields: {tags: {eq: $tag}, collection: {eq: $postCollection}}}
+  ) {
+    edges {
+      node {
+        fields {
+          slug
+          date
+          collection
         }
-      `,
+        frontmatter {
+          title
+          date
+          tags
+          category
+        }
+      }
+    }
+  }
+}`,
       { tag, postCollection }
     );
     const tagNodes = tagQueryResult.data.allMarkdownRemark.edges; // array of markdown nodes
@@ -237,27 +230,30 @@ exports.createCollectionPages = async (
     // get post nodes by category
     // TODO remove unneeded frontmatter stuff in query
     // eslint-disable-next-line no-await-in-loop
-    const categoryQueryResult = await graphql(`query GetAllPostsWithCategory {
-        allMarkdownRemark(
-          sort: { fields: frontmatter___date, order: DESC }
-          filter: { fields: { category: { eq: "${categoryFilterText}" }, collection: { eq: "${postCollection}" } } }
-        ) {
-          edges {
-            node {
-              fields {
-                slug
-                date
-                collection
-              }
-              frontmatter {
-                title
-                date
-                category
-              }
-            }
-          }
+    const categoryQueryResult = await graphql(
+      `query GetAllPostsWithCategory($categoryFilterText: String, $postCollection: String) {
+  allMarkdownRemark(
+    sort: {frontmatter: {date: DESC}}
+    filter: {fields: {category: {eq: $categoryFilterText}, collection: {eq: $postCollection}}}
+  ) {
+    edges {
+      node {
+        fields {
+          slug
+          date
+          collection
         }
-      }`);
+        frontmatter {
+          title
+          date
+          category
+        }
+      }
+    }
+  }
+}`,
+      { categoryFilterText, postCollection }
+    );
     const categoryNodes = categoryQueryResult.data.allMarkdownRemark.edges; // array of markdown nodes
 
     const categoryPageCount = Math.ceil(categoryNodes.length / postsPerPage);

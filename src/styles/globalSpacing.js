@@ -2,16 +2,6 @@ import { css } from '@emotion/react';
 import { sizingVar, measuresVar } from './variables';
 
 export default css`
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin-bottom: ${sizingVar['ms-18']}em;
-    letter-spacing: 0.02em;
-  }
-
   p,
   img,
   ol,
