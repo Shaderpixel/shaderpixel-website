@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import { graphql, StaticQuery } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -23,31 +23,22 @@ const SITE_METADATA_QUERY = graphql`
   }
 `;
 
-class MainLayout extends React.Component {
-  render() {
-    const { children, ...remainderProps } = this.props;
-    // const { siteDescription } = this.props.data.return(
-    return (
-      <StaticQuery query={SITE_METADATA_QUERY}>
-        {({ site: { siteMetadata } }) => (
-          <>
-            <Helmet>
-              <html lang="en" />
-              {/* <meta name="description" content={siteMetadata.description} /> */}
-            </Helmet>
-            <Header siteNav={siteMetadata.siteNav} />
-            <main
-              className="u-px-5% lg:u-px-10% lg:u-mb-10%"
-              {...remainderProps}
-            >
-              {children}
-            </main>
-            <Footer userLinks={siteMetadata.userLinks} />
-          </>
-        )}
-      </StaticQuery>
-    );
-  }
-}
-
-export { MainLayout };
+export const MainLayout = ({ children, ...remainderProps }) => {
+  const data = useStaticQuery(SITE_METADATA_QUERY);
+  const {
+    site: { siteMetadata },
+  } = data;
+  return (
+    <>
+      <Helmet>
+        <html lang="en" />
+        {/* <meta name="description" content={siteMetadata.description} /> */}
+      </Helmet>
+      <Header siteNav={siteMetadata.siteNav} />
+      <main className="u-px-5% lg:u-px-10% lg:u-mb-10%" {...remainderProps}>
+        {children}
+      </main>
+      <Footer userLinks={siteMetadata.userLinks} />
+    </>
+  );
+};

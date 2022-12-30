@@ -4,7 +4,7 @@ import { graphql } from 'gatsby';
 import { css } from '@emotion/react';
 import moment from 'moment';
 import kebabCase from 'lodash.kebabcase';
-import { GatsbyImage } from "gatsby-plugin-image";
+import { GatsbyImage } from 'gatsby-plugin-image';
 import { Pills } from '../../components/Pills';
 import { MainLayout } from '../../layout';
 import config from '../../../data/SiteConfig';
@@ -108,186 +108,188 @@ export default class PostTemplate extends React.Component {
       postFrontmatter.category_id = config.postDefaultCategoryID;
     }
 
-    return <>
-      <Helmet
-        title={`${postFrontmatter.title} ${titleSeparator} ${siteTitle}`}
-      />
-      <MainLayout className="u-px-5% lg:u-pl-2.5% lg:u-pr-1.25% xl:u-px-5% lg:u-mb-10%">
-        <BlogArticle>
-          <BlogHero>
-            <BlogFrontmatter className="u-measure-long">
-              <BlogTitle>{postFrontmatter.title}</BlogTitle>
-              <BlogDate
-                dateTime={postNode.fields.date}
-                isDark={this.context.dark}
-              >
-                {moment(postNode.fields.date).format(config.dateFormat)}
-              </BlogDate>
-              <BlogDecorativeRibbon isDark={this.context.dark} />
-              <BlogDecorativeRibbonTail>
-                <div>
+    return (
+      <>
+        <Helmet
+          title={`${postFrontmatter.title} ${titleSeparator} ${siteTitle}`}
+        />
+        <MainLayout className="u-px-5% lg:u-pl-2.5% lg:u-pr-1.25% xl:u-px-5% lg:u-mb-10%">
+          <BlogArticle>
+            <BlogHero>
+              <BlogFrontmatter className="u-measure-long">
+                <BlogTitle>{postFrontmatter.title}</BlogTitle>
+                <BlogDate
+                  dateTime={postNode.fields.date}
+                  isDark={this.context.dark}
+                >
+                  {moment(postNode.fields.date).format(config.dateFormat)}
+                </BlogDate>
+                <BlogDecorativeRibbon isDark={this.context.dark} />
+                <BlogDecorativeRibbonTail>
                   <div>
                     <div>
                       <div>
                         <div>
-                          <div />
+                          <div>
+                            <div />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </BlogDecorativeRibbonTail>
-              <BlogCategory
-                href={`/${pageContext.collection}/categories/${kebabCase(
-                  postFrontmatter.category
-                    ? postFrontmatter.category
-                    : postFrontmatter.category_id
-                )}`}
-              >
-                <span className="u-sr-only">Category:</span>
-                <span className="u-font-mono">
-                  {postFrontmatter.category
-                    ? postFrontmatter.category
-                    : postFrontmatter.category_id}
-                </span>
-              </BlogCategory>
-              {postFrontmatter.tags ? (
-                <>
-                  <TagIcon
+                </BlogDecorativeRibbonTail>
+                <BlogCategory
+                  href={`/${pageContext.collection}/categories/${kebabCase(
+                    postFrontmatter.category
+                      ? postFrontmatter.category
+                      : postFrontmatter.category_id
+                  )}`}
+                >
+                  <span className="u-sr-only">Category:</span>
+                  <span className="u-font-mono">
+                    {postFrontmatter.category
+                      ? postFrontmatter.category
+                      : postFrontmatter.category_id}
+                  </span>
+                </BlogCategory>
+                {postFrontmatter.tags ? (
+                  <>
+                    <TagIcon
+                      css={theme =>
+                        css`
+                          ${postStyles.blogTagIcon(theme)}
+                        `
+                      }
+                    />
+                    <Pills
+                      css={postStyles.blogTags}
+                      data={postFrontmatter.tags}
+                      ariaLabel="Blog tags"
+                      link={postFrontmatter.tags.map(
+                        tag =>
+                          `/${pageContext.collection}/tags/${kebabCase(tag)}`
+                      )}
+                    />
+                  </>
+                ) : null}
+              </BlogFrontmatter>
+              <figure className="u-measure-long u-mb-6 md:u-mb-8">
+                <GatsbyImage
+                  image={postFrontmatter.cover.childImageSharp.gatsbyImageData}
+                  alt={postFrontmatter.coverAlt}
+                />
+                {postFrontmatter.coverCredit ? (
+                  <figcaption>{postFrontmatter.coverCredit}</figcaption>
+                ) : null}
+              </figure>
+            </BlogHero>
+            {visibleTOC ? (
+              <BlogNavContainer>
+                <BlogNavContainerContent>
+                  <h2 className="lg:u-h6 lg:u-pt-4">On this Page</h2>
+                  <nav
                     css={theme =>
                       css`
-                        ${postStyles.blogTagIcon(theme)}
+                        ${postStyles.blogTOC(theme)}
                       `
                     }
+                    className="u-measure-compact u-no-link-style"
+                    dangerouslySetInnerHTML={{
+                      __html: postNode.tableOfContents,
+                    }}
                   />
-                  <Pills
-                    css={postStyles.blogTags}
-                    data={postFrontmatter.tags}
-                    ariaLabel="Blog tags"
-                    link={postFrontmatter.tags.map(
-                      tag =>
-                        `/${pageContext.collection}/tags/${kebabCase(tag)}`
-                    )}
-                  />
-                </>
-              ) : null}
-            </BlogFrontmatter>
-            <figure className="u-measure-long u-mb-6 md:u-mb-8">
-              <GatsbyImage
-                image={postFrontmatter.cover.childImageSharp.gatsbyImageData}
-                alt={postFrontmatter.coverAlt} />
-              {postFrontmatter.coverCredit ? (
-                <figcaption>{postFrontmatter.coverCredit}</figcaption>
-              ) : null}
-            </figure>
-          </BlogHero>
-          {visibleTOC ? (
-            <BlogNavContainer>
-              <BlogNavContainerContent>
-                <h2 className="lg:u-h6 lg:u-pt-4">On this Page</h2>
-                <nav
+                </BlogNavContainerContent>
+              </BlogNavContainer>
+            ) : null}
+            <BlogContent
+              className="u-measure-long lg:u-measure-short xl:u-measure-long lg:u-mb-0"
+              dangerouslySetInnerHTML={{ __html: postNode.html }}
+            />
+            <PrevPostLink
+              to={pageContext.prevSlug}
+              css={postStyles.blogPrevNext}
+            >
+              <LeftChevron
+                css={theme =>
+                  css`
+                    ${postStyles.blogChevronIcon(theme)}
+                  `
+                }
+              />
+              Previous Read
+              <br /> {pageContext.prevTitle}
+              <div
+                css={theme =>
+                  css`
+                    ${postStyles.hoverText(theme)}
+                    ${postStyles.hoverTextPrev}
+                  `
+                }
+                className="blog-hoverText"
+              >
+                <ArrowIconLeft
                   css={theme =>
                     css`
-                      ${postStyles.blogTOC(theme)}
+                      ${postStyles.blogArrowIcon(theme)}
+                      ${postStyles.blogArrowIconLeft}
                     `
                   }
-                  className="u-measure-compact u-no-link-style"
-                  dangerouslySetInnerHTML={{
-                    __html: postNode.tableOfContents,
-                  }}
                 />
-              </BlogNavContainerContent>
-            </BlogNavContainer>
-          ) : null}
-          <BlogContent
-            className="u-measure-long lg:u-measure-short xl:u-measure-long lg:u-mb-0"
-            dangerouslySetInnerHTML={{ __html: postNode.html }}
-          />
-          <PrevPostLink
-            to={pageContext.prevSlug}
-            css={postStyles.blogPrevNext}
-          >
-            <LeftChevron
-              css={theme =>
-                css`
-                  ${postStyles.blogChevronIcon(theme)}
-                `
-              }
-            />
-            Previous Read
-            <br /> {pageContext.prevTitle}
-            <div
-              css={theme =>
-                css`
-                  ${postStyles.hoverText(theme)}
-                  ${postStyles.hoverTextPrev}
-                `
-              }
-              className="blog-hoverText"
+                Let's go
+              </div>
+            </PrevPostLink>
+            <NextPostLink
+              to={pageContext.nextSlug}
+              css={postStyles.blogPrevNext}
             >
-              <ArrowIconLeft
+              {!tablet ? (
+                <RightChevron
+                  css={theme =>
+                    css`
+                      ${postStyles.blogChevronIcon(theme)}
+                    `
+                  }
+                />
+              ) : null}
+              Next Read
+              {tablet ? (
+                <RightChevron
+                  css={theme =>
+                    css`
+                      ${postStyles.blogChevronIcon(theme)}
+                    `
+                  }
+                />
+              ) : null}
+              <br /> {pageContext.nextTitle}
+              <div
                 css={theme =>
                   css`
-                    ${postStyles.blogArrowIcon(theme)}
-                    ${postStyles.blogArrowIconLeft}
+                    ${postStyles.hoverText(theme)}
+                    ${postStyles.hoverTextNext}
                   `
                 }
-              />
-              Let's go
-            </div>
-          </PrevPostLink>
-          <NextPostLink
-            to={pageContext.nextSlug}
-            css={postStyles.blogPrevNext}
-          >
-            {!tablet ? (
-              <RightChevron
-                css={theme =>
-                  css`
-                    ${postStyles.blogChevronIcon(theme)}
-                  `
-                }
-              />
-            ) : null}
-            Next Read
-            {tablet ? (
-              <RightChevron
-                css={theme =>
-                  css`
-                    ${postStyles.blogChevronIcon(theme)}
-                  `
-                }
-              />
-            ) : null}
-            <br /> {pageContext.nextTitle}
-            <div
-              css={theme =>
-                css`
-                  ${postStyles.hoverText(theme)}
-                  ${postStyles.hoverTextNext}
-                `
-              }
-              className="blog-hoverText"
-            >
-              Read On!
-              <ArrowIconRight
-                css={theme =>
-                  css`
-                    ${postStyles.blogArrowIcon(theme)}
-                    ${postStyles.blogArrowIconRight}
-                  `
-                }
-              />
-            </div>
-          </NextPostLink>
-        </BlogArticle>
-      </MainLayout>
-    </>;
+                className="blog-hoverText"
+              >
+                Read On!
+                <ArrowIconRight
+                  css={theme =>
+                    css`
+                      ${postStyles.blogArrowIcon(theme)}
+                      ${postStyles.blogArrowIconRight}
+                    `
+                  }
+                />
+              </div>
+            </NextPostLink>
+          </BlogArticle>
+        </MainLayout>
+      </>
+    );
   }
 }
 
-/* eslint no-undef: "off" */
-//  $slug = slug from page's context from createPage
+// GQL variables come from page's context from createPage: Create individual pages section
 export const pageQuery = graphql`
   query BlogPostBySlug(
     $slug: String!

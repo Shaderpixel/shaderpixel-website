@@ -127,8 +127,7 @@ const ListingTemplate = ({ data, pageContext }) => {
 
 export default ListingTemplate;
 
-/* eslint no-undef: "off" */
-//  $slug = slug from page's context from createPage
+// GQL variables come from page's context from createPage: Create tag pages
 export const pageQuery = graphql`
   query BlogPostsByTagPagination(
     $limit: Int!
@@ -148,7 +147,7 @@ export const pageQuery = graphql`
       }
       limit: $limit
       skip: $skip
-      sort: { fields: frontmatter___date, order: DESC }
+      sort: { frontmatter: { date: DESC } }
     ) {
       edges {
         node {
