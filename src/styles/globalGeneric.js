@@ -36,10 +36,10 @@ export default theme => css`
 
   @media not all, screen and (prefers-reduced-motion: reduce) {
     * {
-      /* animation-duration: 0s !important;
+      animation-duration: 0s !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0s !important;
-      scroll-behavior: auto !important; */
+      scroll-behavior: auto !important;
     }
   }
 

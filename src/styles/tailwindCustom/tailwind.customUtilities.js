@@ -6,7 +6,9 @@ const {
   reusableCssProperties,
 } = require('../variables.node');
 
-// Note: if there is a prefix specified in tailwind.config.js, utilities created in this file will require that prefix. e.g. u-h1
+// Note: if there is a prefix specified in tailwind.config.js, utilities created in this file will require that prefix to use. e.g. u-h1
+// Any styles that relies on theme toggling changes shouldn't be here
+// Current problem with commons.css suddenly take precedence on save in while Gatsby develop. If there's styles that has two parts e.g. @supports, don't add any part of the styles here cause the styles wrapped in @supports suddenly loses precedence.
 
 const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
   const typographyUtilities = {
@@ -54,8 +56,51 @@ const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
       '--text-slnt': '0',
       'font-style': 'normal',
     },
+    '.text-stroke': {
+      '-webkit-text-stroke-width': '1px',
+      color: 'transparent',
+    },
   };
   addUtilities(typographyUtilities, variants('customTypographyUtilities')); // get variants from main config file
+});
+
+const customTypographyBase = plugin(function({ addBase, variants }) {
+  const typographyElements = {
+    h1: {
+      'font-size': `${sizingVar.ms14}em`,
+    },
+    h2: {
+      'font-size': `${sizingVar.ms13}em`,
+    },
+    h3: {
+      'font-size': `${sizingVar.ms12}em`,
+    },
+    h4: {
+      'font-size': `${sizingVar.ms11}em`,
+    },
+    h5: {
+      'font-size': `${sizingVar.ms10}em`,
+    },
+    em: {
+      'font-style': 'italic',
+      '--text-slnt': -10,
+    },
+    'b, strong': {
+      '--font-wght': 700,
+    },
+    small: {
+      'font-size': `${sizingVar['ms-3']}em`,
+    },
+    figcaption: {
+      'font-size': `${sizingVar['ms-2']}em`,
+    },
+    'h1, h2, h3, h4, h5, h6': {
+      'line-height': `${sizingVar.ms0}`,
+      'letter-spacing': '0.02em',
+      'margin-bottom': `${sizingVar['ms-18']}em`,
+    },
+  };
+  addBase(typographyElements, variants('typographyElements')); // get variants from main config file
 });
 
 const customSpacingUtilities = plugin(function({ addUtilities, variants }) {
@@ -85,6 +130,7 @@ const customMiscUtilities = plugin(function({ addUtilities, variants }) {
   addUtilities(customStyleUtilities, variants('customStyleUtilities')); // get variants from main config file
 });
 
+exports.customTypographyBase = customTypographyBase;
 exports.customTypographyUtilities = customTypographyUtilities;
 exports.customSpacingUtilities = customSpacingUtilities;
 exports.customMiscUtilities = customMiscUtilities;

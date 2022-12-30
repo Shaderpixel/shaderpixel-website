@@ -194,6 +194,7 @@ export default theme => css`
 
   /*-----------------------
    FONT SETTING
+   * Font-family is not moved inside of Tailwind customTypographyBase or customTypographyUtilities plugins because it can't handle @support and causes layout shift when saving in Gatsby develop and commons.css suddenly takes precendence
   -----------------------*/
   body {
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
@@ -207,7 +208,7 @@ export default theme => css`
       font-variation-settings: 'wght' var(--text-wght), 'slnt' var(--text-slnt);
     }
 
-    &.u-text-stroke {
+    & .u-text-stroke {
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
       'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
@@ -247,7 +248,6 @@ export default theme => css`
   h4,
   h5,
   h6 {
-    line-height: ${sizingVar.ms0};
     color: ${theme.headerColor};
 
     &.u-text-stroke {
@@ -261,54 +261,11 @@ export default theme => css`
     font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono',
       'Courier New', monospace;
     font-variant-ligatures: contextual;
+
     @supports (font-variation-settings: normal) {
       font-family: 'Fira Code VF', monospace;
       font-variation-settings: 'wght' var(--text-wght);
     }
-  }
-
-  /*-----------------------
-   Element Font Styling
-  -----------------------*/
-  /* HEADERS */
-  h1 {
-    font-size: ${sizingVar.ms14}em;
-  }
-
-  h2 {
-    font-size: ${sizingVar.ms13}em;
-  }
-
-  h3 {
-    font-size: ${sizingVar.ms12}em;
-  }
-
-  h4 {
-    font-size: ${sizingVar.ms11}em;
-  }
-
-  h5 {
-    font-size: ${sizingVar.ms10}em;
-  }
-
-  h6 {
-    font-size: ${sizingVar.ms9}em;
-  }
-
-  /* ITALICS AND STRONGS */
-  em {
-    font-style: italic;
-    --text-slnt: -10;
-  }
-
-  b,
-  strong {
-    --font-wght: 700;
-  }
-
-  /* SMALL */
-  small {
-    font-size: ${sizingVar['ms-3']}em;
   }
 
   /* PARAGRAPH INTRO TEXT */
@@ -316,10 +273,6 @@ export default theme => css`
     font-size: ${sizingVar.ms3}em;
   }
 
-  /* FIGURE CAPTION */
-  figcaption {
-    font-size: ${sizingVar['ms-2']}em;
-  }
 
   /*-----------------------
    Typography utilities
