@@ -6,10 +6,6 @@
 const urlJoin = require('url-join');
 const config = require('./data/SiteConfig');
 
-// custom Tailwind extractor for PurgeCSS. Copied from plugin package and modified to look for %
-const customTWExtractor = content =>
-  content.match(/[\w-/:%[\]]+(?<!:%)/g) || [];
-
 module.exports = {
   pathPrefix: config.pathPrefix === '' ? '/' : config.pathPrefix,
   siteMetadata: {
@@ -37,18 +33,6 @@ module.exports = {
     postDefaultCategory: config.postDefaultCategoryID,
   },
   plugins: [
-    /**
-     * not needed because static folder is always copied over
-     * https://www.gatsbyjs.org/docs/static-folder/
-     * */
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `assets`,
-    //     path: `${__dirname}/static/`,
-    //     ignore: [],
-    //   },
-    // },
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -154,8 +138,7 @@ module.exports = {
         printRejected: true,
         // printAll: true,
         develop: false,
-        // tailwind: true,
-        defaultExtractor: customTWExtractor,
+        tailwind: true,
       },
     },
     {

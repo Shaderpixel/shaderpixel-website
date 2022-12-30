@@ -1,14 +1,13 @@
 const tailwindcss = require(`tailwindcss`);
 const autoprefixer = require(`autoprefixer`);
-const postCssImport = require('postcss-preset-env');
+const postCssPreset = require('postcss-preset-env');
+const postCssImport = require('postcss-import');
 
 module.exports = {
   plugins: [
+    postCssImport,
     tailwindcss,
     autoprefixer,
-    postCssImport({ stage: 1 }),
-    // require(`cssnano`)({
-    //   preset: `default`,
-    // }),
+    postCssPreset({ stage: 1 }),
   ],
 };
