@@ -41,10 +41,10 @@ export const CategoryCardDetailContainer = styled.div`
 
   ul {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(360px, 1fr)
-    ); /* 360px baseed on smallest screen size as refeerence */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    @media (min-width: ${screensVar.sm}) {
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
     grid-auto-rows: max-content;
     grid-gap: ${sizingVar.ms0}em;
     margin-bottom: ${sizingVar.ms0}em;
@@ -144,19 +144,22 @@ const listContainer = css`
 const navParentContainerStyles = (
   theme,
   navListExpanded,
-  navScrollVh,
-  isHeadroomPinned,
-  headerElHeight
+  navScrollVh
+  // isHeadroomPinned,
+  // headerElHeight,
+  // navListSticky
 ) =>
   css`
     position: sticky;
     top: 0;
     z-index: 1;
-    /* todo add ref to detect the height of headroom */
-    transform: ${isHeadroomPinned
-      ? `translateY(${headerElHeight}px)`
-      : 'translateY(0)'};
-    transition: transform 280ms ease-in-out; /* this should match headroom's transition */
+    /* the following won't work because when you push the category nav down by the height of the headroom el, intersection observer thinks that it has become unpinned */
+    /*transform: ${
+      isHeadroomPinned && navListSticky
+        ? `translateY(${headerElHeight}px)`
+        : 'translateY(0)'
+    };*/
+    /*transition: transform 280ms ease-in-out; */ /* this should match headroom's transition */
     background-color: ${theme.backgroundColor};
 
     &::before {
@@ -178,11 +181,13 @@ const navParentContainerStyles = (
 
     &.navHeightLimit {
       &::after {
-        content: ${!navListExpanded
-          ? `''`
-          : navScrollVh > sizingVar.maxNavListExpandedHeight
-          ? `''`
-          : 'initial'};
+        content: ${
+          !navListExpanded
+            ? `''`
+            : navScrollVh > sizingVar.maxNavListExpandedHeight
+            ? `''`
+            : 'initial'
+        };
         position: absolute;
         bottom: 0;
         left: 0;
@@ -213,9 +218,11 @@ const navParentContainerStyles = (
       padding: ${sizingVar['ms-11']}em;
 
       svg {
-        fill: ${theme.mode === 'light'
-          ? theme.colors.themePrimary2
-          : theme.colors.themeDark1};
+        fill: ${
+          theme.mode === 'light'
+            ? theme.colors.themePrimary2
+            : theme.colors.themeDark1
+        };
         height: ${sizingVar.ms5}em;
         width: ${sizingVar.ms5}em;
       }
