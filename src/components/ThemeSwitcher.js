@@ -2,6 +2,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { sizingVar, screensVar } from '../styles/variables';
+import IconSun from '../../static/icons/icon-sun.inline.svg';
+import IconMoon from '../../static/icons/icon-moon.compressed.inline.svg';
 
 // Styles
 const ThemeSwitcher = styled.div`
@@ -64,26 +66,32 @@ const ThemeSwitcher = styled.div`
       }
     }
 
-    &::before {
-      content: "\\263C";
+    .light-theme-icon {
       position: relative;
+      z-index: 1;
+      stroke: ${({ theme }) => theme.footerBackgroundColor};
+      fill: ${({ theme }) => theme.footerBackgroundColor};
+      stroke-width: 15px;
+      width: ${sizingVar.ms7}em;
+      height: ${sizingVar.ms7}em;
       left: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms2}rem /2);
       transform: translate3d(-51%,0,0);
-      color: ${({ theme }) => theme.footerBackgroundColor};
 
       @media (min-width: ${screensVar.md}) {
         left: calc(${sizingVar['ms-22']}rem + ${sizingVar.ms5}rem /2);
       }
     }
 
-    &::after {
-      content: "\\263E";
+    .dark-theme-icon {
       position: absolute;
-      transform: translate3d(50%, 0, 0) rotate3d(0, 0, 1, 35deg);
+      z-index: 1;
+      width: ${sizingVar.ms6}em;
+      height: ${sizingVar.ms6}em;
+      fill: ${({ theme }) => theme.colors.themePrimary1};
+      transform: translate3d(50%, 0, 0) rotate3d(0, 0, 1, -2deg);
       right: calc(${sizingVar['ms-22']}rem + ${
   sizingVar.ms2
 }rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
-      color: ${({ theme }) => theme.colors.themePrimary1};
 
       @media (min-width: ${screensVar.md}) {
         right: calc(${sizingVar['ms-22']}rem + ${
@@ -91,6 +99,7 @@ const ThemeSwitcher = styled.div`
 }rem /2); /* move back by dot starting point and half of dot width, rem to reset fontsize */
       }
     }
+
 
     .theme-switch-toggle {
       position: absolute;
@@ -114,12 +123,13 @@ const ThemeSwitcher = styled.div`
   & > input[type="checkbox"]:checked + label {
     background-color: ${({ theme }) => theme.colors.themeDark2};
 
-    &::before {
-      color:  ${({ theme }) => theme.colors.themePrimary2};
+    .light-theme-icon {
+      stroke:  ${({ theme }) => theme.colors.themePrimary2};
+      fill:  ${({ theme }) => theme.colors.themePrimary2};
     }
 
-    &::after {
-      color:  ${({ theme }) => theme.footerBackgroundColor};
+    .dark-theme-icon {
+      fill:  ${({ theme }) => theme.footerBackgroundColor};
     }
 
     .theme-switch-toggle {
@@ -153,9 +163,11 @@ const ThemeSwitch = ({ className, ...restProps }) => (
     />
     <label htmlFor="ThemeSwitcher" className="theme-switch__label">
       <span className="u-sr-only">
-        Toggle {restProps.themeContext.dark ? 'light' : 'dark'} theme
+        {`Toggle ${restProps.themeContext.dark ? 'light' : 'dark'} theme`}
       </span>
+      <IconSun className="light-theme-icon" />
       <div className="theme-switch-toggle" aria-hidden="true" />
+      <IconMoon className="dark-theme-icon" />
     </label>
   </ThemeSwitcher>
 );
