@@ -43,9 +43,9 @@ export default theme => css`
     }
   }
 
-  .header-anchor {
+  .header-anchor.before {
     /* set and used by gatsby-remark-autolink-headers */
-    transform: translateY(100%);
+    top: ${sizingVar.ms0}rem;
 
     svg {
       fill: ${theme.headerColor};

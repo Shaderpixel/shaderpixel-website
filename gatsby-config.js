@@ -32,6 +32,7 @@ module.exports = {
     },
     postDefaultCategory: config.postDefaultCategoryID,
   },
+  trailingSlash: `never`, // trailing slash interferes with in-page anchors
   plugins: [
     {
       resolve: 'gatsby-source-filesystem',
@@ -86,8 +87,8 @@ module.exports = {
           {
             resolve: `gatsby-remark-autolink-headers`,
             options: {
+              offsetY: `100`, // not functional, need figuring out
               className: `header-anchor`,
-              offsetY: `106`, // not functional v2, needs upgrade to latest
             },
           },
           {
