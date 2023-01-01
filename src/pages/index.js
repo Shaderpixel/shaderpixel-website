@@ -131,18 +131,16 @@ const Index = props => {
             >
               <p className="u-mb-5--em intro">
                 You have landed on Richard Lock's personal website where he
-                writes about things that are of interest to him (duh). His
-                purpose for building this website is to collect <i>ah ha</i>{' '}
-                moments in web development, share anecdotal life experiences,
-                societal observations, and epiphanies from the throne.
+                writes about things that are of interest to him. His purpose for
+                building this website is to collect <i>ah ha</i> moments in web
+                development, share anecdotal life experiences, societal
+                observations, and epiphanies from the throne.
               </p>
               <p>
                 Richard often writes about topics related to his professional
-                life - web development and management (his primary passion and
-                full time job) where he showcases his prowess in both areas. He
-                hopes to give back to the community and join the ranks of many
-                knowledgeaeble individuals who have generously shared their
-                thoughts on the internet.
+                life - web development and management, his primary passion and
+                full time job. He hopes to give back to the community who have
+                generously shared their thoughts on the internet.
               </p>
               <p>
                 He also writes about his personal interests - home maintenance,
