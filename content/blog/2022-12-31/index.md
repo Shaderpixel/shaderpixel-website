@@ -13,7 +13,7 @@ summary: 'The redesign of my website has been a long time coming.'
 
 I am so glad that I am finally able to push my website redesign across the finish line and launched it right around the corner of the new year.
 
-As mentioned [in this post], I pegged my development of Gatsby at version 2. It was a conscious decision since it will take too much effort from me to try to update and deal with the breaking changes while trying to finish building my site, since I can only work on it for short amount of time with large lapses in between.
+As mentioned [in this post](/blog/christmas-and-a-new-website), I pegged my development of Gatsby at version 2. It was a conscious decision since it will take too much effort from me to try to update and deal with the breaking changes while trying to finish building my site, since I can only work on it for short amount of time with large lapses in between.
 
 Despite my excitement that the site was done and fully build-able locally with gatsby build , Netlify was not able to deploy my code. It got hung up on some error generating WebP images from my sample posts.  I asked for assistance in the support forums and as I suspected and to my dismay, they requested that I update my Gatsby version. Hence began my long and painful journey of migrating towards the latest version which is v5.3.1
 
