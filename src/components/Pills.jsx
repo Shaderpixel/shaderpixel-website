@@ -10,6 +10,7 @@ export const Pills = ({
 }) => {
   const PillsContainer = styled.ul`
     display: inline-flex;
+    flex-wrap: wrap;
   `;
   const Pill = styled.li`
     margin-right: ${sizingVar.ms0}em;

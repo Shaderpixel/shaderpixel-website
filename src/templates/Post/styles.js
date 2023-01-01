@@ -63,7 +63,13 @@ const blogTagIcon = theme => css`
   fill: ${theme.fontColor};
   height: ${sizingVar.ms2}em;
   width: ${sizingVar.ms2}em;
-  align-self: center;
+  align-self: seelf-start;
+  margin-top: ${sizingVar['ms-6']}rem;
+
+  @media (min-width: ${screensVar.sm}) {
+    align-self: center;
+    margin-top: 0;
+  }
 `;
 const blogTags = css`
   grid-area: blog-tags;
@@ -310,8 +316,13 @@ export const BlogNavContainer = styled.section`
   grid-area: blog-sidebar-1;
 `;
 export const BlogNavContainerContent = styled.div`
-  top: 0;
   position: sticky;
+  top: 0;
+  border: 1px solid ${({ theme }) => theme.borderColor};
+  border-left-width: 0;
+  padding: 1em;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
 `;
 export const BlogContent = styled.section`
   grid-area: blog-content-area;
