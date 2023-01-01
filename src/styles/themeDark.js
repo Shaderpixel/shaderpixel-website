@@ -47,6 +47,7 @@ const theme = {
   footerLinkColorActive: themeBlue6,
   borderColor: themeSlate,
   borderColorActive: themeBlue3,
+  siteNavBorder: themePrimary1,
   borderRadius: '5px',
   tagBgColor: themeSlate,
   tagFgColor: themeDark1,

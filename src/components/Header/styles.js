@@ -121,7 +121,7 @@ const header = theme => css`
 const headroomStyles = theme => css`
   .headroom {
     background-color: ${theme.headerBackgroundColor};
-    border-bottom: 1px solid ${theme.colors.themePrimary1};
+    border-bottom: 1px solid ${theme.siteNavBorder};
     top: 0;
     left: 0;
     right: 0;
