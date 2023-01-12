@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import { sizingVar, screensVar } from '../../styles/variables';
@@ -213,9 +212,23 @@ export const FooterLinksGrid = styled.ul`
   grid-template-rows: 1fr 1fr;
   grid-gap: ${sizingVar['ms-1']}em;
 
+  a {
+    &:hover {
+      svg {
+        transform: scale3d(0.85, 0.85, 0.85);
+        .logo-background {
+          fill: ${({ theme }) => theme.colors.themePrimary2};
+        }
+      }
+    }
+  }
+
   svg {
     height: ${sizingVar.ms9}em;
     width: ${sizingVar.ms9}em;
+    transition-property: transform, fill;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 250ms;
 
     @media (min-width: ${screensVar.md}) {
       height: ${sizingVar.ms11}em;
