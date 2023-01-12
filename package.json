@@ -110,7 +110,6 @@
   },
   "overrides": {
     "graphql@>14.7.0": "^16.0.0",
-    "gatsby@<5.0.0": "^5.0.0",
     "browserslist": "^4.0.0"
   }
 }
