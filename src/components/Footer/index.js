@@ -48,7 +48,7 @@ const Footer = ({ userLinks, ...restProps }) => {
                     href={link.link}
                     // css={theme =>
                     //   css`
-                    //     ${footerStyles.linkStyles(theme)}
+                    //     ${footerStyles.iconLink(theme)}
                     //   `
                     // }
                   >
