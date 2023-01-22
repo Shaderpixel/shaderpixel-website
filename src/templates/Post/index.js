@@ -110,9 +110,12 @@ export default class PostTemplate extends React.Component {
 
     return (
       <>
-        <Helmet
-          title={`${postFrontmatter.title} ${titleSeparator} ${siteTitle}`}
-        />
+        <Helmet>
+          <title>{`${postFrontmatter.title} ${titleSeparator} ${siteTitle}`}</title>
+          {postFrontmatter.excerpt ? (
+            <meta name="description" content={postFrontmatter.excerpt} />
+          ) : null}
+        </Helmet>
         <MainLayout className="u-px-5% lg:u-pl-2.5% lg:u-pr-1.25% xl:u-px-5% lg:u-mb-10%">
           <BlogArticle>
             <BlogHero>
@@ -173,15 +176,19 @@ export default class PostTemplate extends React.Component {
                   </>
                 ) : null}
               </BlogFrontmatter>
-              <figure className="u-measure-long u-mb-6 md:u-mb-8">
-                <GatsbyImage
-                  image={postFrontmatter.cover.childImageSharp.gatsbyImageData}
-                  alt={postFrontmatter.coverAlt}
-                />
-                {postFrontmatter.coverCredit ? (
-                  <figcaption>{postFrontmatter.coverCredit}</figcaption>
-                ) : null}
-              </figure>
+              {postFrontmatter.cover?.childImageSharp.gatsbyImageData && (
+                <figure className="u-measure-long u-mb-6 md:u-mb-8">
+                  <GatsbyImage
+                    image={
+                      postFrontmatter.cover.childImageSharp.gatsbyImageData
+                    }
+                    alt={postFrontmatter.coverAlt}
+                  />
+                  {postFrontmatter.coverCredit ? (
+                    <figcaption>{postFrontmatter.coverCredit}</figcaption>
+                  ) : null}
+                </figure>
+              )}
             </BlogHero>
             {visibleTOC ? (
               <BlogNavContainer>
@@ -320,6 +327,7 @@ export const pageQuery = graphql`
         date
         category
         tags
+        excerpt
         summary
       }
       fields {
