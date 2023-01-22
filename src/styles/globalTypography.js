@@ -11,10 +11,12 @@ export default theme => css`
     font-family: 'InterVF';
     font-weight: 100 900;
     font-stretch: 85% 100%;
+    font-style: oblique 0deg 10deg;
     font-display: swap;
-    src: local('Inter'),
+    src:
       url(${fonts.interVF}) format('woff2 supports variations'),
-      url(${fonts.interVF}) format('woff2-variations');
+      url(${fonts.interVF}) format('woff2-variations'),
+      url(${fonts.interVF}) format('woff2');
   }
 
   @font-face {
@@ -197,17 +199,6 @@ export default theme => css`
    * Font-family is not moved inside of Tailwind customTypographyBase or customTypographyUtilities plugins because it can't handle @support and causes layout shift when saving in Gatsby develop and commons.css suddenly takes precendence
   -----------------------*/
   body {
-    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-      'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-      'Noto Color Emoji';
-
-    @supports (font-variation-settings: normal) {
-      font-family: 'InterVF', system-ui, -apple-system, BlinkMacSystemFont,
-        'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-      font-variation-settings: 'wght' var(--text-wght), 'slnt' var(--text-slnt);
-    }
-
     & .u-text-stroke {
       font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
@@ -228,14 +219,6 @@ export default theme => css`
   .u-display-4,
   .u-display-5,
   .u-display-6 {
-    font-family: Emberly, Georgia, Cambria, 'Times New Roman', Times, serif;
-
-    @supports (font-variation-settings: normal) {
-      font-family: 'Emberly VF', Georgia, Cambria, 'Times New Roman', Times,
-        serif;
-      font-variation-settings: 'wght' var(--text-header-wght),
-        'wdth' var(--text-header-wdth);
-    }
 
     &.u-text-stroke {
       font-family: Emberly, Georgia, Cambria, 'Times New Roman', Times, serif;
