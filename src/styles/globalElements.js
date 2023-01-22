@@ -81,4 +81,16 @@ export default theme => css`
       }
     }
   }
+  figure.u-blockquoteWrapper {
+    position: relative;
+    padding: ${sizingVar.ms0}em;
+    background-image: linear-gradient(
+        45deg,
+        ${theme.blockquoteBackground1},
+        ${theme.blockquouteBackground2}
+      ),
+      url("data:image/svg+xml;charset=utf-8,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 0h1L0 6V5zm1 5v1H5z' fill='${encodeURIComponent(
+        theme.blockquouteFill
+      )}' fill-opacity='.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
 `;

@@ -1,4 +1,4 @@
-import { mix } from 'polished';
+import { mix, transparentize } from 'polished';
 
 const white = '#fff';
 const solidGray = '#282823';
@@ -53,6 +53,9 @@ const theme = {
   tagFgColor: themePrimary1,
   linkColor: themeBlue2,
   linkColorActive: themeRed,
+  blockquoteBackground1: transparentize(0.5, themeSecondary1),
+  blockquouteBackground2: transparentize(0.7, themeBlue1),
+  blockquouteFill: themePrimary1,
   boxShadow:
     'hsla(0, 0%, 0%, 0.2) 0px 3px 3px -2px, hsla(0, 0%, 0%, 0.14) 0px 3px 4px 0px, hsla(0, 0%, 0%, 0.12) 0px 1px 8px 0px;',
   colors: {
