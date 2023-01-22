@@ -48,13 +48,41 @@ const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
     '.display-6': {
       'font-size': `${sizingVar.ms15}em`,
     },
+    '.h1, .h2, .h3,.h4,.h5,.h6,.u-display-1, .u-display-2, .u-display-3, .u-display-4, .u-display-5, .u-display-6': {
+      'font-family':
+        "IEmberly, Georgia, Cambria, 'Times New Roman', Times, serif",
+      '@supports (font-variation-settings: normal)': {
+        'font-family':
+          "'Emberly VF', Georgia, Cambria, 'Times New Roman', Times, serif",
+        'font-variation-settings':
+          "'wght' var(--text-header-wght), 'wdth' var(--text-header-wdth)",
+      },
+    },
     '.italic': {
-      '--text-slnt': '-10',
       'font-style': 'italic',
+      // https://stackoverflow.com/questions/64933925/how-to-create-a-tailwind-responsive-class-using-a-plugin
+      '@supports (font-variation-settings: normal)': {
+        'font-style': 'normal',
+        '--text-slnt': '-10',
+        'font-variation-settings':
+          "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
+      },
+    },
+    '.semi-italic': {
+      'font-style': 'italic',
+      // https://stackoverflow.com/questions/64933925/how-to-create-a-tailwind-responsive-class-using-a-plugin
+      '@supports (font-variation-settings: normal)': {
+        'font-style': 'normal',
+        '--text-slnt': '-5',
+        'font-variation-settings':
+          "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
+      },
     },
     '.not-italic': {
-      '--text-slnt': '0',
       'font-style': 'normal',
+      '--text-slnt': '0',
+      'font-variation-settings':
+        "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
     },
     '.text-stroke': {
       '-webkit-text-stroke-width': '1px',
@@ -66,6 +94,16 @@ const customTypographyUtilities = plugin(function({ addUtilities, variants }) {
 
 const customTypographyBase = plugin(function({ addBase, variants }) {
   const typographyElements = {
+    body: {
+      'font-family':
+        "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'",
+      '@supports (font-variation-settings: normal)': {
+        'font-family':
+          "'InterVF', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif",
+        'font-variation-settings':
+          "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
+      },
+    },
     h1: {
       'font-size': `${sizingVar.ms14}em`,
     },
@@ -83,10 +121,19 @@ const customTypographyBase = plugin(function({ addBase, variants }) {
     },
     em: {
       'font-style': 'italic',
-      '--text-slnt': -10,
+      '@supports (font-variation-settings: normal)': {
+        'font-style': 'normal',
+        '--text-slnt': '-10',
+        'font-variation-settings':
+          "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
+      },
     },
     'b, strong': {
-      '--font-wght': 700,
+      '@supports (font-variation-settings: normal)': {
+        '--text-wght': '700',
+        'font-variation-settings':
+          "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
+      },
     },
     small: {
       'font-size': `${sizingVar['ms-3']}em`,
@@ -95,6 +142,14 @@ const customTypographyBase = plugin(function({ addBase, variants }) {
       'font-size': `${sizingVar['ms-2']}em`,
     },
     'h1, h2, h3, h4, h5, h6': {
+      'font-family':
+        "IEmberly, Georgia, Cambria, 'Times New Roman', Times, serif",
+      '@supports (font-variation-settings: normal)': {
+        'font-family':
+          "'Emberly VF', Georgia, Cambria, 'Times New Roman', Times, serif",
+        'font-variation-settings':
+          "'wght' var(--text-header-wght), 'wdth' var(--text-header-wdth)",
+      },
       'line-height': `${sizingVar.ms0}`,
       'letter-spacing': '0.02em',
       'margin-bottom': `${sizingVar['ms-18']}em`,
