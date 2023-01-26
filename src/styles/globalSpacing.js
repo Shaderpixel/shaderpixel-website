@@ -4,6 +4,7 @@ import { sizingVar, measuresVar } from './variables';
 export default css`
   p,
   img,
+  figure,
   ol,
   ul {
     & + h2,
