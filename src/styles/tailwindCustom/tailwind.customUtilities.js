@@ -104,6 +104,15 @@ const customTypographyBase = plugin(function({ addBase, variants }) {
           "'wght' var(--text-wght), 'slnt' var(--text-slnt)",
       },
     },
+    'pre, code': {
+      'font-family':
+        "'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !important;",
+      'font-variant-ligature': 'contextual',
+      '@supports (font-variation-settings: normal)': {
+        'font-family': "'Fira Code VF', monospace !important",
+        'font-variation-settings': "'wght' var(--text-wght)",
+      },
+    },
     h1: {
       'font-size': `${sizingVar.ms14}em`,
     },
@@ -178,8 +187,14 @@ const customSpacingUtilities = plugin(function({ addUtilities, variants }) {
 
 const customMiscUtilities = plugin(function({ addUtilities, variants }) {
   const customStyleUtilities = {
-    '.no-link-style a': {
-      'text-decoration': `none !important`,
+    '.code': {
+      'font-family':
+        "'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;",
+      'font-variant-ligature': 'contextual',
+      '@supports (font-variation-settings: normal)': {
+        'font-family': "'Fira Code VF', monospace",
+        'font-variation-settings': "'wght' var(--text-wght)",
+      },
     },
   };
   addUtilities(customStyleUtilities, variants('customStyleUtilities')); // get variants from main config file

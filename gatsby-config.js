@@ -70,7 +70,7 @@ module.exports = {
             resolve: 'gatsby-remark-images',
             options: {
               // https://github.com/gatsbyjs/gatsby/commit/fa9fb9782c58811fcfb199ca32985a2ba39ffaac
-              maxWidth: 800,
+              maxWidth: '900',
               quality: 70,
               withWebp: {
                 quality: 80,
@@ -79,7 +79,7 @@ module.exports = {
                 quality: 80,
               },
               showCaptions: ['title', 'alt'],
-              wrapperStyle: 'max-width: 800px;',
+              wrapperStyle: 'max-width: 900px;',
             },
           },
           'gatsby-remark-responsive-iframe',

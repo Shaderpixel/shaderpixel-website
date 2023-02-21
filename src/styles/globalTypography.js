@@ -238,19 +238,6 @@ export default theme => css`
     }
   }
 
-  pre,
-  code,
-  .u-code {
-    font-family: 'Fira Code', Menlo, Monaco, Consolas, 'Liberation Mono',
-      'Courier New', monospace;
-    font-variant-ligatures: contextual;
-
-    @supports (font-variation-settings: normal) {
-      font-family: 'Fira Code VF', monospace;
-      font-variation-settings: 'wght' var(--text-wght);
-    }
-  }
-
   /* PARAGRAPH INTRO TEXT */
   p.intro {
     font-size: ${sizingVar.ms3}em;
