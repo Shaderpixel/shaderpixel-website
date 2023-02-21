@@ -1,16 +1,16 @@
 import { css } from '@emotion/react';
 import { sizingVar } from './variables';
 
-export default css`
+export default theme => css`
   /* For more options see https://www.gatsbyjs.org/packages/gatsby-remark-prismjs/ */
   /**
   * Add back the container background-color, border-radius, padding, margin
   * and overflow that we removed from <pre>.
   */
   .gatsby-highlight {
-    background-color: #fdf6e3;
+    background-color: ${theme.colors.prism.background};
     border-radius: 0.3em;
-    margin: 0.5em 0;
+    margin: ${sizingVar['ms-1']}rem 0;
     padding: 1em;
     overflow: auto;
   }

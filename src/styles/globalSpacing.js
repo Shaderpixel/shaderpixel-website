@@ -6,7 +6,8 @@ export default css`
   img,
   figure,
   ol,
-  ul {
+  ul,
+  .gatsby-highlight {
     & + h2,
     & + h3,
     & + h4,
@@ -45,6 +46,13 @@ export default css`
     & > p:last-child,
     & > img:last-child {
       margin-bottom: 0;
+    }
+
+    ul,
+    ol {
+      figure {
+        margin: ${sizingVar['ms-1']}em 0;
+      }
     }
   }
 

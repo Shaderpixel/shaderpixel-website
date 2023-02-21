@@ -19,7 +19,7 @@ const GlobalStyles = withTheme(({ theme }) => (
       ${globalTypography(theme)}
       ${globalElements(theme)}
       ${globalSpacing}
-      ${prismThemeMod}
+      ${prismThemeMod(theme)}
     `}
   />
 ));
