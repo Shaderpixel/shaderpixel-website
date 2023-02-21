@@ -3,7 +3,7 @@ title: 'The Tainted Canvas'
 date: '2023-01-22'
 cover: './images/canvas.webp'
 coverAlt: 'white minimalist canvas'
-coverCredit: 'White minimalist painting by Steve Johnson - Unsplash'
+coverCredit: 'Textured pattern by Lucas - Unsplash'
 category: 'Gatsby Development'
 tags: ['TIL', 'HTML']
 # slug: 'test10'
